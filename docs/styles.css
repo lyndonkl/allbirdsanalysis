@@ -147,7 +147,7 @@ button { font: inherit; cursor: pointer; }
   pointer-events: none;
 }
 @media (max-width: 600px) {
-  .progress-bar { top: 48px; }
+  .progress-bar { top: 64px; }
 }
 .progress-bar__fill {
   height: 100%;
@@ -970,7 +970,7 @@ body[data-bg="black"] .bird-ticker {
   #scene-7 .chardan-grid { grid-template-columns: repeat(2, 1fr); }
   #scene-13 .sim-stage { grid-template-columns: 1fr; }
   #scene-15 .countdown { grid-template-columns: 1fr; }
-  .bird-ticker { font-size: 11px; padding: 5px 8px; top: 54px; right: 10px; }
+  .bird-ticker { font-size: 11px; padding: 5px 8px; top: 70px; right: 10px; }
   #scene-1 .stats-row { grid-template-columns: repeat(2, 1fr); }
 
   /* M1 (Round 3): shrink in-SVG typography for dense charts at narrow viewport.
