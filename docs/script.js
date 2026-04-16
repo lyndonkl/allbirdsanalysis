@@ -460,9 +460,15 @@ function renderScene8(stepIdx = 0) {
   // Announcement vertical
   g.append('line').attr('class', 'announce-line')
     .attr('x1', x(0)).attr('x2', x(0)).attr('y1', 0).attr('y2', ih);
-  g.append('text').attr('x', x(0)).attr('y', -6).attr('text-anchor', 'middle')
+  // Round 5 Bug A2: the ANNOUNCEMENT label used to sit at y=-6, which
+  // floats beneath the plot's own top header ("INDEXED TO 100 AT
+  // ANNOUNCEMENT...") at y=18. It collided directly with the header text.
+  // Move it INTO the plot, below the milestone 2-row band (band is at
+  // y=12 and y=30), right-anchored to the announcement rule so the label
+  // hangs clearly off the vertical without touching the first milestone.
+  g.append('text').attr('x', x(0) + 6).attr('y', 50).attr('text-anchor', 'start')
     .attr('font-family', 'Inter, sans-serif').attr('font-size', 11).attr('fill', T.ink60)
-    .text('ANNOUNCEMENT');
+    .attr('letter-spacing', '0.1em').text('ANNOUNCEMENT');
 
   // LBCC line progressive: step 1 shows pre-announce only, step 2 to day 0, 3 to 90, 4 to 180, 5 to 365
   const dayCutoffs = [-1, 0, 90, 180, 365, 365];
@@ -499,31 +505,42 @@ function renderScene8(stepIdx = 0) {
   // rule. Float labels at the TOP of the plot area with a thin leader line
   // down to the data point so the lines stay clean. Also avoid drawing
   // over the announcement vertical (x=x(0)) by nudging day-0 labels right.
+  // Round 5 Bug A1: milestone labels still overlapped even after the
+  // Round-4 horizontal nudge because the label text width (170-280px) is
+  // wider than the 130px collision window. Rather than widening the window
+  // (which pushes later labels past the chart right edge), stagger labels
+  // into TWO y-rows. Odd-indexed labels sit at y=12, even-indexed at y=30,
+  // doubling the vertical bandwidth with zero horizontal cost.
   const milestones = d.lbcc.milestones;
   const visibleMilestones = Math.max(0, Math.min(milestones.length, stepIdx));
-  const labelBandY = 12;                                 // top-of-plot label row
-  const labelPositions = [];                             // {x, label} to avoid collisions
-  milestones.slice(0, visibleMilestones).forEach(m => {
+  const labelBandTopY = 12;                              // row A
+  const labelBandBottomY = 30;                           // row B
+  const labelPositions = [];                             // {x, label, row}
+  milestones.slice(0, visibleMilestones).forEach((m, idx) => {
     const day = m.d;
     if (day > cutoff) return;
     const pt = d.lbcc.series.reduce((a, b) => (Math.abs(b.d - day) < Math.abs(a.d - day) ? b : a));
     const dx = x(day);
-    // Nudge horizontally away from prior labels so the milestone band stays legible.
+    // Alternate rows so adjacent labels never share a horizontal band.
+    const row = idx % 2;
+    const bandY = row === 0 ? labelBandTopY : labelBandBottomY;
+    // Nudge horizontally away from prior labels ON THE SAME ROW.
     let lx = dx;
     for (const p of labelPositions) {
+      if (p.row !== row) continue;
       if (Math.abs(lx - p.x) < 130) {
         lx = p.x + 130;
       }
     }
-    labelPositions.push({ x: lx, label: m.label });
+    labelPositions.push({ x: lx, label: m.label, row });
     g.append('circle').attr('class', 'milestone-dot').attr('cx', dx).attr('cy', y(pt.p)).attr('r', 3);
     // Leader line from dot up to the label band
     g.append('line').attr('class', 'milestone-leader')
       .attr('x1', dx).attr('x2', lx)
-      .attr('y1', y(pt.p)).attr('y2', labelBandY + 4)
+      .attr('y1', y(pt.p)).attr('y2', bandY + 4)
       .attr('stroke', T.ink40).attr('stroke-opacity', 0.6).attr('stroke-width', 1);
     g.append('text').attr('class', 'milestone-label')
-      .attr('x', lx + 4).attr('y', labelBandY)
+      .attr('x', lx + 4).attr('y', bandY)
       .text(m.label);
   });
 }
@@ -589,34 +606,61 @@ function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
       .attr('fill-opacity', isAnchor ? 0.15 : 0);
 
     // Label gating:
-    //   anchor (NewBird) always visible
-    //   ring i shown only once stepIdx reaches i (revealed as we zoom out)
-    //   already-passed rings fade to 0.55 so they remain context landmarks
+    //   anchor (NewBird) always visible at full opacity
+    //   current step's ring at full opacity
+    //   already-passed rings fade to 0.55 as landmarks
+    //   future rings hidden
+    // Round 5 Bug B: the previous `screenR > 18` gate excluded the anchor
+    // label once zoom climbed past step 0 (anchor screenR shrinks to ~6 at
+    // zoom=18). The reader then loses the $128M reference entirely. Always
+    // render the anchor + current-step labels; only gate passed-ring labels
+    // by screen radius so they don't stack as microscopic dots.
     let labelOpacity = 0;
     if (isAnchor) {
       labelOpacity = 1;
-    } else if (stepIdx > i) {
-      labelOpacity = 0.55;
     } else if (stepIdx === i) {
       labelOpacity = 1;
+    } else if (stepIdx > i) {
+      labelOpacity = 0.55;
     }
 
-    if (screenR > 18 && labelOpacity > 0) {
-      // Lambda's label at stepIdx=1 collides with NewBird's label because
-      // both rings briefly fill similar screen space. Nudge Lambda's value
-      // label above the frame center (negative offset) so the two read
-      // separately.
-      const valueYOffset = (i === 1 && stepIdx === 1) ? -screenR - 40 : -screenR + 4;
-      svg.append('text').attr('class', 'ring-label')
-        .attr('x', cx).attr('y', cy - screenR - 12)
-        .attr('text-anchor', 'middle').attr('fill', isAnchor ? T.accent : T.ink60)
-        .attr('opacity', labelOpacity)
-        .text(r.name);
-      svg.append('text').attr('class', 'ring-value')
-        .attr('x', cx).attr('y', cy + valueYOffset)
-        .attr('text-anchor', 'middle').attr('fill', isAnchor ? T.accent : T.ink)
-        .attr('opacity', labelOpacity)
-        .text(r.value >= 1000 ? '$' + (r.value / 1000).toFixed(r.value >= 10000 ? 0 : 1) + 'B' : '$' + r.value + 'M');
+    const forceLabel = isAnchor || stepIdx === i;
+    const okSize = screenR > 14;
+    if (labelOpacity > 0 && (forceLabel || okSize)) {
+      // Round 5 Bug B: anchor label pin.
+      // Once we zoom past step 0, the anchor ring shrinks to a handful of
+      // pixels at the canvas center. Park the anchor label BELOW the dot
+      // (south of center) so it cannot collide with the outer ring's
+      // top-anchored label. When the anchor is still the dominant ring
+      // (step 0), keep the original north stand-off for familiarity.
+      if (isAnchor && stepIdx > 0) {
+        const pin = Math.max(screenR + 12, 22);
+        svg.append('text').attr('class', 'ring-label')
+          .attr('x', cx).attr('y', cy + pin)
+          .attr('text-anchor', 'middle').attr('fill', T.accent)
+          .attr('opacity', labelOpacity)
+          .text(r.name);
+        svg.append('text').attr('class', 'ring-value')
+          .attr('x', cx).attr('y', cy + pin + 16)
+          .attr('text-anchor', 'middle').attr('fill', T.accent)
+          .attr('opacity', labelOpacity)
+          .text(r.value >= 1000 ? '$' + (r.value / 1000).toFixed(r.value >= 10000 ? 0 : 1) + 'B' : '$' + r.value + 'M');
+      } else {
+        // Non-anchor label or anchor at step 0 — original north stand-off.
+        // Lambda's label at stepIdx=1 used to collide with NewBird's value,
+        // so nudge Lambda's value further above.
+        const valueYOffset = (i === 1 && stepIdx === 1) ? -screenR - 40 : -screenR + 4;
+        svg.append('text').attr('class', 'ring-label')
+          .attr('x', cx).attr('y', cy - screenR - 12)
+          .attr('text-anchor', 'middle').attr('fill', isAnchor ? T.accent : T.ink60)
+          .attr('opacity', labelOpacity)
+          .text(r.name);
+        svg.append('text').attr('class', 'ring-value')
+          .attr('x', cx).attr('y', cy + valueYOffset)
+          .attr('text-anchor', 'middle').attr('fill', isAnchor ? T.accent : T.ink)
+          .attr('opacity', labelOpacity)
+          .text(r.value >= 1000 ? '$' + (r.value / 1000).toFixed(r.value >= 10000 ? 0 : 1) + 'B' : '$' + r.value + 'M');
+      }
     }
   });
 
@@ -1004,9 +1048,28 @@ function renderScene12(stepIdx = 0) {
   }
 
   // today dot on far left
-  g.append('text').attr('x', xScale(0)).attr('y', mainY + 58).attr('text-anchor', 'middle')
-    .attr('font-family', 'Source Serif 4, Georgia, serif').attr('font-style', 'italic').attr('font-size', 18)
-    .attr('fill', '#F2F2F2').text('$14.50 today');
+  // Round 5 Bug C: the "$14.50 today" label used to sit at y = mainY+58,
+  // the same y as the first event label (i=0 is "below", labelY = mainY+58).
+  // They shared both x and y. Move the today marker into its own dedicated
+  // lane further south of the timeline and render as an amber pill so it
+  // reads as a distinct "you are here" landmark rather than a floating
+  // event label.
+  const todayLaneY = mainY + 96;
+  const pillW = 110;
+  const pillH = 22;
+  g.append('rect')
+    .attr('x', xScale(0) - pillW / 2).attr('y', todayLaneY - pillH / 2)
+    .attr('width', pillW).attr('height', pillH).attr('rx', 11)
+    .attr('fill', T.marginal).attr('fill-opacity', 0.95);
+  g.append('text').attr('x', xScale(0)).attr('y', todayLaneY + 4).attr('text-anchor', 'middle')
+    .attr('font-family', 'Inter, sans-serif').attr('font-size', 12).attr('font-weight', 600)
+    .attr('fill', '#0B0B0B').attr('letter-spacing', '0.06em').text('TODAY · $14.50');
+  // Thin leader line connecting the today pill to the timeline dot.
+  g.append('line')
+    .attr('x1', xScale(0)).attr('x2', xScale(0))
+    .attr('y1', mainY + 4).attr('y2', todayLaneY - pillH / 2 - 2)
+    .attr('stroke', T.marginal).attr('stroke-opacity', 0.5).attr('stroke-width', 1)
+    .attr('stroke-dasharray', '2 3');
 }
 
 // =============================================================
@@ -1310,11 +1373,25 @@ function renderScene16(stepIdx = 5) {
   });
 
   // current price dashed
+  // Round 5 Bug D: the amber vertical used to start at y=-40 (SVG y=30,
+  // flush with the "Ten analysts..." title at y=30) and the label at y=-46
+  // (SVG y=24) sat directly on top of the title. Confine the line to the
+  // plot region and render the label as an amber pill INSIDE the plot's
+  // top edge so the header is never touched.
   g.append('line').attr('class', 'current-line')
-    .attr('x1', x(current)).attr('x2', x(current)).attr('y1', -40).attr('y2', ih + 8);
+    .attr('x1', x(current)).attr('x2', x(current)).attr('y1', 0).attr('y2', ih + 8);
+  const currentLabelY = 14;
+  const currentLabelText = 'market $14.50';
+  const currentPillW = 96;
+  g.append('rect').attr('class', 'current-label-pill')
+    .attr('x', x(current) - currentPillW / 2).attr('y', currentLabelY - 11)
+    .attr('width', currentPillW).attr('height', 18).attr('rx', 9)
+    .attr('fill', T.marginal).attr('fill-opacity', 0.95);
   g.append('text').attr('class', 'current-label')
-    .attr('x', x(current)).attr('y', -46).attr('text-anchor', 'middle')
-    .text('market $14.50');
+    .attr('x', x(current)).attr('y', currentLabelY + 2).attr('text-anchor', 'middle')
+    .attr('fill', '#0B0B0B').attr('font-weight', 600).attr('font-size', 12)
+    .attr('font-family', 'Inter, sans-serif').attr('font-style', 'normal')
+    .text(currentLabelText);
 
   // Plot dots — force-directed lanes to avoid the $3.30 bear cluster overlap.
   // Plan §3 Scene 16 — reviewer major 3: two bears at target=$3.30 were stacked
