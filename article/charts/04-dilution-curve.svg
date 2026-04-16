@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 394" width="700" height="394" role="img" aria-labelledby="t04 d04">
+  <title id="t04">Dilution curve: how far existing holders are diluted at each stock-price scenario</title>
+  <desc id="d04">Dual-line chart showing new shares issued (in millions) and percent dilution of existing holders as a function of BIRD stock price at conversion. At $14.50, 4.3 million new shares and 53% dilution. At $5.00, 12.5 million new shares and 153% dilution. At $1.50, 41.7 million new shares and 510% dilution. Assumes 20% conversion discount, $50 million facility, 8.17 million existing shares.</desc>
+  <style>
+    .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:20px;fill:#1A1A1A}
+    .subtitle{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#5C5C5C}
+    .axis-tick{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;fill:#5C5C5C}
+    .axis-title{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#5C5C5C;letter-spacing:0.12em}
+    .gridline{stroke:#9E9E9E;stroke-opacity:0.18}
+    .line-shares{fill:none;stroke:#B23A48;stroke-width:2.4}
+    .line-dilution{fill:none;stroke:#1A1A1A;stroke-width:1.6;stroke-dasharray:4 4}
+    .scenario-label{font-family:Inter,system-ui,sans-serif;font-weight:600;font-size:12px;fill:#1A1A1A}
+    .scenario-value{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:600;font-size:18px;fill:#B23A48}
+    .scenario-sub{font-family:Inter,system-ui,sans-serif;font-size:10px;fill:#5C5C5C}
+    .scenario-dot{fill:#B23A48}
+    .axis-label-l{fill:#B23A48}
+    .axis-label-r{fill:#1A1A1A}
+  </style>
+  <rect width="700" height="394" fill="#FBFAF7"/>
+
+  <text class="title" x="40" y="34">A $50M facility turns into 42 million shares if BIRD retraces to $1.50</text>
+  <text class="subtitle" x="40" y="52">NEW SHARES ISSUED AT EACH PRICE SCENARIO · 20% CONVERSION DISCOUNT · 8.17M EXISTING SHARES</text>
+
+  <!-- Plot area: x=60..630 (570 wide), y=90..320 (230 tall)
+       X domain: price $1.50 .. $14.50 (reversed — lower price on left? we'll go left=$1.50 right=$14.50 — more natural)
+       X = 60 + ((p - 1.5) / 13) * 570
+       Left Y: shares 0..50M; Right Y: dilution 0..600%
+       yS(s) = 320 - (s / 50) * 230  => s in millions
+       yD(d) = 320 - (d / 600) * 230
+  -->
+
+  <!-- grid -->
+  <g>
+    <line class="gridline" x1="60" y1="90"  x2="630" y2="90"/>
+    <line class="gridline" x1="60" y1="146" x2="630" y2="146"/>
+    <line class="gridline" x1="60" y1="204" x2="630" y2="204"/>
+    <line class="gridline" x1="60" y1="262" x2="630" y2="262"/>
+    <line class="gridline" x1="60" y1="320" x2="630" y2="320"/>
+  </g>
+
+  <!-- Left Y axis: shares (0..50M) -->
+  <g>
+    <text class="axis-tick axis-label-l" x="54" y="94"  text-anchor="end">50M</text>
+    <text class="axis-tick axis-label-l" x="54" y="150" text-anchor="end">37.5M</text>
+    <text class="axis-tick axis-label-l" x="54" y="208" text-anchor="end">25M</text>
+    <text class="axis-tick axis-label-l" x="54" y="266" text-anchor="end">12.5M</text>
+    <text class="axis-tick axis-label-l" x="54" y="323" text-anchor="end">0</text>
+    <text class="axis-title axis-label-l" x="40" y="76" transform="rotate(-90 40 200)">SHARES ISSUED</text>
+  </g>
+
+  <!-- Right Y axis: dilution (0..600%) -->
+  <g>
+    <text class="axis-tick axis-label-r" x="636" y="94"  text-anchor="start">600%</text>
+    <text class="axis-tick axis-label-r" x="636" y="150" text-anchor="start">450%</text>
+    <text class="axis-tick axis-label-r" x="636" y="208" text-anchor="start">300%</text>
+    <text class="axis-tick axis-label-r" x="636" y="266" text-anchor="start">150%</text>
+    <text class="axis-tick axis-label-r" x="636" y="323" text-anchor="start">0%</text>
+  </g>
+
+  <!-- X axis -->
+  <line x1="60" y1="320" x2="630" y2="320" stroke="#1A1A1A"/>
+  <g>
+    <text class="axis-tick" x="60"  y="340" text-anchor="middle">$1.50</text>
+    <text class="axis-tick" x="170" y="340" text-anchor="middle">$4.00</text>
+    <text class="axis-tick" x="280" y="340" text-anchor="middle">$6.50</text>
+    <text class="axis-tick" x="389" y="340" text-anchor="middle">$9.00</text>
+    <text class="axis-tick" x="498" y="340" text-anchor="middle">$11.50</text>
+    <text class="axis-tick" x="630" y="340" text-anchor="middle">$14.50</text>
+    <text class="axis-title" x="345" y="358" text-anchor="middle">BIRD STOCK PRICE AT CONVERSION →</text>
+  </g>
+
+  <!-- Curves. Shares(p) = 50 / (0.8p) = 62.5/p (in millions)  -->
+  <!-- Dilution(p) = shares/8.17 * 100 -->
+  <!-- Sample points:
+       p=1.50 => shares=41.67M, dil=510%
+       p=2.00 => 31.25M, 382%
+       p=3.00 => 20.83M, 255%
+       p=5.00 => 12.50M, 153%
+       p=8.00 =>  7.81M,  96%
+       p=11.60 => 5.39M,  66%
+       p=14.50 => 4.31M,  53%
+  -->
+
+  <!-- Convert to svg coords for shares -->
+  <!-- x(p) = 60 + ((p-1.5)/13)*570 -->
+  <!-- yS(s) = 320 - (s/50)*230 -->
+  <!-- p=1.50 x=60 yS(41.67)=320-191.68=128.3 -->
+  <!-- p=2.00 x=60 + (0.5/13)*570 = 60 + 21.92 = 81.92; yS(31.25)=320-143.75=176.25 -->
+  <!-- p=3.00 x=60 + (1.5/13)*570 = 60 + 65.77 = 125.77; yS(20.83)=320-95.82=224.18 -->
+  <!-- p=5.00 x=60 + (3.5/13)*570 = 60 + 153.46 = 213.46; yS(12.5)=320-57.5=262.5 -->
+  <!-- p=8.00 x=60 + (6.5/13)*570 = 60 + 285 = 345; yS(7.81)=320-35.93=284.07 -->
+  <!-- p=11.60 x=60 + (10.1/13)*570 = 60 + 442.85 = 502.85; yS(5.39)=320-24.8=295.2 -->
+  <!-- p=14.50 x=60 + 570 = 630; yS(4.31)=320-19.83=300.17 -->
+
+  <path class="line-shares" d="M60,128.3 C 72,150 76,162 81.92,176.25 C 100,196 112,214 125.77,224.18 C 165,246 185,258 213.46,262.5 C 260,276 295,281 345,284.07 C 410,290 450,293 502.85,295.2 C 560,298 605,299 630,300.17"/>
+
+  <!-- Dilution: yD(d) = 320 - (d/600)*230
+       p=1.50 yD(510)=320-195.5=124.5
+       p=2.00 yD(382)=320-146.4=173.6
+       p=3.00 yD(255)=320-97.75=222.25
+       p=5.00 yD(153)=320-58.65=261.35
+       p=8.00 yD(96) =320-36.8=283.2
+       p=11.60 yD(66)=320-25.3=294.7
+       p=14.50 yD(53)=320-20.32=299.68 -->
+  <path class="line-dilution" d="M60,124.5 C 72,148 76,160 81.92,173.6 C 100,193 112,212 125.77,222.25 C 165,245 185,257 213.46,261.35 C 260,276 295,281 345,283.2 C 410,289 450,292 502.85,294.7 C 560,297 605,298 630,299.68"/>
+
+  <!-- Scenario dots + labels -->
+  <!-- $14.50 (current) -->
+  <circle class="scenario-dot" cx="630" cy="300.17" r="5"/>
+  <text class="scenario-label" x="624" y="292" text-anchor="end">Today</text>
+  <text class="scenario-value" x="624" y="276" text-anchor="end">4.3M · 53%</text>
+  <text class="scenario-sub" x="624" y="260" text-anchor="end">at $14.50</text>
+
+  <!-- $5 -->
+  <circle class="scenario-dot" cx="213.46" cy="262.5" r="5"/>
+  <text class="scenario-label" x="220" y="254" text-anchor="start">Moderate stress</text>
+  <text class="scenario-value" x="220" y="238" text-anchor="start">12.5M · 153%</text>
+  <text class="scenario-sub" x="220" y="222" text-anchor="start">at $5.00</text>
+
+  <!-- $1.50 -->
+  <circle class="scenario-dot" cx="60" cy="128.3" r="6"/>
+  <text class="scenario-label" x="68" y="120" text-anchor="start">Severe stress (Bit Origin level)</text>
+  <text class="scenario-value" x="68" y="104" text-anchor="start">41.7M · 510%</text>
+  <text class="scenario-sub" x="68" y="88" text-anchor="start">at $1.50 → 1-for-6 reverse split territory</text>
+
+  <!-- Legend -->
+  <g transform="translate(60,70)">
+    <line x1="0" y1="0" x2="20" y2="0" class="line-shares"/>
+    <text x="26" y="4" class="subtitle" fill="#B23A48" font-weight="600">New shares issued (left axis)</text>
+    <line x1="200" y1="0" x2="220" y2="0" class="line-dilution"/>
+    <text x="226" y="4" class="subtitle" font-weight="600">Dilution % of 8.17M float (right axis)</text>
+  </g>
+
+  <text x="40" y="384" class="subtitle">
+    New shares = $50M ÷ (P × 0.80). Dilution = new shares ÷ existing shares. Assumes one-shot conversion of the full facility. Excludes interest accrual.
+  </text>
+</svg>

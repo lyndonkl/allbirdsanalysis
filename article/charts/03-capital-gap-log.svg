@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 525" width="700" height="525" role="img" aria-labelledby="t03 d03">
+  <title id="t03">Capital adequacy gap: NewBird AI's $128M vs. what the AI compute business requires</title>
+  <desc id="d03">Horizontal bar chart on a logarithmic scale comparing NewBird AI's $128 million total capital to Lambda Labs ($2.3B, 18×), Applied Digital ($7B, 55×), CoreWeave 2025 capex ($14.9B, 116×), and hyperscaler 2025 capex combined ($600B+, 4,688×). The minimum viable neocloud is $500M to $1B.</desc>
+  <style>
+    .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:22px;fill:#1A1A1A}
+    .subtitle{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#5C5C5C}
+    .bar-anchor{fill:#0E7C7B}
+    .bar-other{fill:#8A8A8A}
+    .bar-viable{fill:#D9A441;opacity:0.4}
+    .bar-label{font-family:Inter,system-ui,sans-serif;font-size:13px;font-weight:600;fill:#1A1A1A}
+    .bar-value{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:13px;fill:#1A1A1A;font-variant-numeric:tabular-nums}
+    .bar-ratio{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:600;font-size:16px;fill:#B23A48}
+    .axis-tick{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;fill:#5C5C5C}
+    .axis-line{stroke:#9E9E9E;stroke-opacity:0.25}
+    .you-are-here{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#B23A48;letter-spacing:0.16em;font-weight:600}
+  </style>
+  <rect width="700" height="525" fill="#FFFFFF"/>
+
+  <text class="title" x="40" y="40">$128M vs. $600B — NewBird's capital is 0.02% of table stakes</text>
+  <text class="subtitle" x="40" y="60">TOTAL CAPITAL / 2025 CAPEX · LOG SCALE · SHARED AI-COMPUTE COMPARISON SET</text>
+
+  <!-- Log axis: $100M = 0, $1B = 200, $10B = 400, $100B = 600, $1T = 800. Width 600 from x=270.
+       log10($128M)=log10(128)=2.107 => where? Use axis domain $100M..$1T (log10 from 2 to 6).
+       x(val_in_M) = 270 + ((log10(val_in_M) - 2) / 4) * 600
+       Row height 52, left label area width 220. Row y centers at 110, 170, 230, 290, 350.
+  -->
+
+  <!-- grid -->
+  <line class="axis-line" x1="270" y1="92" x2="270" y2="380"/>
+  <line class="axis-line" x1="420" y1="92" x2="420" y2="380"/>
+  <line class="axis-line" x1="570" y1="92" x2="570" y2="380"/>
+  <line class="axis-line" x1="720" y1="92" x2="720" y2="380" stroke="none"/>
+  <!-- we'll only plot to x=600 effective; re-scale so x(1T)=660 -->
+  <!-- Let's redefine: x(val_in_M) = 270 + ((log10(val_in_M) - 2) / 4) * 370; so $100M@270, $1T@640. -->
+
+  <!-- axis ticks -->
+  <text class="axis-tick" x="270" y="400" text-anchor="middle">$100M</text>
+  <text class="axis-tick" x="362.5" y="400" text-anchor="middle">$1B</text>
+  <text class="axis-tick" x="455" y="400" text-anchor="middle">$10B</text>
+  <text class="axis-tick" x="547.5" y="400" text-anchor="middle">$100B</text>
+  <text class="axis-tick" x="640" y="400" text-anchor="middle">$1T</text>
+  <line x1="270" y1="385" x2="640" y2="385" stroke="#1A1A1A"/>
+  <line x1="270" y1="385" x2="270" y2="380" stroke="#1A1A1A"/>
+  <line x1="362.5" y1="385" x2="362.5" y2="380" stroke="#1A1A1A"/>
+  <line x1="455" y1="385" x2="455" y2="380" stroke="#1A1A1A"/>
+  <line x1="547.5" y1="385" x2="547.5" y2="380" stroke="#1A1A1A"/>
+  <line x1="640" y1="385" x2="640" y2="380" stroke="#1A1A1A"/>
+
+  <!-- Minimum viable band: $500M..$1B -->
+  <!-- x($500M)=270 + ((log10(500)-2)/4)*370 = 270 + (0.69897/4)*370 = 270 + 64.7 = 334.7 -->
+  <!-- x($1B=$1000M)=362.5 -->
+  <rect class="bar-viable" x="334.7" y="92" width="27.8" height="288"/>
+  <text x="348.6" y="88" class="subtitle" text-anchor="middle" fill="#D9A441" font-weight="600">MIN VIABLE NEOCLOUD · $500M–$1B</text>
+
+  <!-- Row 1: NewBird AI · $128M -->
+  <!-- x(128)=270 + ((log10(128)-2)/4)*370 = 270 + ((2.107-2)/4)*370 = 270 + 9.9 = 279.9 -->
+  <g transform="translate(0,110)">
+    <text x="260" y="4" text-anchor="end" class="bar-label">NewBird AI</text>
+    <text x="260" y="20" text-anchor="end" class="subtitle">$50M conv + $39M sale + $39M cash</text>
+    <rect class="bar-anchor" x="270" y="-14" width="9.9" height="28"/>
+    <text x="285" y="4" class="bar-value">$128M</text>
+    <text x="285" y="20" class="you-are-here">YOU ARE HERE</text>
+  </g>
+
+  <!-- Row 2: Lambda Labs · $2.3B -->
+  <!-- x(2300)=270 + ((log10(2300)-2)/4)*370 = 270 + (1.362/4)*370 = 270 + 125.96 = 395.96 -->
+  <g transform="translate(0,170)">
+    <text x="260" y="4" text-anchor="end" class="bar-label">Lambda Labs</text>
+    <text x="260" y="20" text-anchor="end" class="subtitle">$2.3B raised (private, Nvidia-backed)</text>
+    <rect class="bar-other" x="270" y="-14" width="126" height="28"/>
+    <text x="406" y="4" class="bar-value">$2.3B</text>
+    <text x="406" y="20" class="bar-ratio">18×</text>
+  </g>
+
+  <!-- Row 3: Applied Digital · $7B -->
+  <!-- x(7000)=270 + ((log10(7000)-2)/4)*370 = 270 + (1.845/4)*370 = 270 + 170.7 = 440.7 -->
+  <g transform="translate(0,230)">
+    <text x="260" y="4" text-anchor="end" class="bar-label">Applied Digital</text>
+    <text x="260" y="20" text-anchor="end" class="subtitle">$7B total AI data-center capital</text>
+    <rect class="bar-other" x="270" y="-14" width="170.7" height="28"/>
+    <text x="450" y="4" class="bar-value">$7B</text>
+    <text x="450" y="20" class="bar-ratio">55×</text>
+  </g>
+
+  <!-- Row 4: CoreWeave 2025 capex · $14.9B -->
+  <!-- x(14900)=270 + ((log10(14900)-2)/4)*370 = 270 + (2.173/4)*370 = 270 + 201 = 471 -->
+  <g transform="translate(0,290)">
+    <text x="260" y="4" text-anchor="end" class="bar-label">CoreWeave 2025 capex</text>
+    <text x="260" y="20" text-anchor="end" class="subtitle">$14.9B in fiscal 2025 alone</text>
+    <rect class="bar-other" x="270" y="-14" width="201" height="28"/>
+    <text x="481" y="4" class="bar-value">$14.9B</text>
+    <text x="481" y="20" class="bar-ratio">116×</text>
+  </g>
+
+  <!-- Row 5: Hyperscalers 2025 · $600B -->
+  <!-- x(600000)=270 + ((log10(600000)-2)/4)*370 = 270 + (3.778/4)*370 = 270 + 349.46 = 619.46 -->
+  <g transform="translate(0,350)">
+    <text x="260" y="4" text-anchor="end" class="bar-label">Hyperscalers combined</text>
+    <text x="260" y="20" text-anchor="end" class="subtitle">AWS + Azure + GCP + Meta, 2025 AI capex</text>
+    <rect class="bar-other" x="270" y="-14" width="349.46" height="28"/>
+    <text x="628" y="4" class="bar-value">$600B+</text>
+    <text x="628" y="20" class="bar-ratio">4,688×</text>
+  </g>
+
+  <!-- callout -->
+  <g transform="translate(40,430)">
+    <rect width="620" height="80" fill="#FBFAF7" stroke="#B23A48" stroke-width="1"/>
+    <text x="20" y="28" class="title" font-size="20" fill="#B23A48">0.02%</text>
+    <text x="20" y="50" class="subtitle" font-weight="600">of hyperscaler 2025 AI capex.</text>
+    <text x="130" y="28" class="subtitle" font-weight="600">NewBird AI's total capital base is one pixel inside the bar above.</text>
+    <text x="130" y="46" class="subtitle">To matter at this table the company needs between $500M and $1B of balance-sheet capital — a 4× to 8× equity raise from today's</text>
+    <text x="130" y="62" class="subtitle">position. That is not a competitive disadvantage. That is a category error.</text>
+  </g>
+
+  <text x="40" y="518" class="subtitle">
+    Sources: company filings (CoreWeave 10-K, Applied Digital disclosures); Bloomberg Intelligence hyperscaler capex aggregation; Lambda Labs Series D PR; NewBird 10-Q.
+  </text>
+</svg>

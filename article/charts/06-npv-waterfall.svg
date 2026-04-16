@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460" width="700" height="460" role="img" aria-labelledby="t06 d06">
+  <title id="t06">Unit economics live or die at $3.50 per GPU-hour</title>
+  <desc id="d06">Diverging-bar chart of project net present value across six GPU rental-rate scenarios. At $2.00 and $2.50 per hour the project returns roughly negative $37 million and negative $18 million. At $3.00: negative $8 million. At $3.50: plus $3 million — the break-even threshold. At $4.00: plus $18 million. At $5.00: plus $48 million. The chart visually separates market-today rates (red, bracketed under "today's market") from enterprise-contract rates (bracketed under "enterprise contracts required"). The entire investment thesis lives at $3.50 and above.</desc>
+  <style>
+    .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:22px;fill:#1A1A1A}
+    .subtitle{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#5C5C5C}
+    .row-primary{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:600;font-size:16px;fill:#1A1A1A}
+    .row-sub{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;fill:#5C5C5C}
+    .axis-tick{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;fill:#5C5C5C}
+    .zero-line{stroke:#1A1A1A;stroke-width:1.5}
+    .value-label-neg{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#B23A48;font-weight:600;font-variant-numeric:tabular-nums}
+    .value-label-mar{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#D9A441;font-weight:600;font-variant-numeric:tabular-nums}
+    .value-label-pos{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#3A8E5C;font-weight:600;font-variant-numeric:tabular-nums}
+    .bracket-bear{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#B23A48;font-weight:600;letter-spacing:0.12em}
+    .bracket-bull{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#5C5C5C;font-weight:600;letter-spacing:0.12em}
+    .verdict{font-family:Inter,system-ui,sans-serif;font-size:10px;fill:#1A1A1A;letter-spacing:0.06em}
+    .thesis-highlight{fill:#FFF4D6}
+    .callout-text{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;fill:#1A1A1A}
+  </style>
+  <rect width="700" height="460" fill="#FFFFFF"/>
+
+  <text class="title" x="40" y="40">Unit economics live or die at $3.50 per GPU-hour</text>
+  <text class="subtitle" x="40" y="60">PROJECT NPV AT SIX RENTAL-RATE SCENARIOS · 5-YEAR DCF · 10.5% WACC · ALL FIGURES IN USD MILLIONS</text>
+
+  <!-- Plot area: left margin 220 (labels), zero line at x=440, -$45..+$55 spans 120..640.
+       xZero = 440. Each $ = (640-120)/(55 - -45) = 520/100 = 5.2 px/$.
+       Row height 44, y-start 110.
+  -->
+  <!-- x axis ticks -->
+  <line x1="120" y1="110" x2="120" y2="400" class="axis-tick" stroke="#D9D9D9"/>
+  <line x1="224" y1="110" x2="224" y2="400" stroke="#D9D9D9" stroke-dasharray="2 2"/>
+  <line x1="328" y1="110" x2="328" y2="400" stroke="#D9D9D9" stroke-dasharray="2 2"/>
+  <line x1="440" y1="90"  x2="440" y2="410" class="zero-line"/>
+  <line x1="544" y1="110" x2="544" y2="400" stroke="#D9D9D9" stroke-dasharray="2 2"/>
+  <line x1="640" y1="110" x2="640" y2="400" stroke="#D9D9D9" stroke-dasharray="2 2"/>
+  <text class="axis-tick" x="120" y="420" text-anchor="middle">−$45M</text>
+  <text class="axis-tick" x="224" y="420" text-anchor="middle">−$25M</text>
+  <text class="axis-tick" x="328" y="420" text-anchor="middle">−$10M</text>
+  <text class="axis-tick" x="440" y="420" text-anchor="middle" font-weight="600" fill="#1A1A1A">$0</text>
+  <text class="axis-tick" x="544" y="420" text-anchor="middle">+$20M</text>
+  <text class="axis-tick" x="640" y="420" text-anchor="middle">+$55M</text>
+  <text class="subtitle" x="440" y="440" text-anchor="middle" letter-spacing="0.12em">← PROJECT NPV (USD MILLIONS) →</text>
+
+  <!-- Thesis highlight band over $3.50 row (row index 3, y=110+3*44 = 242, h=36) -->
+  <rect class="thesis-highlight" x="10" y="242" width="680" height="36"/>
+
+  <!-- Rows: rate, util, npv, verdict, color
+       REJECT red, MARGINAL amber, INVEST green
+       Row 1: $2.00/hr  70%  -$37M REJECT bear
+       Row 2: $2.50/hr  80%  -$18M REJECT bear
+       Row 3: $3.00/hr  85%   -$8M REJECT bear
+       Row 4: $3.50/hr  90%   +$3M MARGINAL (thesis break-even)
+       Row 5: $4.00/hr  90%  +$18M INVEST bull
+       Row 6: $5.00/hr  92%  +$48M STRONG INVEST bull
+  -->
+
+  <!-- helpers: bar from xZero to xZero + npv*5.2 -->
+
+  <!-- Row 1 (y=110): $2.00 / 70% / -$37M -->
+  <g transform="translate(0,110)">
+    <text class="row-primary" x="210" y="20" text-anchor="end">$2.00 / hr</text>
+    <text class="row-sub"     x="210" y="34" text-anchor="end">spot market · 70% util</text>
+    <rect x="247.6" y="10" width="192.4" height="20" fill="#B23A48"/>
+    <text class="value-label-neg" x="243" y="24" text-anchor="end">−$37M</text>
+    <text class="verdict" x="444" y="24" fill="#B23A48">REJECT</text>
+  </g>
+
+  <!-- Row 2 (y=154): $2.50 / 80% / -$18M -->
+  <g transform="translate(0,154)">
+    <text class="row-primary" x="210" y="20" text-anchor="end">$2.50 / hr</text>
+    <text class="row-sub"     x="210" y="34" text-anchor="end">80% util</text>
+    <rect x="346.4" y="10" width="93.6" height="20" fill="#B23A48"/>
+    <text class="value-label-neg" x="342" y="24" text-anchor="end">−$18M</text>
+    <text class="verdict" x="444" y="24" fill="#B23A48">REJECT</text>
+  </g>
+
+  <!-- Row 3 (y=198): $3.00 / 85% / -$8M -->
+  <g transform="translate(0,198)">
+    <text class="row-primary" x="210" y="20" text-anchor="end">$3.00 / hr</text>
+    <text class="row-sub"     x="210" y="34" text-anchor="end">85% util  ← market today</text>
+    <rect x="398.4" y="10" width="41.6" height="20" fill="#B23A48"/>
+    <text class="value-label-neg" x="394" y="24" text-anchor="end">−$8M</text>
+    <text class="verdict" x="444" y="24" fill="#B23A48">REJECT</text>
+  </g>
+
+  <!-- Row 4 (y=242): $3.50 / 90% / +$3M MARGINAL -->
+  <g transform="translate(0,242)">
+    <text class="row-primary" x="210" y="20" text-anchor="end" fill="#D9A441">$3.50 / hr</text>
+    <text class="row-sub"     x="210" y="34" text-anchor="end">enterprise contract · 90% util</text>
+    <rect x="440" y="10" width="15.6" height="20" fill="#D9A441"/>
+    <text class="value-label-mar" x="462" y="24">+$3M</text>
+    <text class="verdict" x="512" y="24" fill="#D9A441" font-weight="600">MARGINAL · break-even</text>
+  </g>
+
+  <!-- Row 5 (y=286): $4.00 / 90% / +$18M INVEST -->
+  <g transform="translate(0,286)">
+    <text class="row-primary" x="210" y="20" text-anchor="end">$4.00 / hr</text>
+    <text class="row-sub"     x="210" y="34" text-anchor="end">premium dedicated · 90% util</text>
+    <rect x="440" y="10" width="93.6" height="20" fill="#3A8E5C"/>
+    <text class="value-label-pos" x="540" y="24">+$18M</text>
+    <text class="verdict" x="580" y="24" fill="#3A8E5C">INVEST</text>
+  </g>
+
+  <!-- Row 6 (y=330): $5.00 / 92% / +$48M STRONG INVEST -->
+  <g transform="translate(0,330)">
+    <text class="row-primary" x="210" y="20" text-anchor="end">$5.00 / hr</text>
+    <text class="row-sub"     x="210" y="34" text-anchor="end">B200 tier · 92% util</text>
+    <rect x="440" y="10" width="249.6" height="20" fill="#3A8E5C"/>
+    <text class="value-label-pos" x="634" y="24" text-anchor="end" fill="#FFFFFF">+$48M</text>
+    <text class="verdict" x="694" y="24" fill="#3A8E5C" text-anchor="end">STRONG INVEST</text>
+  </g>
+
+  <!-- Brackets on the left -->
+  <g>
+    <line x1="24" y1="118" x2="24" y2="226" stroke="#B23A48" stroke-width="2"/>
+    <line x1="24" y1="118" x2="36" y2="118" stroke="#B23A48" stroke-width="2"/>
+    <line x1="24" y1="226" x2="36" y2="226" stroke="#B23A48" stroke-width="2"/>
+    <text class="bracket-bear" x="14" y="170" text-anchor="end" transform="rotate(-90 14 170)">TODAY'S MARKET</text>
+  </g>
+  <g>
+    <line x1="24" y1="286" x2="24" y2="358" stroke="#5C5C5C" stroke-width="2"/>
+    <line x1="24" y1="286" x2="36" y2="286" stroke="#5C5C5C" stroke-width="2"/>
+    <line x1="24" y1="358" x2="36" y2="358" stroke="#5C5C5C" stroke-width="2"/>
+    <text class="bracket-bull" x="14" y="322" text-anchor="end" transform="rotate(-90 14 322)">ENTERPRISE CONTRACTS REQUIRED</text>
+  </g>
+
+  <!-- Right side callout -->
+  <g transform="translate(670,258)">
+    <path d="M0,0 L-12,-8 L-12,8 Z" fill="#D9A441"/>
+  </g>
+  <text class="callout-text" x="680" y="260" text-anchor="end" fill="#D9A441" font-weight="600">
+    ↑ the entire investment thesis lives here
+  </text>
+</svg>

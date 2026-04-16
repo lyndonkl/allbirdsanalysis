@@ -1,0 +1,12 @@
+{
+  "anchor": { "name": "NewBird AI", "capital": 128, "unit": "M" },
+  "rungs": [
+    { "name": "NewBird AI",         "value": 128,    "unit": "M", "ratio": 1,      "note": "Total capital: $50M convertible + $39M asset sale + $39M cash" },
+    { "name": "Lambda Labs",        "value": 2300,   "unit": "M", "ratio": 18,     "note": "Raised $2.3B across Series C/D (private, Nvidia-backed)" },
+    { "name": "Applied Digital",    "value": 7000,   "unit": "M", "ratio": 55,     "note": "$7B+ total capital deployed in AI data centers" },
+    { "name": "CoreWeave 2025 capex","value": 14900, "unit": "M", "ratio": 116,    "note": "CoreWeave's fiscal 2025 capex was $14.9B" },
+    { "name": "Hyperscalers 2025",  "value": 600000, "unit": "M", "ratio": 4688,   "note": "AWS+Azure+GCP+Meta combined AI infra capex, 2025" }
+  ],
+  "minViable": 500,
+  "maxViable": 1000
+}

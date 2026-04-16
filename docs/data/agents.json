@@ -1,0 +1,15 @@
+{
+  "currentPrice": 14.50,
+  "agents": [
+    { "n": 1,  "name": "Company Analyst — Bull",        "role": "Steelman pivot",         "target": 38.38, "rec": "Speculative Buy",      "stance": "bull" },
+    { "n": 2,  "name": "Company Analyst — Bear",        "role": "Red-team pivot",         "target": 3.30,  "rec": "Strong Sell",          "stance": "bear" },
+    { "n": 3,  "name": "Special Situations — Growth",   "role": "Optimistic DCF",         "target": 12.78, "rec": "Hold",                 "stance": "neutral" },
+    { "n": 4,  "name": "Special Situations — Distress", "role": "Black-Scholes option",   "target": 3.30,  "rec": "Strong Sell",          "stance": "bear" },
+    { "n": 5,  "name": "Capital Allocation — Aggressive","role": "All-in on AI",          "target": 8.30,  "rec": "Conditional Invest",   "stance": "bear" },
+    { "n": 6,  "name": "Capital Allocation — Conservative","role": "Return capital",      "target": 4.77,  "rec": "Reject pivot, pay dividend", "stance": "bear" },
+    { "n": 7,  "name": "Acquisition — As Acquirer",     "role": "Buy AI target w/ stock", "target": 19.12, "rec": "Deploy $70-90M",       "stance": "bull" },
+    { "n": 8,  "name": "Acquisition — As Target",       "role": "Sell into spike",        "target": 8.30,  "rec": "Sell",                 "stance": "bear" },
+    { "n": 9,  "name": "IPO Strategist — Bull rerating","role": "CoreWeave parallel",     "target": 50.00, "rec": "Buy, raise equity now","stance": "bull" },
+    { "n": 10, "name": "IPO Strategist — Bull 24mo",    "role": "Compounded rerating",    "target": 125.00,"rec": "Buy",                  "stance": "bull" }
+  ]
+}

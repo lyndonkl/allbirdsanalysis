@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Last Trade of Allbirds — one trading day, one identity change</title>
+  <meta name="description" content="A scroll-driven investigation of Allbirds becoming NewBird AI on April 15, 2026. Ten analysts, one company, ten prices.">
+  <meta property="og:title" content="The Last Trade of Allbirds">
+  <meta property="og:description" content="The day a sneaker company became a GPU company. In eighteen minutes.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-bg="black">
+
+  <!-- Progress chrome -->
+  <div class="progress-bar" role="progressbar" aria-label="Story progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar__fill" id="progressFill"></div>
+    <div class="progress-bar__ticks" id="progressTicks" aria-hidden="true"></div>
+  </div>
+
+  <!-- Persistent BIRD ticker (plan §4) -->
+  <div class="bird-ticker" id="birdTicker" aria-live="polite">
+    <span class="bird-ticker__dot" aria-hidden="true"></span>
+    <span class="bird-ticker__label">BIRD</span>
+    <span class="bird-ticker__price mono tabular" id="birdTickerPrice">$2.49</span>
+  </div>
+
+  <button class="skip-intro" id="skipIntro">Start reading ↓</button>
+
+  <main>
+
+  <!-- ========== SCENE 1 ========== -->
+  <section class="scene scene--sticky" id="scene-1" data-scene="1" data-bg="black" aria-labelledby="s1-title">
+    <div class="sticky-wrap">
+      <div class="cold-open">
+        <div class="clock">April 15, 2026 &nbsp;·&nbsp; 9:29 AM ET</div>
+        <h1 class="headline" id="s1-title">The last morning Allbirds was a shoe company, the stock opened at two dollars and forty-nine cents.</h1>
+        <div class="trailing-chart" id="s1-chart" aria-hidden="true">
+          <!-- rendered by script.js -->
+        </div>
+        <div class="stats-row sans">
+          <div>Last close<span>$2.49</span></div>
+          <div>Market cap<span>$20.6M</span></div>
+          <div>Shares out<span>8.17M</span></div>
+          <div>FY25 revenue<span>$152.5M (−19.7%)</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>Scene 1</h3><p>A $20 million shoe company with a going-concern warning. Nobody on a Manhattan trading desk is watching BIRD this morning. They have no reason to.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>Eighteen minutes away</h3><p>The auditors filed a going-concern note three weeks ago — accountant's English for "we don't think this company can pay its bills."</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 2 ========== -->
+  <section class="scene" id="scene-2" data-scene="2" data-bg="paper-warm" aria-labelledby="s2-title">
+    <div class="scene__inner">
+      <p class="scene__eyebrow">Scene 2 · 9:30 AM — the bell</p>
+      <h2 class="scene__title" id="s2-title">Then the press release hit.</h2>
+      <p class="scene__dek">Sixty-three words in the headline. Two of them — "AI Compute" — were the only words that mattered.</p>
+
+      <div class="metamorph" aria-hidden="false">
+        <div class="morph-side morph-side--shoe" aria-label="Allbirds wool runner silhouette">
+          <!-- Shoe silhouette -->
+          <svg viewBox="0 0 240 140" role="img" aria-label="Shoe silhouette"><path d="M10 110 Q 10 90 30 85 L 60 80 Q 80 78 100 72 L 140 62 Q 170 56 190 64 Q 215 72 228 92 Q 234 104 220 114 L 200 118 L 180 115 L 140 120 L 80 122 L 30 118 Q 14 118 10 110 Z" fill="#3B3125" opacity="0.9"/><path d="M14 108 L 224 108" stroke="#3B3125" stroke-width="1.5" opacity="0.5"/></svg>
+        </div>
+        <div class="nameplate" id="s2-nameplate">
+          <span class="tick">BIRD</span><span class="name" id="s2-name">Allbirds, Inc.</span>
+        </div>
+        <div class="morph-side morph-side--gpu" aria-label="GPU die illustration">
+          <svg viewBox="0 0 240 140" role="img" aria-label="GPU die">
+            <rect x="30" y="20" width="180" height="100" fill="#1A1F2A" rx="4"/>
+            <rect x="60" y="40" width="120" height="60" fill="#0E7C7B" rx="2"/>
+            <g stroke="#0E7C7B" stroke-width="1" opacity="0.8">
+              <line x1="30" y1="35" x2="10" y2="35"/><line x1="30" y1="55" x2="10" y2="55"/><line x1="30" y1="75" x2="10" y2="75"/><line x1="30" y1="95" x2="10" y2="95"/>
+              <line x1="210" y1="35" x2="230" y2="35"/><line x1="210" y1="55" x2="230" y2="55"/><line x1="210" y1="75" x2="230" y2="75"/><line x1="210" y1="95" x2="230" y2="95"/>
+            </g>
+            <text x="120" y="74" text-anchor="middle" fill="#FBFAF7" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="2">H100</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="metrics" aria-label="Identity transition summary">
+        <div>Business<strong>Wool footwear → GPU compute</strong></div>
+        <div>FY2025 revenue<strong>$152.5M → $0 (new business)</strong></div>
+        <div>Market cap<strong>$21M → $148M</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 3 ========== -->
+  <section class="scene scene--sticky" id="scene-3" data-scene="3" data-bg="paper-warm" aria-labelledby="s3-title">
+    <div class="sticky-wrap">
+      <div class="spike-frame" id="s3-chart" role="img" aria-label="Candlestick chart of BIRD from 9:30 AM to 16:00 on April 15, 2026, peaking at 24.31 dollars at 9:47.">
+        <!-- rendered by script.js -->
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>9:30 AM</h3><p>The opening bell. Price still $2.49. Volume ordinary for the first thirty seconds.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>9:35 AM</h3><p>Up 100% as algorithms parse the headline. The first humans are still logging in.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>9:47 AM · +582%</h3><p><strong>Peak $24.31.</strong> Eighteen minutes after the bell. 288 million shares traded on a float of eight million — every share in existence, 35 times over, before lunch.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>Short interest: 18.3%</h3><p>One in every five shares had been borrowed and sold short. In eighteen minutes, every one of those positions was a smoking crater.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 4 ========== -->
+  <section class="scene" id="scene-4" data-scene="4" data-bg="cream" aria-labelledby="s4-title">
+    <div class="scene__inner">
+      <p class="scene__eyebrow">Scene 4 · the question</p>
+      <h2 class="scene__title" id="s4-title">Stocks don't go up six hundred percent because people decided they liked shoes more.</h2>
+      <p class="scene__dek">Something had been sold, something had been bought, and something had been promised. To understand the eighteen minutes, you need three answers.</p>
+      <div class="questions">
+        <div class="q-row"><div class="q-num">01</div><p class="q-text">What did Allbirds give away?</p></div>
+        <div class="q-row"><div class="q-num">02</div><p class="q-text">Who handed them the money?</p></div>
+        <div class="q-row"><div class="q-num">03</div><p class="q-text">What kind of company did they pretend to become?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 5 ========== -->
+  <section class="scene scene--sticky" id="scene-5" data-scene="5" data-bg="cream" aria-labelledby="s5-title">
+    <div class="sticky-wrap">
+      <div class="shrink-stage" id="s5-stage" role="img" aria-label="Allbirds' valuation fell from $4.1 billion at its 2021 IPO to $39 million at its 2026 asset sale — a 99% destruction of enterprise value over 52 months.">
+        <div class="timeline" id="s5-timeline"></div>
+        <div class="shrink-canvas" id="s5-canvas">
+          <div class="box-ipo" id="s5-box"></div>
+          <div class="box-label" id="s5-label">$4.1B</div>
+          <div class="box-sub" id="s5-sub">November 2021 — IPO at $15/share</div>
+          <div class="destruction" id="s5-destruction">−99%</div>
+          <div class="conv-box" id="s5-conv">$50M convertible<br>(new financing, Apr 15)</div>
+        </div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>2021 · the IPO</h3><p>Allbirds went public at $15 a share. Wall Street valued it at <strong>four point one billion dollars.</strong></p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>2023 · the grind</h3><p>Store closures, brand reset, inventory write-downs. The stock drifts from $5 to $1.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>March 30, 2026</h3><p>The shoe business — every store, every SKU, every spool of merino — is sold to American Exchange Group for <strong>thirty-nine million dollars.</strong></p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>One penny on the dollar</h3><p>Whatever Allbirds was about to become, the shoe company was already gone. A $50M convertible lands to replace it.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 6 ========== -->
+  <section class="scene" id="scene-6" data-scene="6" data-bg="cream" aria-labelledby="s6-title">
+    <div class="scene__inner">
+      <p class="scene__eyebrow">Scene 6 · who paid</p>
+      <h2 class="scene__title" id="s6-title">A phrase lawyers love and reporters hate.</h2>
+
+      <div class="redact-stage">
+        <h4>Exhibit 99.1 — Press release, April 15, 2026</h4>
+        <p><em>Allbirds, Inc. (NASDAQ: BIRD) today announced the closing of a $50,000,000 senior secured convertible note financing with <span class="redact">[ undisclosed institutional investor ]</span>, to fund the Company's expansion into AI compute infrastructure.</em></p>
+        <p>The offering was placed by <strong style="color:var(--bear);">Chardan Capital Markets, LLC</strong>, acting as sole placement agent. Legal counsel to the Company was provided by Holland &amp; Hart LLP.</p>
+        <div class="chardan-callout">
+          The investor's name is redacted. <strong>The placement agent's name is not.</strong> Chardan Capital Markets' recent history is the rest of this story.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 7 ========== -->
+  <section class="scene scene--sticky" id="scene-7" data-scene="7" data-bg="cream" aria-labelledby="s7-title">
+    <div class="sticky-wrap">
+      <div class="chardan-grid" id="s7-grid" role="img" aria-label="Six small-multiple charts showing price destruction for six Chardan-placed deals, and a seventh panel marked 'NewBird AI?' with a question mark."></div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>Nikola · 2020</h3><p>SPAC pivot to hydrogen trucks. Founder convicted of fraud, 4-year sentence. Company filed Chapter 11.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>Bit Origin · July 2025</h3><p>$500M Dogecoin treasury. <strong>Six months later: 1-for-60 reverse split, 98% destruction.</strong></p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>Classover · 2025</h3><p>$500M convertible into Solana tokens. Capital locked up; liquidity collapse.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>Eyenovia · 2025</h3><p>$50M PIPE into HYPE tokens. Legacy pharma business stalled.</p></div></div>
+      <div class="step" data-step="5"><div class="step__card"><h3>VivoPower · 2025</h3><p>$121M for XRP. Stock halved within 90 days.</p></div></div>
+      <div class="step" data-step="6"><div class="step__card"><h3>Lion Group · 2025</h3><p>$600M for Hyperliquid. Trading halted; going-concern flag issued.</p></div></div>
+      <div class="step" data-step="7"><div class="step__card"><h3>NewBird AI · today</h3><p>Day one of the seventh panel. The only thing separating NewBird from the other six is that its chart hasn't been drawn yet.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 8 ========== -->
+  <section class="scene scene--sticky" id="scene-8" data-scene="8" data-bg="cream" aria-labelledby="s8-title">
+    <div class="sticky-wrap">
+      <div class="overlay-chart" id="s8-chart" role="img" aria-label="Long Blockchain's post-announcement trajectory went from +380% peak to delisted at zero within 15 months. BIRD sits at day one of the equivalent chart."></div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>Dec 2017 — announcement day</h3><p>Long Island Iced Tea renames to <strong>Long Blockchain Corp.</strong> The stock spikes +380%. Sound familiar?</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>Day +90</h3><p>Short-seller attention. Name change challenged by Nasdaq. The fade begins.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>Day +180</h3><p>A reverse split is attempted — the universal last resort of a company with eight-cent shares.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>Day +365</h3><p>Nasdaq delists. SEC opens an insider-trading investigation. The tea company is effectively zero.</p></div></div>
+      <div class="step" data-step="5"><div class="step__card"><h3>BIRD is on day 1 of this chart.</h3><p>Same checklist. Same placement agent's pattern. Whatever comes next, the line above shows what happened the last time a shell pivoted from iced tea to blockchain.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 9 ========== -->
+  <section class="scene scene--sticky" id="scene-9" data-scene="9" data-bg="white" aria-labelledby="s9-title">
+    <div class="sticky-wrap">
+      <div class="scale-stage" id="s9-stage" role="img" aria-label="A horizontal-log capital ladder. NewBird AI has $128M. Lambda Labs raised $2.3B (18× more), Applied Digital $7B (55×), CoreWeave 2025 capex $14.9B (116×), hyperscalers combined $600B+ (4,688×). The minimum viable neocloud is $500M to $1B.">
+        <!-- rendered by script.js: concentric rings -->
+      </div>
+      <div class="caption-panel" id="s9-caption">
+        <span class="ratio" id="s9-ratio">1×</span>
+        <span id="s9-captext">NewBird AI has $128 million in total capital. Scroll to place it next to the companies it now claims to compete with.</span>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>NewBird AI</h3><p>$128M — the $50M convertible, $39M from the shoe-asset sale, $39M Q1 cash.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>Lambda Labs — 18×</h3><p>Private, Nvidia-backed. Has raised <strong>$2.3 billion</strong>. Still not profitable.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>Applied Digital — 55×</h3><p>Has invested <strong>$7 billion</strong> in AI data centers. Revenue $340M.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>CoreWeave 2025 capex — 116×</h3><p><strong>$14.9 billion</strong> spent in fiscal 2025 alone. $30B plan for 2026.</p></div></div>
+      <div class="step" data-step="5"><div class="step__card"><h3>Hyperscalers combined — 4,688×</h3><p>AWS + Azure + GCP + Meta 2025 AI capex: <strong>$600 billion+.</strong> NewBird's entire capital base is 0.02% of the table stakes.</p></div></div>
+      <div class="step" data-step="6"><div class="step__card"><h3>Minimum viable neocloud: $500M–$1B</h3><p>To matter at this table, NewBird needs between $500 million and a billion dollars. It has $128 million. That is not a competitive disadvantage. That is a category error.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 10 ========== -->
+  <section class="scene scene--sticky" id="scene-10" data-scene="10" data-bg="white" aria-labelledby="s10-title">
+    <div class="sticky-wrap">
+      <div class="heatmap-stage" id="s10-stage" role="img" aria-label="A heatmap showing project NPV across rental rate ($2.00 to $5.00 per GPU-hour) and utilization (70% to 92%). Below $3.50/hour, every cell is negative. The market is pricing $3.00 × 85% (negative $8M). The thesis requires $4.00 × 90% (positive $18M)."></div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>Rows: rental rate. Columns: utilization.</h3><p>Green cells = positive NPV. Red cells = losing money. Each number is NPV in millions, 5-year DCF at 10.5% WACC.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>The sea of red</h3><p>Below <strong>$3.50/hour</strong>, every scenario is negative NPV. The bull case is not that AI is a good business; it is that NewBird can sign enterprise contracts at or above $3.50.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>The break-even frontier</h3><p>The amber line traces the zero-NPV contour. Every cell below-left of it is a money-losing project. Every cell above-right is a viable one.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>Market reality vs. thesis requirement</h3><p>The black dot (market rates today) sits at $3.00 × 85% = <strong>−$8M NPV.</strong> The amber dot (thesis requirement) is at $4.00 × 90% = +$18M. The entire pivot lives in the gap.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 11 ========== -->
+  <section class="scene scene--sticky" id="scene-11" data-scene="11" data-bg="white" aria-labelledby="s11-title">
+    <div class="sticky-wrap">
+      <div class="fade-chart" id="s11-chart" role="img" aria-label="BIRD closed April 15 at $14.50, off 40% from its intraday peak of $24.31."></div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>11:30 AM · $24.31</h3><p>The peak. From here, every minute is a small surrender.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>2:00 PM · $17.00</h3><p>The stock has given back a third of the morning's gain.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>4:00 PM · $14.50</h3><p>The close. Still up almost five hundred percent on the day. Still a triumph. Already the chart was telling you who was buying in the morning and who was selling in the afternoon.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 12 ========== -->
+  <section class="scene scene--sticky" id="scene-12" data-scene="12" data-bg="slate" aria-labelledby="s12-title">
+    <div class="sticky-wrap">
+      <div class="tl-stage" id="s12-stage" role="img" aria-label="Horizontal timeline from April 15 to May 18. At May 18 the stockholder vote occurs and the path forks into a bull branch (benign conversion terms, $38-$125) and a bear branch (toxic floating terms, $1.50 or reverse split)."></div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>Today · April 15</h3><p>The press release did not include the conversion terms. By securities law, it did not have to — yet.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>Early May</h3><p>Sometime between now and May 18, the company will file a definitive proxy. The conversion terms become public. Until then, the dilution risk is mathematically unbounded.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>May 18 · the vote</h3><p>Stockholders vote on authorizing the convertible — required because the dilution exceeds Nasdaq's 19.99% cap.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>Two futures</h3><p><strong>Benign fixed terms:</strong> the convertible behaves like patient growth capital. The bull outcomes ($38–$125) become possible.<br><strong>Toxic floating + lookback:</strong> the dilution compounds. The bear outcomes ($1.50 or reverse split) become likely.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 13 ========== -->
+  <section class="scene scene--sticky" id="scene-13" data-scene="13" data-bg="paper-warm" aria-labelledby="s13-title">
+    <div class="sticky-wrap">
+      <div class="sim-stage">
+        <div class="sim-viz">
+          <svg class="slider-svg" viewBox="0 0 600 84" id="s13-slider" role="slider" tabindex="0"
+               aria-valuemin="1.50" aria-valuemax="14.50" aria-valuenow="14.50"
+               aria-label="BIRD stock price scenario slider. Drag or use arrow keys.">
+            <!-- rendered by script.js -->
+          </svg>
+          <svg class="pie-svg" viewBox="0 0 420 240" id="s13-pie" aria-hidden="true">
+            <!-- rendered by script.js -->
+          </svg>
+        </div>
+        <div class="sim-panel" aria-live="polite">
+          <h3>If BIRD trades at…</h3>
+          <div class="odo-row"><span class="odo-label">Conversion price (20% discount)</span><span class="odo-value mono" id="s13-odo-convprice">$11.60</span></div>
+          <div class="odo-row"><span class="odo-label">New shares issued</span><span class="odo-value mono" id="s13-odo-newshares">4.3M</span></div>
+          <div class="odo-row"><span class="odo-label">Existing holders own</span><span class="odo-value mono" id="s13-odo-existing">65.5%</span></div>
+          <div class="odo-row"><span class="odo-label">Dilution</span><span class="odo-value mono warn" id="s13-odo-dilution">53%</span></div>
+          <div class="drag-invite" aria-hidden="true">↔ Drag the handle to explore</div>
+        </div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>Today · $14.50</h3><p>At the current price, the $50M convertible becomes <strong>4.3M new shares</strong> — half again the float. Existing holders still own two-thirds.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>If BIRD retraces to $5</h3><p>Conversion at $4 generates <strong>12.5M new shares.</strong> Dilution jumps to 153%. Existing holders now own 40%.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>If BIRD retraces to $1.50</h3><p>The Bit Origin level. Conversion at $1.20 means <strong>41.7 million new shares.</strong> The 8 million holders of record this morning would own less than a sixth of their own company.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>Your turn.</h3><p>Drag the handle — or use the arrow keys — to pick a price and watch the dilution numbers recompute. This is what a floating convertible does, mechanically, when a stock retraces.</p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 15 ========== -->
+  <section class="scene" id="scene-15" data-scene="15" data-bg="paper-warm" aria-labelledby="s15-title">
+    <div class="scene__inner">
+      <p class="scene__eyebrow">Scene 15 · the bull's best argument</p>
+      <h2 class="scene__title" id="s15-title">The bull case is not crazy. It is a race.</h2>
+      <p class="scene__dek">NewBird's stock is now its most valuable asset — more valuable than its cash. A competent CEO with a hot ticker can, historically, pull this off. The window is thirty to ninety days.</p>
+
+      <div class="countdown">
+        <div class="countdown-panel">
+          <h3>Secondary-offering window</h3>
+          <div class="raise-value" id="s15-raise">$420M</div>
+          <div class="day-count" id="s15-day">Day 1 of 90 · price at $14</div>
+          <input type="range" id="s15-scrubber" class="day-scrubber" min="1" max="90" step="1" value="1" aria-label="Drag to advance the day">
+          <p style="font-family:var(--sans); font-size:13px; color:var(--ink-60); margin-top:14px;">If management executes a $300M-$500M secondary at $11–$14 in the next thirty days, the capital-adequacy gap closes far enough that an actual GPU business becomes possible.</p>
+        </div>
+        <div>
+          <div style="font-family:var(--sans); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-60); margin-bottom:10px;">Raise capacity</div>
+          <div class="countdown-bar"><div class="countdown-bar__fill" id="s15-bar"></div></div>
+          <p class="scene__prose" style="margin-top:22px;">CoreWeave was a Bitcoin-mining shop that nobody had heard of in 2017; today it is worth sixty-two billion dollars. The bull case is that NewBird is the next one.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 16 ========== -->
+  <section class="scene scene--sticky" id="scene-16" data-scene="16" data-bg="closing" aria-labelledby="s16-title">
+    <div class="sticky-wrap">
+      <div class="ladder-stage" id="s16-stage" role="img" aria-label="Ten analysts span targets from $2.50 to $125. Five are bearish (crimson), one neutral (grey), four bullish (teal). The current market price sits in the gap between the bears and the lone Hold valuation.">
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="1"><div class="step__card"><h3>Ten analysts</h3><p>Same Bloomberg terminal. Same SEC filings. Same eighteen-minute spike.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>Five bears · $2.50 to $8.30</h3><p>Strong Sell / Avoid. The unit economics don't work, the capital gap is unbridgeable, the convertible is toxic, and the precedents all ended the same way.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>One neutral · $12.78</h3><p>Hold. Fairly valued if — and only if — the bull case executes on schedule.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>Four bulls · $38 to $125</h3><p>Buy. Stock-as-currency arbitrage, CoreWeave-parallel re-rating, benign conversion terms.</p></div></div>
+      <div class="step" data-step="5"><div class="step__card"><h3>The market says $14.50.</h3><p>Above all bears, below the neutral, and far below any bull. Roughly one chance in six. Whether that is optimism or innumeracy, you find out on <strong>May 18.</strong></p></div></div>
+    </div>
+  </section>
+
+  <!-- ========== SCENE 17 — Footer ========== -->
+  <section id="scene-17" data-scene="17" data-bg="closing" aria-labelledby="s17-title">
+    <div class="inner">
+      <p class="scene__eyebrow">Scene 17 · methodology</p>
+      <h2 class="scene__title" id="s17-title">Every number in this piece traces to a filing.</h2>
+      <p class="scene__prose">Sources are listed below. Numerical claims trace to public SEC filings (10-K, 10-Q, 8-K), press releases, and reported market data. Ten analyst valuations come from a dialectical team in the accompanying v2 report folder.</p>
+
+      <details open>
+        <summary>The ten-agent valuation</summary>
+        <ul class="doc-list" id="agentDocs"></ul>
+      </details>
+
+      <details>
+        <summary>Key numerical claims</summary>
+        <ul class="doc-list">
+          <li><strong>$2.49 open, $24.31 intraday high, $14.50 close (Apr 15, 2026):</strong> Bloomberg, Yahoo Finance, TradingView.</li>
+          <li><strong>288M shares on 8.17M float = 35× turnover:</strong> Trendspider.</li>
+          <li><strong>18.3% short interest:</strong> MarketBeat.</li>
+          <li><strong>$39M asset sale to American Exchange Group (Mar 30, 2026):</strong> StockTitan.</li>
+          <li><strong>$50M convertible placed by Chardan Capital Markets:</strong> GlobeNewswire, Apr 15, 2026.</li>
+          <li><strong>NewBird total capital $128M:</strong> $50M convertible + $39M asset sale + $39M Q1 cash (10-Q).</li>
+          <li><strong>CoreWeave 2025 capex $14.9B:</strong> CoreWeave 10-K.</li>
+          <li><strong>Hyperscaler 2025 capex $600B+:</strong> AWS/Azure/GCP/Meta guidance aggregates.</li>
+          <li><strong>Dilution math (4.3M → 12.5M → 41.7M new shares):</strong> $50M ÷ (price × 0.80), holding existing shares at 8.17M.</li>
+          <li><strong>NPV grid ($2/hr −$37M → $5/hr +$48M):</strong> 5-year DCF at 10.5% WACC, Capital Allocation Aggressive report.</li>
+          <li><strong>Long Blockchain Corp precedent:</strong> Wikipedia (LBCC), SEC litigation releases.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>Counter-view links (bull-case steelmen)</summary>
+        <ul class="doc-list">
+          <li><a href="https://github.com/lyndonkl/allbirdsanalysis/blob/main/reports/v2/01-company-analyst-bull.md">Company Analyst — Bull ($38.38)</a></li>
+          <li><a href="https://github.com/lyndonkl/allbirdsanalysis/blob/main/reports/v2/09-ipo-strategist-bull-rerating.md">IPO Strategist — Bull rerating ($50 / $125)</a></li>
+          <li><a href="https://github.com/lyndonkl/allbirdsanalysis/blob/main/reports/v2/07-acquisition-allbirds-as-acquirer.md">Acquisition — Allbirds as acquirer</a></li>
+        </ul>
+      </details>
+
+      <p class="foot-note">
+        Data timestamps: April 15, 2026, unless otherwise noted. This piece is an investigation, not investment advice. The author holds no position in BIRD at the time of writing.<br>
+        Static companion charts live at <a href="https://github.com/lyndonkl/allbirdsanalysis/tree/main/article/charts"><code>/article/charts</code></a> in the repo.
+      </p>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- D3 + scrollama from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://unpkg.com/scrollama"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

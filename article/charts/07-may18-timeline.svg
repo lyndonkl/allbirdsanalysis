@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 1244" width="700" height="1244" role="img" aria-labelledby="t07 d07">
+  <title id="t07">From April 15 to May 18: a one-month timeline and two forks</title>
+  <desc id="d07">Vertical branching timeline beginning at April 15, 2026 ($14.50 close) and ending at the May 18, 2026 stockholder vote. Events along the way include the market digestion period, a Q1 preview window, the expected proxy filing around May 5, and a two-week review period. At May 18 the path forks: a bull branch (benign fixed-conversion terms, outcomes between $38 and $125) and a bear branch (toxic floating plus lookback terms, outcomes around $1.50 or a reverse split).</desc>
+  <style>
+    .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:22px;fill:#F2F2F2}
+    .subtitle{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#A8AEC0}
+    .date{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#D9A441;font-variant-numeric:tabular-nums}
+    .event-label{font-family:Inter,system-ui,sans-serif;font-size:14px;fill:#F2F2F2}
+    .event-note{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#9FA6B8}
+    .spine{stroke:#D9A441;stroke-width:2}
+    .spine-dim{stroke:rgba(217,164,65,0.35);stroke-width:2}
+    .dot{fill:#D9A441}
+    .today-dot{fill:#0E7C7B;stroke:#F2F2F2;stroke-width:2}
+    .vote-dot{fill:#D9A441;stroke:#F2F2F2;stroke-width:3}
+    .vote-title{font-family:Inter,system-ui,sans-serif;font-size:13px;fill:#D9A441;font-weight:600;letter-spacing:0.18em}
+    .branch-bull{stroke:#3A8E5C;stroke-width:2;fill:none}
+    .branch-bear{stroke:#B23A48;stroke-width:2;fill:none}
+    .branch-label{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:600;font-size:20px}
+    .branch-sub{font-family:Inter,system-ui,sans-serif;font-size:12px}
+    .footer-note{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#8A8EA0}
+  </style>
+  <rect width="700" height="1244" fill="#1A1F2A"/>
+
+  <text class="title" x="40" y="50">The thirty-three days between today and May eighteenth</text>
+  <text class="subtitle" x="40" y="74" letter-spacing="0.08em">CALENDAR · KNOWN EVENTS · AND TWO FORKS AT THE STOCKHOLDER VOTE</text>
+
+  <!-- Spine: centerline x=350, events from y=130 to y=720 -->
+  <line class="spine" x1="350" y1="130" x2="350" y2="720"/>
+
+  <!-- Today · April 15 -->
+  <g transform="translate(350,130)">
+    <circle class="today-dot" r="10"/>
+    <text class="date" x="-30" y="-22" text-anchor="end">April 15, 2026</text>
+    <text class="event-label" x="-30" y="-6" text-anchor="end" font-weight="600">Today · Day 1</text>
+    <text class="event-note" x="-30" y="12" text-anchor="end">BIRD closes $14.50, intraday peak $24.31</text>
+    <text class="event-note" x="-30" y="28" text-anchor="end">288M shares traded · 35× float</text>
+  </g>
+
+  <!-- Apr 22 · Market digests -->
+  <g transform="translate(350,250)">
+    <circle class="dot" r="6"/>
+    <text class="date" x="30" y="-6" text-anchor="start">April 22</text>
+    <text class="event-label" x="30" y="12" text-anchor="start">Market digests</text>
+    <text class="event-note" x="30" y="28" text-anchor="start">Short interest rebuilds into the vote</text>
+  </g>
+
+  <!-- Apr 30 · Q1 preview -->
+  <g transform="translate(350,370)">
+    <circle class="dot" r="6"/>
+    <text class="date" x="-30" y="-6" text-anchor="end">April 30</text>
+    <text class="event-label" x="-30" y="12" text-anchor="end">Q1 preview window</text>
+    <text class="event-note" x="-30" y="28" text-anchor="end">NewBird may disclose early contract wins</text>
+  </g>
+
+  <!-- May 5 · Proxy filing -->
+  <g transform="translate(350,490)">
+    <circle class="dot" r="6"/>
+    <text class="date" x="30" y="-6" text-anchor="start">May 5</text>
+    <text class="event-label" x="30" y="12" text-anchor="start">Definitive proxy expected</text>
+    <text class="event-note" x="30" y="28" text-anchor="start">Conversion terms become public</text>
+  </g>
+
+  <!-- May 12 · Proxy review -->
+  <g transform="translate(350,600)">
+    <circle class="dot" r="6"/>
+    <text class="date" x="-30" y="-6" text-anchor="end">May 12</text>
+    <text class="event-label" x="-30" y="12" text-anchor="end">Proxy review period</text>
+    <text class="event-note" x="-30" y="28" text-anchor="end">Institutional positioning window</text>
+  </g>
+
+  <!-- May 18 · the VOTE -->
+  <g transform="translate(350,720)">
+    <circle class="vote-dot" r="14"/>
+    <text class="vote-title" x="0" y="-30" text-anchor="middle">STOCKHOLDER VOTE</text>
+    <text class="date" x="0" y="-14" text-anchor="middle">May 18, 2026</text>
+    <text class="event-note" x="0" y="36" text-anchor="middle">Required because dilution exceeds Nasdaq's 19.99% cap</text>
+  </g>
+
+  <!-- Two forks from y=720 downward to y=1100 -->
+  <!-- Bull branch goes left, bear branch goes right -->
+  <path class="branch-bull" d="M350,730 C 350,800 180,820 180,900 L 180,1080"/>
+  <path class="branch-bear" d="M350,730 C 350,800 520,820 520,900 L 520,1080"/>
+
+  <!-- Fork labels -->
+  <g transform="translate(180,1100)">
+    <text class="branch-label" fill="#3A8E5C" text-anchor="middle" y="0">Benign fixed terms</text>
+    <text class="branch-sub" fill="#9BC5A9" text-anchor="middle" y="24">Fixed conversion price, reasonable discount</text>
+    <text class="branch-sub" fill="#9BC5A9" text-anchor="middle" y="42">Secondary offering executes at $11–$14</text>
+    <text class="branch-label" fill="#3A8E5C" text-anchor="middle" y="76">$38 – $125</text>
+    <text class="branch-sub" fill="#9BC5A9" text-anchor="middle" y="98" letter-spacing="0.16em">BULL RANGE</text>
+  </g>
+
+  <g transform="translate(520,1100)">
+    <text class="branch-label" fill="#B23A48" text-anchor="middle" y="0">Toxic floating terms</text>
+    <text class="branch-sub" fill="#D3A4AB" text-anchor="middle" y="24">Floating conversion + lookback + reset</text>
+    <text class="branch-sub" fill="#D3A4AB" text-anchor="middle" y="42">Dilution cascades with each retrace</text>
+    <text class="branch-label" fill="#B23A48" text-anchor="middle" y="76">$1.50 / RS</text>
+    <text class="branch-sub" fill="#D3A4AB" text-anchor="middle" y="98" letter-spacing="0.16em">BEAR RANGE</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="40" y="1230" class="footer-note">Dates: company calendar + SEC filing convention. Ranges: ten-agent dialectical valuation, v2 reports.</text>
+</svg>

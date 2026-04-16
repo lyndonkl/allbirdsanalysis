@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 394" width="700" height="394" role="img" aria-labelledby="t08 d08">
+  <title id="t08">Ten analysts, one company, ten prices — from $2.50 to $125</title>
+  <desc id="d08">Strip-plot of ten analyst price targets on a log scale from $2 to $150. Five bearish dots cluster between $2.50 and $8.30 (crimson), one neutral dot sits at $12.78 (grey), and four bullish dots span $19.12 to $125 (teal). A dashed vertical line marks the current market price of $14.50, which sits above all bears, below the neutral, and far below any bull. The bear cluster holds five of ten votes.</desc>
+  <style>
+    .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:22px;fill:#1A1A1A}
+    .subtitle{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#5C5C5C}
+    .axis-tick{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;fill:#5C5C5C}
+    .axis-line{stroke:#1A1A1A;stroke-width:1}
+    .current-line{stroke:#D9A441;stroke-width:2;stroke-dasharray:5 4}
+    .current-label{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:600;font-size:16px;fill:#D9A441}
+    .agent-label{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#1A1A1A}
+    .agent-sub{font-family:Inter,system-ui,sans-serif;font-size:10px;fill:#5C5C5C}
+    .bear-cluster-label{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#B23A48;font-weight:600;letter-spacing:0.16em}
+    .neutral-cluster-label{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#8A8A8A;font-weight:600;letter-spacing:0.16em}
+    .bull-cluster-label{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#3A8E5C;font-weight:600;letter-spacing:0.16em}
+    .caption{font-family:'Source Serif 4',Georgia,serif;font-size:13px;fill:#1A1A1A}
+  </style>
+  <rect width="700" height="394" fill="#FAF7F0"/>
+
+  <text class="title" x="40" y="40">Ten analysts · one company · ten prices</text>
+  <text class="subtitle" x="40" y="60">12-MONTH PRICE TARGETS BY AGENT FRAMEWORK · LOG SCALE · MARKET TODAY $14.50</text>
+
+  <!-- Log axis: x=60..660 (600 wide), domain $2..$150
+       log10(2)=0.301, log10(150)=2.176, range 1.875
+       x(v) = 60 + ((log10(v) - 0.301) / 1.875) * 600
+  -->
+
+  <!-- ticks at 2.5, 5, 10, 14.5, 25, 50, 100, 125 -->
+  <!-- x(2.5)   = 60 + (0.397-0.301)/1.875 * 600 = 60 + 30.7 = 90.7 -->
+  <!-- x(5)    = 60 + (0.699-0.301)/1.875 * 600 = 60 + 127.4 = 187.4 -->
+  <!-- x(10)   = 60 + (1.000-0.301)/1.875 * 600 = 60 + 223.7 = 283.7 -->
+  <!-- x(14.5) = 60 + (1.161-0.301)/1.875 * 600 = 60 + 275.2 = 335.2 -->
+  <!-- x(25)   = 60 + (1.398-0.301)/1.875 * 600 = 60 + 351 = 411 -->
+  <!-- x(50)   = 60 + (1.699-0.301)/1.875 * 600 = 60 + 447.4 = 507.4 -->
+  <!-- x(100)  = 60 + (2.000-0.301)/1.875 * 600 = 60 + 543.7 = 603.7 -->
+  <!-- x(125)  = 60 + (2.097-0.301)/1.875 * 600 = 60 + 574.7 = 634.7 -->
+
+  <line class="axis-line" x1="60" y1="280" x2="660" y2="280"/>
+  <g>
+    <line x1="90.7"  y1="280" x2="90.7"  y2="286" class="axis-line"/>
+    <line x1="187.4" y1="280" x2="187.4" y2="286" class="axis-line"/>
+    <line x1="283.7" y1="280" x2="283.7" y2="286" class="axis-line"/>
+    <line x1="335.2" y1="280" x2="335.2" y2="286" class="axis-line"/>
+    <line x1="411"   y1="280" x2="411"   y2="286" class="axis-line"/>
+    <line x1="507.4" y1="280" x2="507.4" y2="286" class="axis-line"/>
+    <line x1="603.7" y1="280" x2="603.7" y2="286" class="axis-line"/>
+    <line x1="634.7" y1="280" x2="634.7" y2="286" class="axis-line"/>
+
+    <text class="axis-tick" x="90.7"  y="302" text-anchor="middle">$2.50</text>
+    <text class="axis-tick" x="187.4" y="302" text-anchor="middle">$5</text>
+    <text class="axis-tick" x="283.7" y="302" text-anchor="middle">$10</text>
+    <text class="axis-tick" x="335.2" y="302" text-anchor="middle" fill="#D9A441" font-weight="600">$14.50</text>
+    <text class="axis-tick" x="411"   y="302" text-anchor="middle">$25</text>
+    <text class="axis-tick" x="507.4" y="302" text-anchor="middle">$50</text>
+    <text class="axis-tick" x="603.7" y="302" text-anchor="middle">$100</text>
+    <text class="axis-tick" x="634.7" y="302" text-anchor="middle">$125</text>
+  </g>
+
+  <!-- Current market line (dashed) full vertical -->
+  <line class="current-line" x1="335.2" y1="90" x2="335.2" y2="280"/>
+  <text class="current-label" x="335.2" y="82" text-anchor="middle">market $14.50</text>
+
+  <!-- Dots: y center 220, with vertical jitter by agent number
+       Bear 5, Neutral 1, Bull 4
+       Targets: 3.30, 3.30, 4.77, 8.30, 8.30 (bears), 12.78 (neutral), 19.12, 38.38, 50.00, 125.00 (bulls)
+  -->
+  <!-- x of each target -->
+  <!-- x(3.30) = 60 + (0.519-0.301)/1.875 * 600 = 60 + 69.8 = 129.8 -->
+  <!-- x(4.77) = 60 + (0.679-0.301)/1.875 * 600 = 60 + 120.9 = 180.9 -->
+  <!-- x(8.30) = 60 + (0.919-0.301)/1.875 * 600 = 60 + 197.8 = 257.8 -->
+  <!-- x(12.78)= 60 + (1.107-0.301)/1.875 * 600 = 60 + 257.8 = 317.8 -->
+  <!-- x(19.12)= 60 + (1.281-0.301)/1.875 * 600 = 60 + 313.7 = 373.7 -->
+  <!-- x(38.38)= 60 + (1.584-0.301)/1.875 * 600 = 60 + 410.6 = 470.6 -->
+  <!-- x(50.00)= 507.4 -->
+  <!-- x(125)  = 634.7 -->
+
+  <!-- Bears (crimson) -->
+  <circle cx="129.8" cy="210" r="11" fill="#B23A48"/>
+  <text class="agent-label" x="129.8" y="196" text-anchor="middle" fill="#B23A48">$3.30</text>
+  <text class="agent-sub"   x="129.8" y="238" text-anchor="middle">Company · Bear</text>
+
+  <circle cx="129.8" cy="240" r="11" fill="#B23A48"/>
+  <text class="agent-sub"   x="129.8" y="258" text-anchor="middle">Special · Distress</text>
+
+  <circle cx="180.9" cy="210" r="11" fill="#B23A48"/>
+  <text class="agent-label" x="180.9" y="196" text-anchor="middle" fill="#B23A48">$4.77</text>
+  <text class="agent-sub"   x="180.9" y="238" text-anchor="middle">Cap Alloc · Conserve</text>
+
+  <circle cx="257.8" cy="210" r="11" fill="#B23A48"/>
+  <text class="agent-label" x="257.8" y="196" text-anchor="middle" fill="#B23A48">$8.30</text>
+  <text class="agent-sub"   x="257.8" y="238" text-anchor="middle">Cap Alloc · Aggressive</text>
+
+  <circle cx="257.8" cy="240" r="11" fill="#B23A48"/>
+  <text class="agent-sub"   x="257.8" y="258" text-anchor="middle">Acquisition · As Target</text>
+
+  <!-- Neutral (grey) -->
+  <circle cx="317.8" cy="210" r="11" fill="#8A8A8A"/>
+  <text class="agent-label" x="317.8" y="196" text-anchor="middle" fill="#5C5C5C">$12.78</text>
+  <text class="agent-sub"   x="317.8" y="238" text-anchor="middle">Special · Growth</text>
+
+  <!-- Bulls (teal) -->
+  <circle cx="373.7" cy="210" r="11" fill="#3A8E5C"/>
+  <text class="agent-label" x="373.7" y="196" text-anchor="middle" fill="#3A8E5C">$19.12</text>
+  <text class="agent-sub"   x="373.7" y="238" text-anchor="middle">Acquisition · Acquirer</text>
+
+  <circle cx="470.6" cy="210" r="11" fill="#3A8E5C"/>
+  <text class="agent-label" x="470.6" y="196" text-anchor="middle" fill="#3A8E5C">$38.38</text>
+  <text class="agent-sub"   x="470.6" y="238" text-anchor="middle">Company · Bull</text>
+
+  <circle cx="507.4" cy="240" r="11" fill="#3A8E5C"/>
+  <text class="agent-label" x="507.4" y="258" text-anchor="middle" fill="#3A8E5C">$50</text>
+  <text class="agent-sub"   x="507.4" y="274" text-anchor="middle">IPO · Bull 12m</text>
+
+  <circle cx="634.7" cy="210" r="11" fill="#3A8E5C"/>
+  <text class="agent-label" x="634.7" y="196" text-anchor="middle" fill="#3A8E5C">$125</text>
+  <text class="agent-sub"   x="634.7" y="238" text-anchor="middle">IPO · Bull 24m</text>
+
+  <!-- Cluster brackets under the axis -->
+  <g transform="translate(0,322)">
+    <line x1="110" y1="0" x2="275" y2="0" stroke="#B23A48" stroke-width="2"/>
+    <line x1="110" y1="0" x2="110" y2="6" stroke="#B23A48" stroke-width="2"/>
+    <line x1="275" y1="0" x2="275" y2="6" stroke="#B23A48" stroke-width="2"/>
+    <text class="bear-cluster-label" x="192.5" y="20" text-anchor="middle">5 OF 10 · BEAR</text>
+
+    <line x1="300" y1="0" x2="336" y2="0" stroke="#8A8A8A" stroke-width="2"/>
+    <line x1="300" y1="0" x2="300" y2="6" stroke="#8A8A8A" stroke-width="2"/>
+    <line x1="336" y1="0" x2="336" y2="6" stroke="#8A8A8A" stroke-width="2"/>
+    <text class="neutral-cluster-label" x="318" y="20" text-anchor="middle">HOLD</text>
+
+    <line x1="360" y1="0" x2="650" y2="0" stroke="#3A8E5C" stroke-width="2"/>
+    <line x1="360" y1="0" x2="360" y2="6" stroke="#3A8E5C" stroke-width="2"/>
+    <line x1="650" y1="0" x2="650" y2="6" stroke="#3A8E5C" stroke-width="2"/>
+    <text class="bull-cluster-label" x="505" y="20" text-anchor="middle">4 OF 10 · BULL</text>
+  </g>
+
+  <text x="40" y="384" class="caption">
+    Market price sits above every bear, below the neutral, and far below any bull. The bear cluster holds five of ten votes.
+  </text>
+</svg>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 394" width="700" height="394" role="img" aria-labelledby="t05 d05">
+  <title id="t05">H100 spot rental rate: $8/hour in 2023 to $1.50/hour in 2026</title>
+  <desc id="d05">Line chart of NVIDIA H100 GPU spot rental rates from 2023 to April 2026, overlaid with viability bands for NewBird AI's project economics. Strong Invest above $5, Invest $4-$5, Marginal $3.50-$4, Reject below $3.50. Market rates are currently $1.50, deep in the Reject zone.</desc>
+  <style>
+    .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:20px;fill:#1A1A1A}
+    .subtitle{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#5C5C5C}
+    .axis-tick{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;fill:#5C5C5C}
+    .axis-title{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#5C5C5C;letter-spacing:0.12em}
+    .line-spot{fill:none;stroke:#1A1A1A;stroke-width:2}
+    .dot-spot{fill:#1A1A1A}
+    .band-label{font-family:Inter,system-ui,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em}
+    .anno-text{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#1A1A1A}
+    .anno-text-warn{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#B23A48;font-weight:600}
+  </style>
+  <rect width="700" height="394" fill="#FBFAF7"/>
+
+  <text class="title" x="40" y="34">The $8 GPU became the $1.50 GPU — and the NewBird thesis lives on $3.50</text>
+  <text class="subtitle" x="40" y="52">NVIDIA H100 SPOT RENTAL RATE, USD/HOUR · 2023–APR 2026 · VIABILITY BANDS OVERLAID</text>
+
+  <!-- Plot: x=60..660 (600 wide), y=90..330 (240 tall)
+       X domain: 14 monthly points, Jan 2023 to Apr 2026
+       Y domain: $0..$9
+       yR(p) = 330 - (p/9)*240
+  -->
+
+  <!-- Viability bands as horizontal stripes across the plot -->
+  <!-- Strong Invest 5-8 => y(5)=330-133.3=196.7 ; y(8)=330-213.3=116.7 => rect x=60,y=116.7,h=80 -->
+  <rect x="60" y="116.7" width="600" height="80"  fill="#3A8E5C" opacity="0.10"/>
+  <!-- Invest 4-5: y(4)=330-106.7=223.3 => rect y=196.7 h=26.6 -->
+  <rect x="60" y="196.7" width="600" height="26.7" fill="#6BAE7E" opacity="0.14"/>
+  <!-- Marginal 3.5-4: y(3.5)=330-93.3=236.7 => rect y=223.3 h=13.3 -->
+  <rect x="60" y="223.3" width="600" height="13.3" fill="#D9A441" opacity="0.18"/>
+  <!-- Reject 0-3.5 : y(0)=330 => rect y=236.7 h=93.3 -->
+  <rect x="60" y="236.7" width="600" height="93.3" fill="#B23A48" opacity="0.10"/>
+
+  <!-- band labels (right margin) -->
+  <text class="band-label" x="666" y="160" fill="#3A8E5C">STRONG</text>
+  <text class="band-label" x="666" y="174" fill="#3A8E5C">INVEST</text>
+  <text class="band-label" x="666" y="214" fill="#6BAE7E">INVEST</text>
+  <text class="band-label" x="666" y="234" fill="#D9A441">MARGINAL</text>
+  <text class="band-label" x="666" y="278" fill="#B23A48">REJECT</text>
+  <text class="band-label" x="666" y="292" fill="#B23A48">(−NPV)</text>
+
+  <!-- Y axis ticks -->
+  <text class="axis-tick" x="54" y="94"  text-anchor="end">$9</text>
+  <text class="axis-tick" x="54" y="148" text-anchor="end">$7</text>
+  <text class="axis-tick" x="54" y="201" text-anchor="end">$5</text>
+  <text class="axis-tick" x="54" y="234" text-anchor="end">$3.50</text>
+  <text class="axis-tick" x="54" y="281" text-anchor="end">$2</text>
+  <text class="axis-tick" x="54" y="334" text-anchor="end">$0</text>
+
+  <!-- X axis ticks -->
+  <line x1="60" y1="330" x2="660" y2="330" stroke="#1A1A1A"/>
+  <text class="axis-tick" x="60"  y="350" text-anchor="middle">2023</text>
+  <text class="axis-tick" x="245" y="350" text-anchor="middle">2024</text>
+  <text class="axis-tick" x="430" y="350" text-anchor="middle">2025</text>
+  <text class="axis-tick" x="615" y="350" text-anchor="middle">2026</text>
+  <text class="axis-title" x="360" y="368" text-anchor="middle">H100 SPOT RENTAL · APR 2026 READS $1.50/HR</text>
+
+  <!-- Spot line series: 14 points. xStep = 600 / 13 = 46.15
+       values: 8.00, 7.40, 6.90, 5.80, 4.50, 3.60, 2.80, 2.20, 1.90, 1.70, 1.60, 1.55, 1.50, 1.50
+       yR(p) = 330 - (p/9)*240
+  -->
+  <path class="line-spot" d="M60,116.7 L106.15,132.7 L152.3,146.0 L198.45,175.3 L244.6,210.0 L290.75,234.0 L336.9,255.3 L383.05,271.3 L429.2,279.3 L475.35,284.7 L521.5,287.3 L567.65,288.7 L613.8,290.0 L660,290.0"/>
+
+  <!-- Dots -->
+  <g fill="#1A1A1A">
+    <circle cx="60"    cy="116.7" r="3"/>
+    <circle cx="152.3"  cy="146.0" r="3"/>
+    <circle cx="244.6"  cy="210.0" r="3"/>
+    <circle cx="336.9"  cy="255.3" r="3"/>
+    <circle cx="429.2"  cy="279.3" r="3"/>
+    <circle cx="521.5"  cy="287.3" r="3"/>
+    <circle cx="613.8"  cy="290.0" r="3"/>
+  </g>
+
+  <!-- Annotations -->
+  <!-- 2023 Q1 peak -->
+  <text class="anno-text" x="66" y="108">$8 peak · Q1 2023</text>
+  <line x1="60" y1="116.7" x2="80" y2="110" stroke="#1A1A1A" stroke-width="1"/>
+
+  <!-- Today marker -->
+  <line x1="613.8" y1="290" x2="613.8" y2="120" stroke="#B23A48" stroke-dasharray="3 3"/>
+  <text class="anno-text-warn" x="610" y="100" text-anchor="end">Apr 2026 · $1.50</text>
+  <text class="anno-text-warn" x="610" y="114" text-anchor="end">inside REJECT zone</text>
+
+  <!-- Thesis line at $3.50 -->
+  <line x1="60" y1="236.7" x2="660" y2="236.7" stroke="#D9A441" stroke-dasharray="4 3" stroke-width="1.5"/>
+  <text class="anno-text" x="65" y="232" fill="#D9A441" font-weight="600">$3.50 · NewBird thesis break-even</text>
+
+  <text x="40" y="384" class="subtitle">
+    Spot rates: SemiAnalysis, Vast.ai, RunPod marketplaces; enterprise rates trade 60–180% premium. NewBird needs enterprise, not spot.
+  </text>
+</svg>

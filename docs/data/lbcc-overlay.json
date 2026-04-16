@@ -1,0 +1,31 @@
+{
+  "lbcc": {
+    "name": "Long Blockchain Corp (LBCC)",
+    "series": [
+      { "d": -30, "p": 100 }, { "d": -20, "p": 98 }, { "d": -10, "p": 102 },
+      { "d":  -1, "p": 100 },
+      { "d":   0, "p": 380 },
+      { "d":  10, "p": 310 }, { "d":  20, "p": 265 }, { "d":  30, "p": 230 },
+      { "d":  45, "p": 200 }, { "d":  60, "p": 170 }, { "d":  90, "p": 140 },
+      { "d": 120, "p": 105 }, { "d": 150, "p": 75 },  { "d": 180, "p": 55 },
+      { "d": 210, "p": 40 },  { "d": 240, "p": 28 },  { "d": 270, "p": 18 },
+      { "d": 300, "p": 10 },  { "d": 330, "p": 5 },   { "d": 365, "p": 2 }
+    ],
+    "milestones": [
+      { "d": 0,   "label": "Dec 2017 — Name change to Long Blockchain" },
+      { "d": 90,  "label": "Short sellers pile in; Nasdaq warning" },
+      { "d": 180, "label": "Reverse split attempted" },
+      { "d": 365, "label": "Nasdaq delisted; SEC investigation opens" }
+    ]
+  },
+  "bird": {
+    "name": "NewBird AI (BIRD)",
+    "series": [
+      { "d": -30, "p": 105 }, { "d": -20, "p": 101 }, { "d": -10, "p":  98 },
+      { "d":  -1, "p": 100 },
+      { "d":   0, "p": 582 }
+    ],
+    "currentDay": 0,
+    "peakPct": 582
+  }
+}
