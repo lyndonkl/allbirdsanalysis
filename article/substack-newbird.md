@@ -2,6 +2,8 @@
 
 *On a wool sneaker startup, a $50M convertible, and one piece of paper almost nobody has read yet.*
 
+> **AI-generated analysis.** The valuation work in this piece was produced by a team of ten [Claude Code subagents](https://docs.claude.com/en/docs/claude-code/sub-agents) — five specialist agent types ([company analyst](https://github.com/lyndonkl/claude/blob/main/agents/company-analyst.md), [special-situations analyst](https://github.com/lyndonkl/claude/blob/main/agents/special-situations-analyst.md), [capital-allocation strategist](https://github.com/lyndonkl/claude/blob/main/agents/capital-allocation-strategist.md), [acquisition analyst](https://github.com/lyndonkl/claude/blob/main/agents/acquisition-analyst.md), [IPO strategist](https://github.com/lyndonkl/claude/blob/main/agents/ipo-strategist.md)) each run as bull/bear pairs to force dialectical tension. [All ten individual agent reports and the synthesis document are public on GitHub.](https://github.com/lyndonkl/allbirdsanalysis/tree/main/reports/v2) I did the editorial work and the writing; the numbers came from the team. Not investment advice.
+
 ---
 
 On April 15, 2026, a Tuesday, the equity of a small footwear company called Allbirds appreciated by 582%.

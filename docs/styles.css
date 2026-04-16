@@ -96,12 +96,58 @@ button { font: inherit; cursor: pointer; }
 /* =========================================================================
    Progress chrome (plan §4 — "Navigation chrome")
    ========================================================================= */
+/* AI-generated disclosure strip (persistent, sits above progress bar) */
+.ai-disclosure {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 102;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: rgba(11, 11, 14, 0.92);
+  backdrop-filter: saturate(140%) blur(6px);
+  -webkit-backdrop-filter: saturate(140%) blur(6px);
+  color: #FBFAF7;
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  pointer-events: auto;
+}
+.ai-disclosure__badge {
+  display: inline-block;
+  padding: 2px 7px;
+  background: var(--accent);
+  color: #FFFFFF;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+.ai-disclosure__text { color: rgba(255,255,255,0.86); }
+.ai-disclosure__text a {
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(255,255,255,0.45);
+}
+.ai-disclosure__text a:hover { text-decoration-color: #FFFFFF; }
+@media (max-width: 600px) {
+  .ai-disclosure { font-size: 10.5px; padding: 5px 10px; gap: 6px; }
+  .ai-disclosure__badge { font-size: 9px; letter-spacing: 0.1em; }
+}
+
 .progress-bar {
-  position: fixed; top: 0; left: 0;
+  position: fixed; top: 32px; left: 0;
   width: 100%; height: 2px;
   background: transparent;
   z-index: 100;
   pointer-events: none;
+}
+@media (max-width: 600px) {
+  .progress-bar { top: 48px; }
 }
 .progress-bar__fill {
   height: 100%;
@@ -124,7 +170,7 @@ button { font: inherit; cursor: pointer; }
 /* Persistent BIRD ticker (plan §4) */
 .bird-ticker {
   position: fixed;
-  top: 14px; right: 18px;
+  top: 46px; right: 18px;
   font-family: var(--mono);
   font-size: 13px;
   letter-spacing: 0.02em;
@@ -924,7 +970,7 @@ body[data-bg="black"] .bird-ticker {
   #scene-7 .chardan-grid { grid-template-columns: repeat(2, 1fr); }
   #scene-13 .sim-stage { grid-template-columns: 1fr; }
   #scene-15 .countdown { grid-template-columns: 1fr; }
-  .bird-ticker { font-size: 11px; padding: 5px 8px; top: 8px; right: 10px; }
+  .bird-ticker { font-size: 11px; padding: 5px 8px; top: 54px; right: 10px; }
   #scene-1 .stats-row { grid-template-columns: repeat(2, 1fr); }
 
   /* M1 (Round 3): shrink in-SVG typography for dense charts at narrow viewport.
