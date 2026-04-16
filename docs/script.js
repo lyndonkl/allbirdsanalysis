@@ -515,6 +515,7 @@ function renderScene8(stepIdx = 0) {
   const visibleMilestones = Math.max(0, Math.min(milestones.length, stepIdx));
   const labelBandTopY = 12;                              // row A
   const labelBandBottomY = 30;                           // row B
+  const labelBandRightEdgeY = 48;                        // row C — only for flipped-anchor rightmost labels
   const labelPositions = [];                             // {x, label, row}
   milestones.slice(0, visibleMilestones).forEach((m, idx) => {
     const day = m.d;
@@ -523,7 +524,7 @@ function renderScene8(stepIdx = 0) {
     const dx = x(day);
     // Alternate rows so adjacent labels never share a horizontal band.
     const row = idx % 2;
-    const bandY = row === 0 ? labelBandTopY : labelBandBottomY;
+    let bandY = row === 0 ? labelBandTopY : labelBandBottomY;
     // Nudge horizontally away from prior labels ON THE SAME ROW.
     let lx = dx;
     for (const p of labelPositions) {
@@ -532,8 +533,6 @@ function renderScene8(stepIdx = 0) {
         lx = p.x + 130;
       }
     }
-    labelPositions.push({ x: lx, label: m.label, row });
-    g.append('circle').attr('class', 'milestone-dot').attr('cx', dx).attr('cy', y(pt.p)).attr('r', 3);
     // Round 6 Bug 1: the rightmost milestone ("Nasdaq delisted; SEC
     // investigation opens") at day=365 sits at x=iw, and with text-anchor
     // start the label runs ~200px past the SVG right edge and gets clipped.
@@ -542,6 +541,14 @@ function renderScene8(stepIdx = 0) {
     const isRightEdge = lx > iw * 0.75;
     const anchor = isRightEdge ? 'end' : 'start';
     const textX = isRightEdge ? lx - 4 : lx + 4;
+    // Round 7 Bug 1: once the rightmost label's anchor flips to 'end',
+    // its text extends LEFT from lx, landing on top of the previous
+    // label (same y-row, closer than the 130px collision window guards).
+    // Push flipped-anchor rightmost labels to a dedicated third row (y=48)
+    // that sits below the existing 12/30 stagger.
+    if (isRightEdge) bandY = labelBandRightEdgeY;
+    labelPositions.push({ x: lx, label: m.label, row: isRightEdge ? 2 : row });
+    g.append('circle').attr('class', 'milestone-dot').attr('cx', dx).attr('cy', y(pt.p)).attr('r', 3);
     // Leader line from dot up to the label band
     g.append('line').attr('class', 'milestone-leader')
       .attr('x1', dx).attr('x2', lx)
@@ -1390,19 +1397,22 @@ function renderScene16(stepIdx = 5) {
   // top edge so the header is never touched.
   g.append('line').attr('class', 'current-line')
     .attr('x1', x(current)).attr('x2', x(current)).attr('y1', 0).attr('y2', ih + 8);
-  const currentLabelY = 14;
+  const currentLabelY = 16;
   const currentLabelText = 'market $14.50';
-  const currentPillW = 96;
-  // Round 6 Bug 4: solid amber fill read as a "stoplight" in a bright
-  // editorial piece. Soften to a paper-white pill with an amber border so
-  // the "current market" colour coding survives as a signal, not a shout.
+  // Round 7 Bug 2: prior pill was 96×18 with rx=9. With 12px Inter 600
+  // "market $14.50" measures ~86px — leaving just ~5px horizontal slack
+  // per side, so the amber 1.5px border kissed the text. Bump to 112×26
+  // (+8px horiz padding per side, +4px vert padding) and raise rx to 13
+  // so the rounded corners scale with the taller pill and don't clip text.
+  const currentPillW = 112;
+  const currentPillH = 26;
   g.append('rect').attr('class', 'current-label-pill')
-    .attr('x', x(current) - currentPillW / 2).attr('y', currentLabelY - 11)
-    .attr('width', currentPillW).attr('height', 18).attr('rx', 9)
+    .attr('x', x(current) - currentPillW / 2).attr('y', currentLabelY - currentPillH / 2)
+    .attr('width', currentPillW).attr('height', currentPillH).attr('rx', 13)
     .attr('fill', 'rgba(255,255,255,0.95)')
     .attr('stroke', T.marginal).attr('stroke-width', 1.5);
   g.append('text').attr('class', 'current-label')
-    .attr('x', x(current)).attr('y', currentLabelY + 2).attr('text-anchor', 'middle')
+    .attr('x', x(current)).attr('y', currentLabelY + 4).attr('text-anchor', 'middle')
     .attr('fill', T.ink).attr('font-weight', 600).attr('font-size', 12)
     .attr('font-family', 'Inter, sans-serif').attr('font-style', 'normal')
     .text(currentLabelText);
