@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 394" width="700" height="394" role="img" aria-labelledby="t01 d01">
-  <title id="t01">BIRD intraday, April 15, 2026: open $2.49, peak $24.31 at 9:47 AM, close $14.50</title>
-  <desc id="d01">Candlestick chart of NewBird AI (BIRD) from 9:30 AM to 4:00 PM Eastern on April 15, 2026. Stock opened at $2.49, spiked 582% to an intraday peak of $24.31 at 9:47 AM on volume 35 times its float, then faded through the afternoon to close at $14.50. Volume strip shown below the price chart.</desc>
+  <title id="t01">BIRD intraday, April 15, 2026: open $2.49, peak $24.31 at 9:47 AM, close $16.99</title>
+  <desc id="d01">Candlestick chart of NewBird AI (BIRD) from 9:30 AM to 4:00 PM Eastern on April 15, 2026. Stock opened at $2.49, spiked 876% to an intraday peak of $24.31 at 9:47 AM on volume roughly 50 times its float, then faded through the afternoon to close at $16.99. Volume strip shown below the price chart.</desc>
   <style>
     .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:18px;fill:#1A1A1A}
     .subtitle{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#5C5C5C;letter-spacing:0.06em}
@@ -20,7 +20,7 @@
   <rect width="700" height="394" fill="#FBFAF7"/>
 
   <text class="title" x="40" y="34">BIRD intraday, April 15, 2026</text>
-  <text class="subtitle" x="40" y="52">5-MIN BARS · PEAK $24.31 (+582%) AT 9:47 AM · CLOSE $14.50 · VOLUME 35× FLOAT</text>
+  <text class="subtitle" x="40" y="52">5-MIN BARS · PEAK $24.31 AT 9:47 AM · CLOSE $16.99 · 286M SHARES · 35× ON SHARES OUTSTANDING / ~50× ON FLOAT</text>
 
   <!-- price area -->
   <g transform="translate(50,70)">
@@ -65,23 +65,23 @@
     <g><line class="wick" x1="380" x2="380" y1="47.7" y2="60.8"/><rect class="candle-down" x="368" y="49.4" width="24" height="10.1"/></g>
     <!-- 11 13:00 o18.30 h18.70 l16.40 c16.80 v14 (down) -->
     <g><line class="wick" x1="420" x2="420" y1="56.2" y2="73.9"/><rect class="candle-down" x="408" y="59.5" width="24" height="11.5"/></g>
-    <!-- 12 14:00 o16.80 h17.20 l15.40 c15.70 v12 (down) -->
-    <g><line class="wick" x1="460" x2="460" y1="67.7" y2="81.6"/><rect class="candle-down" x="448" y="71.0" width="24" height="8.5"/></g>
-    <!-- 13 15:00 o15.70 h15.90 l14.20 c14.80 v11 (down) -->
-    <g><line class="wick" x1="500" x2="500" y1="77.7" y2="90.8"/><rect class="candle-down" x="488" y="79.5" width="24" height="6.9"/></g>
-    <!-- 14 15:30 o14.80 h15.00 l14.30 c14.60 v10 (down) -->
-    <g><line class="wick" x1="540" x2="540" y1="84.6" y2="90.0"/><rect class="candle-down" x="528" y="86.5" width="24" height="1.6"/></g>
-    <!-- 15 16:00 o14.60 h14.70 l14.40 c14.50 v8 (down) -->
-    <g><line class="wick" x1="580" x2="580" y1="86.9" y2="89.2"/><rect class="candle-down" x="568" y="88.1" width="24" height="0.8"/></g>
+    <!-- 12 14:00 o16.80 h17.40 l16.20 c17.10 v12 (up) -->
+    <g><line class="wick" x1="460" x2="460" y1="66.2" y2="75.4"/><rect class="candle-up" x="448" y="68.5" width="24" height="2.3"/></g>
+    <!-- 13 15:00 o17.10 h17.60 l16.60 c17.20 v11 (up) -->
+    <g><line class="wick" x1="500" x2="500" y1="64.7" y2="72.4"/><rect class="candle-up" x="488" y="67.7" width="24" height="0.8"/></g>
+    <!-- 14 15:30 o17.20 h17.40 l16.80 c17.05 v10 (down) -->
+    <g><line class="wick" x1="540" x2="540" y1="66.2" y2="70.8"/><rect class="candle-down" x="528" y="67.7" width="24" height="1.1"/></g>
+    <!-- 15 16:00 o17.05 h17.10 l16.85 c16.99 v8 (down) -->
+    <g><line class="wick" x1="580" x2="580" y1="68.5" y2="70.4"/><rect class="candle-down" x="568" y="68.9" width="24" height="0.5"/></g>
 
     <!-- peak annotation -->
     <line class="anno-line" x1="192" y1="13" x2="240" y2="13"/>
-    <text class="peak-label" x="246" y="16">$24.31 · +582%</text>
-    <text class="anno-text" x="246" y="32">9:47 AM · 288M shares · 35× float</text>
+    <text class="peak-label" x="246" y="16">$24.31 · +876%</text>
+    <text class="anno-text" x="246" y="32">9:47 AM · 286M shares · 35× on shares outstanding (~50× on float)</text>
 
     <!-- close annotation -->
-    <line class="anno-line" x1="592" y1="89" x2="570" y2="130" stroke="#1A1A1A"/>
-    <text class="close-label" x="560" y="146" text-anchor="end">close $14.50</text>
+    <line class="anno-line" x1="592" y1="69.3" x2="570" y2="130" stroke="#1A1A1A"/>
+    <text class="close-label" x="560" y="146" text-anchor="end">close $16.99</text>
 
     <!-- x axis -->
     <text class="axis" x="20" y="220" text-anchor="middle">9:30</text>
@@ -94,7 +94,7 @@
   <!-- Volume strip y=310..370 -->
   <g transform="translate(50,300)">
     <text class="axis" x="-6" y="60" text-anchor="end">Vol</text>
-    <text class="axis" x="-6" y="10" text-anchor="end">288M</text>
+    <text class="axis" x="-6" y="10" text-anchor="end">286M</text>
     <!-- bars scaled so max=88 -> 60 -->
     <rect class="volbar" x="8"   y="52"   width="24" height="8"/>
     <rect class="volbar" x="48"  y="36"   width="24" height="24"/>

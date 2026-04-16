@@ -65,14 +65,14 @@ The [math, holding the convertible at $50M](https://github.com/lyndonkl/allbirds
 
 | Stock price at conversion | Conversion price (20% discount) | Shares issued | Resulting dilution |
 |---|---|---|---|
-| $14.50 | $11.60 | 4.3M | 53% |
+| $16.99 | $13.59 | 3.68M | 45% |
 | $5.00 | $4.00 | 12.5M | 153% |
 | $1.50 | $1.20 | 41.7M | 510% |
 
 A 510% dilution, for the avoided-doubt-table, means existing shareholders end up owning roughly one-sixth of the company they used to own all of, in exchange for which the company received $50M, much of which it has already spent. This is the structure that, when you read about a micro-cap doing a 1-for-60 reverse split a few months after a financing announcement, tells you what happened. (See Bit Origin.)
 
 > **[CHART 4 — "Every $1 the stock falls, the dilution gets worse"]**
-> *Dual-encoded curve. X-axis (reverse scale): stock price post-conversion-trigger, $17 → $1. Y-axis left: new shares issued (millions), 0–50. Y-axis right: dilution % of existing 8.17M shares outstanding, 0–600%. Single curve in bear-red, opacity ramping up as the curve climbs (visual reinforcement of the worsening outcome). Three highlighted dots at $14.50, $5.00, $1.50 with annotations. Top-right caveat box: "Assumes 20% discount, no floor. Alternate floating mechanic disclosed in PREM14A; specific triggers in exhibits / definitive proxy." 700×394px (16:9). Built in D3 (dual-axis with synchronized annotations needs imperative control). Why a curve not three bars: a curve says "this is a continuous risk that gets worse as price falls." Three bars say "here are three discrete scenarios."*
+> *Dual-encoded curve. X-axis (reverse scale): stock price post-conversion-trigger, $17 → $1. Y-axis left: new shares issued (millions), 0–50. Y-axis right: dilution % of existing 8.17M shares outstanding, 0–600%. Single curve in bear-red, opacity ramping up as the curve climbs (visual reinforcement of the worsening outcome). Three highlighted dots at $16.99, $5.00, $1.50 with annotations. Top-right caveat box: "Assumes 20% discount, no floor. Alternate floating mechanic disclosed in PREM14A; specific triggers in exhibits / definitive proxy." 700×394px (16:9). Built in D3 (dual-axis with synchronized annotations needs imperative control). Why a curve not three bars: a curve says "this is a continuous risk that gets worse as price falls." Three bars say "here are three discrete scenarios."*
 
 The [April 15 GlobeNewswire press release](https://www.globenewswire.com/news-release/2026/04/15/3274362/0/en/Allbirds-Inc-Executes-50M-Convertible-Financing-Facility-Agreement-Announces-Expansion-into-AI-Compute-Infrastructure.html) did not disclose the conversion mechanics. The PREM14A, filed the same day, does — at least in outline. The investor remains redacted as "an institutional investor" in the press release. The terms matter more than the name, and the terms are now at least partially on file.
 

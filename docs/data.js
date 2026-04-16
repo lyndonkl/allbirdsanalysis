@@ -124,9 +124,9 @@ window.__BIRD_DATA__ = {
       "name": "NewBird AI (BIRD)",
       "series": [
         {"d":-30,"p":105},{"d":-20,"p":101},{"d":-10,"p":98},{"d":-1,"p":100},
-        {"d":0,"p":582}
+        {"d":0,"p":683}
       ],
-      "currentDay": 0, "peakPct": 582
+      "currentDay": 0, "peakPct": 683
     }
   },
   "may18": {

@@ -53,7 +53,8 @@
     <rect x="10" y="10" width="44" height="16" fill="#1A1A1A"/>
     <text class="panel-ticker" x="32" y="22" text-anchor="middle">BTOG</text>
     <text class="panel-name" x="60" y="22">Bit Origin</text>
-    <text class="panel-theme" x="10" y="44">$500M Dogecoin treasury · 2025</text>
+    <text class="panel-theme" x="10" y="44">$400M equity + $100M conv debt</text>
+    <text class="panel-theme" x="10" y="58">Dogecoin treasury · 2025</text>
     <!-- [100, 160, 220, 170, 120, 80, 40, 15, 6, 4, 3, 2] -->
     <path class="spark" d="M5,62 L22.3,42.3 L39.5,16.9 L56.8,38.1 L74.1,59.2 L91.4,76.2 L108.6,93.1 L125.9,103.7 L143.2,107.5 L160.5,108.3 L177.7,108.7 L195,109.2"/>
     <circle class="enddot" cx="195" cy="109.2" r="3.5"/>
@@ -70,7 +71,8 @@
     <rect x="10" y="10" width="44" height="16" fill="#1A1A1A"/>
     <text class="panel-ticker" x="32" y="22" text-anchor="middle">CLAS</text>
     <text class="panel-name" x="60" y="22">Classover</text>
-    <text class="panel-theme" x="10" y="44">$500M into Solana · 2025</text>
+    <text class="panel-theme" x="10" y="44">Up to $500M sr. sec. conv. notes</text>
+    <text class="panel-theme" x="10" y="58">Solana (SOL) · 2025</text>
     <!-- [100, 190, 240, 175, 110, 75, 55, 40, 30, 24, 20, 18] -->
     <path class="spark" d="M5,62 L22.3,29.6 L39.5,8.5 L56.8,35.9 L74.1,63.5 L91.4,78.3 L108.6,86.7 L125.9,93.1 L143.2,97.3 L160.5,99.9 L177.7,101.5 L195,102.4"/>
     <circle class="enddot" cx="195" cy="102.4" r="3.5"/>
@@ -87,7 +89,8 @@
     <rect x="10" y="10" width="44" height="16" fill="#1A1A1A"/>
     <text class="panel-ticker" x="32" y="22" text-anchor="middle">EYEN</text>
     <text class="panel-name" x="60" y="22">Eyenovia</text>
-    <text class="panel-theme" x="10" y="44">$50M PIPE → HYPE tokens · 2025</text>
+    <text class="panel-theme" x="10" y="44">$50M PIPE (conv pref + warrants)</text>
+    <text class="panel-theme" x="10" y="58">HYPE tokens · 2025</text>
     <!-- [100, 150, 195, 160, 110, 70, 55, 42, 35, 30, 26, 24] -->
     <path class="spark" d="M5,62 L22.3,46.5 L39.5,27.5 L56.8,42.3 L74.1,63.5 L91.4,80.4 L108.6,86.7 L125.9,92.2 L143.2,95.2 L160.5,97.3 L177.7,99.0 L195,99.8"/>
     <circle class="enddot" cx="195" cy="99.8" r="3.5"/>
@@ -104,7 +107,8 @@
     <rect x="10" y="10" width="44" height="16" fill="#1A1A1A"/>
     <text class="panel-ticker" x="32" y="22" text-anchor="middle">VVPR</text>
     <text class="panel-name" x="60" y="22">VivoPower</text>
-    <text class="panel-theme" x="10" y="44">$121M for XRP · 2025</text>
+    <text class="panel-theme" x="10" y="44">$121M straight equity @ $6.05</text>
+    <text class="panel-theme" x="10" y="58">XRP treasury · 2025</text>
     <!-- [100, 185, 210, 150, 95, 70, 55, 48, 44, 40, 37, 35] -->
     <path class="spark" d="M5,62 L22.3,31.7 L39.5,21.2 L56.8,46.5 L74.1,69.8 L91.4,80.4 L108.6,86.7 L125.9,89.7 L143.2,91.4 L160.5,93.1 L177.7,94.3 L195,95.2"/>
     <circle class="enddot" cx="195" cy="95.2" r="3.5"/>
@@ -121,7 +125,8 @@
     <rect x="10" y="10" width="44" height="16" fill="#1A1A1A"/>
     <text class="panel-ticker" x="32" y="22" text-anchor="middle">LGHL</text>
     <text class="panel-name" x="60" y="22">Lion Group</text>
-    <text class="panel-theme" x="10" y="44">$600M Hyperliquid · 2025</text>
+    <text class="panel-theme" x="10" y="44">$600M ATW facility</text>
+    <text class="panel-theme" x="10" y="58">HYPE / SOL / SUI · 2025</text>
     <!-- [100, 175, 230, 165, 105, 72, 55, 45, 38, 34, 31, 29] -->
     <path class="spark" d="M5,62 L22.3,35.9 L39.5,12.7 L56.8,40.2 L74.1,65.6 L91.4,79.5 L108.6,86.7 L125.9,91.0 L143.2,94.0 L160.5,95.6 L177.7,96.9 L195,97.7"/>
     <circle class="enddot" cx="195" cy="97.7" r="3.5"/>

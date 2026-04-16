@@ -427,7 +427,7 @@ function renderScene8(stepIdx = 0) {
   const iw = W - M.l - M.r, ih = H - M.t - M.b;
 
   const x = d3.scaleLinear().domain([-30, 365]).range([0, iw]);
-  const y = d3.scaleLinear().domain([0, 620]).range([ih, 0]);
+  const y = d3.scaleLinear().domain([0, 720]).range([ih, 0]);
 
   const svg = d3.select(el).selectAll('svg').data([0]).join('svg')
     .attr('viewBox', `0 0 ${W} ${H}`)
@@ -463,10 +463,11 @@ function renderScene8(stepIdx = 0) {
   // Round 5 Bug A2: the ANNOUNCEMENT label used to sit at y=-6, which
   // floats beneath the plot's own top header ("INDEXED TO 100 AT
   // ANNOUNCEMENT...") at y=18. It collided directly with the header text.
-  // Move it INTO the plot, below the milestone 2-row band (band is at
-  // y=12 and y=30), right-anchored to the announcement rule so the label
-  // hangs clearly off the vertical without touching the first milestone.
-  g.append('text').attr('x', x(0) + 6).attr('y', 50).attr('text-anchor', 'start')
+  // Move it INTO the plot, below the milestone 4-row band (rows at y=12,
+  // y=30, y=48, y=66). Round 8 widened idx=0's label to ~440px, forcing
+  // the milestone stagger from 2 rows to 4 rows. ANNOUNCEMENT drops to
+  // y=84 to clear the new Row 3 (y=66) without touching any milestone row.
+  g.append('text').attr('x', x(0) + 6).attr('y', 84).attr('text-anchor', 'start')
     .attr('font-family', 'Inter, sans-serif').attr('font-size', 11).attr('fill', T.ink60)
     .attr('letter-spacing', '0.1em').text('ANNOUNCEMENT');
 
@@ -484,9 +485,9 @@ function renderScene8(stepIdx = 0) {
   g.append('path').attr('class', 'line-bird').attr('d', lineGen(bird));
   // Pulse + dot at day 0
   g.append('circle').attr('class', 'bird-dot-pulse')
-    .attr('cx', x(0)).attr('cy', y(582));
+    .attr('cx', x(0)).attr('cy', y(683));
   g.append('circle').attr('class', 'bird-dot')
-    .attr('cx', x(0)).attr('cy', y(582)).attr('r', 5);
+    .attr('cx', x(0)).attr('cy', y(683)).attr('r', 5);
 
   // Legend
   const legend = g.append('g').attr('transform', `translate(${iw - 200},10)`);
@@ -511,26 +512,39 @@ function renderScene8(stepIdx = 0) {
   // (which pushes later labels past the chart right edge), stagger labels
   // into TWO y-rows. Odd-indexed labels sit at y=12, even-indexed at y=30,
   // doubling the vertical bandwidth with zero horizontal cost.
+  // Round 8 Bug: idx=0's label grew to ~440px ("+180% close, +388% intraday"
+  // modifiers) and smothered idx=2 on the same row even with the 130px
+  // nudge window. Fix: switch to a 4-row stagger — Row 0 is dedicated to
+  // idx=0 alone (nothing else may share it), idx=1..N cycle through Rows
+  // 1 and 2, and the flipped right-edge label gets Row 3. Widen the
+  // horizontal collision window from 130px to 180px to match the longest
+  // non-idx=0 label widths.
   const milestones = d.lbcc.milestones;
   const visibleMilestones = Math.max(0, Math.min(milestones.length, stepIdx));
-  const labelBandTopY = 12;                              // row A
-  const labelBandBottomY = 30;                           // row B
-  const labelBandRightEdgeY = 48;                        // row C — only for flipped-anchor rightmost labels
+  const labelBandTopY = 12;         // Row 0 — reserved for idx=0 alone (label too wide to share)
+  const labelBandMidUpperY = 30;    // Row 1
+  const labelBandMidLowerY = 48;    // Row 2
+  const labelBandRightEdgeY = 66;   // Row 3 — rightmost flipped-anchor only
+  const bandYByRow = [labelBandTopY, labelBandMidUpperY, labelBandMidLowerY, labelBandRightEdgeY];
   const labelPositions = [];                             // {x, label, row}
   milestones.slice(0, visibleMilestones).forEach((m, idx) => {
     const day = m.d;
     if (day > cutoff) return;
     const pt = d.lbcc.series.reduce((a, b) => (Math.abs(b.d - day) < Math.abs(a.d - day) ? b : a));
     const dx = x(day);
-    // Alternate rows so adjacent labels never share a horizontal band.
-    const row = idx % 2;
-    let bandY = row === 0 ? labelBandTopY : labelBandBottomY;
+    // Row 0 is dedicated to idx=0 (label is too wide to share a row).
+    // Other milestones cycle through rows 1 and 2.
+    // The flipped right-edge label goes to row 3.
+    let row;
+    if (idx === 0) row = 0;
+    else row = 1 + ((idx - 1) % 2);   // cycles 1, 2, 1, 2 for idx=1..N
+    let bandY = bandYByRow[row];
     // Nudge horizontally away from prior labels ON THE SAME ROW.
     let lx = dx;
     for (const p of labelPositions) {
       if (p.row !== row) continue;
-      if (Math.abs(lx - p.x) < 130) {
-        lx = p.x + 130;
+      if (Math.abs(lx - p.x) < 180) {
+        lx = p.x + 180;
       }
     }
     // Round 6 Bug 1: the rightmost milestone ("Nasdaq delisted; SEC
@@ -544,10 +558,13 @@ function renderScene8(stepIdx = 0) {
     // Round 7 Bug 1: once the rightmost label's anchor flips to 'end',
     // its text extends LEFT from lx, landing on top of the previous
     // label (same y-row, closer than the 130px collision window guards).
-    // Push flipped-anchor rightmost labels to a dedicated third row (y=48)
-    // that sits below the existing 12/30 stagger.
-    if (isRightEdge) bandY = labelBandRightEdgeY;
-    labelPositions.push({ x: lx, label: m.label, row: isRightEdge ? 2 : row });
+    // Push flipped-anchor rightmost labels to a dedicated fourth row
+    // (y=66) that sits below the 12/30/48 stagger.
+    if (isRightEdge) {
+      row = 3;
+      bandY = labelBandRightEdgeY;
+    }
+    labelPositions.push({ x: lx, label: m.label, row });
     g.append('circle').attr('class', 'milestone-dot').attr('cx', dx).attr('cy', y(pt.p)).attr('r', 3);
     // Leader line from dot up to the label band
     g.append('line').attr('class', 'milestone-leader')

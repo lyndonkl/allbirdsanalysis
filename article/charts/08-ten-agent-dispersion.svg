@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 394" width="700" height="394" role="img" aria-labelledby="t08 d08">
   <title id="t08">Ten analysts, one company, ten prices — from $2.50 to $125</title>
-  <desc id="d08">Strip-plot of ten analyst price targets on a log scale from $2 to $150. Five bearish dots cluster between $2.50 and $8.30 (crimson), one neutral dot sits at $12.78 (grey), and four bullish dots span $19.12 to $125 (teal). A dashed vertical line marks the current market price of $14.50, which sits above all bears, below the neutral, and far below any bull. The bear cluster holds five of ten votes.</desc>
+  <desc id="d08">Strip-plot of ten analyst price targets on a log scale from $2 to $150. Five bearish dots cluster between $2.50 and $8.30 (crimson), one neutral dot sits at $12.78 (grey), and four bullish dots span $19.12 to $125 (teal). A dashed vertical line marks the current market price of $16.99, which sits above all 5 bears AND above the $12.78 neutral, below the $19.12 Company Analyst Bull (and all higher bulls). The bear cluster still holds five of ten votes.</desc>
   <style>
     .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:22px;fill:#1A1A1A}
     .subtitle{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#5C5C5C}
@@ -19,18 +19,18 @@
   <rect width="700" height="394" fill="#FAF7F0"/>
 
   <text class="title" x="40" y="40">Ten analysts · one company · ten prices</text>
-  <text class="subtitle" x="40" y="60">12-MONTH PRICE TARGETS BY AGENT FRAMEWORK · LOG SCALE · MARKET TODAY $14.50</text>
+  <text class="subtitle" x="40" y="60">12-MONTH PRICE TARGETS BY AGENT FRAMEWORK · LOG SCALE · MARKET TODAY $16.99</text>
 
   <!-- Log axis: x=60..660 (600 wide), domain $2..$150
        log10(2)=0.301, log10(150)=2.176, range 1.875
        x(v) = 60 + ((log10(v) - 0.301) / 1.875) * 600
   -->
 
-  <!-- ticks at 2.5, 5, 10, 14.5, 25, 50, 100, 125 -->
+  <!-- ticks at 2.5, 5, 10, 16.99, 25, 50, 100, 125 -->
   <!-- x(2.5)   = 60 + (0.397-0.301)/1.875 * 600 = 60 + 30.7 = 90.7 -->
   <!-- x(5)    = 60 + (0.699-0.301)/1.875 * 600 = 60 + 127.4 = 187.4 -->
   <!-- x(10)   = 60 + (1.000-0.301)/1.875 * 600 = 60 + 223.7 = 283.7 -->
-  <!-- x(14.5) = 60 + (1.161-0.301)/1.875 * 600 = 60 + 275.2 = 335.2 -->
+  <!-- x(16.99)= 60 + (1.230-0.301)/1.875 * 600 = 60 + 297.3 = 357.3 -->
   <!-- x(25)   = 60 + (1.398-0.301)/1.875 * 600 = 60 + 351 = 411 -->
   <!-- x(50)   = 60 + (1.699-0.301)/1.875 * 600 = 60 + 447.4 = 507.4 -->
   <!-- x(100)  = 60 + (2.000-0.301)/1.875 * 600 = 60 + 543.7 = 603.7 -->
@@ -41,7 +41,7 @@
     <line x1="90.7"  y1="280" x2="90.7"  y2="286" class="axis-line"/>
     <line x1="187.4" y1="280" x2="187.4" y2="286" class="axis-line"/>
     <line x1="283.7" y1="280" x2="283.7" y2="286" class="axis-line"/>
-    <line x1="335.2" y1="280" x2="335.2" y2="286" class="axis-line"/>
+    <line x1="357.3" y1="280" x2="357.3" y2="286" class="axis-line"/>
     <line x1="411"   y1="280" x2="411"   y2="286" class="axis-line"/>
     <line x1="507.4" y1="280" x2="507.4" y2="286" class="axis-line"/>
     <line x1="603.7" y1="280" x2="603.7" y2="286" class="axis-line"/>
@@ -50,7 +50,7 @@
     <text class="axis-tick" x="90.7"  y="302" text-anchor="middle">$2.50</text>
     <text class="axis-tick" x="187.4" y="302" text-anchor="middle">$5</text>
     <text class="axis-tick" x="283.7" y="302" text-anchor="middle">$10</text>
-    <text class="axis-tick" x="335.2" y="302" text-anchor="middle" fill="#D9A441" font-weight="600">$14.50</text>
+    <text class="axis-tick" x="357.3" y="302" text-anchor="middle" fill="#D9A441" font-weight="600">$16.99</text>
     <text class="axis-tick" x="411"   y="302" text-anchor="middle">$25</text>
     <text class="axis-tick" x="507.4" y="302" text-anchor="middle">$50</text>
     <text class="axis-tick" x="603.7" y="302" text-anchor="middle">$100</text>
@@ -58,8 +58,8 @@
   </g>
 
   <!-- Current market line (dashed) full vertical -->
-  <line class="current-line" x1="335.2" y1="90" x2="335.2" y2="280"/>
-  <text class="current-label" x="335.2" y="82" text-anchor="middle">market $14.50</text>
+  <line class="current-line" x1="357.3" y1="90" x2="357.3" y2="280"/>
+  <text class="current-label" x="357.3" y="82" text-anchor="middle">market $16.99</text>
 
   <!-- Dots: y center 220, with vertical jitter by agent number
        Bear 5, Neutral 1, Bull 4
@@ -135,6 +135,6 @@
   </g>
 
   <text x="40" y="384" class="caption">
-    Market price sits above every bear, below the neutral, and far below any bull. The bear cluster holds five of ten votes.
+    Market price sits above every bear and above the $12.78 neutral, still below the $19.12 Company Analyst Bull and all higher bulls. The bear cluster still holds five of ten votes.
   </text>
 </svg>

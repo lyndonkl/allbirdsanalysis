@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 1244" width="700" height="1244" role="img" aria-labelledby="t07 d07">
   <title id="t07">From April 15 to May 18: a one-month timeline and two forks</title>
-  <desc id="d07">Vertical branching timeline beginning at April 15, 2026 ($14.50 close) and ending at the May 18, 2026 stockholder vote. Events along the way include the market digestion period, a Q1 preview window, the expected proxy filing around May 5, and a two-week review period. At May 18 the path forks: a bull branch (benign fixed-conversion terms, outcomes between $38 and $125) and a bear branch (toxic floating plus lookback terms, outcomes around $1.50 or a reverse split).</desc>
+  <desc id="d07">Vertical branching timeline beginning at April 15, 2026 ($16.99 close) and ending at the May 18, 2026 stockholder vote. Events along the way include the market digestion period, a Q1 preview window, the expected proxy filing around May 5, and a two-week review period. At May 18 the path forks: a bull branch (benign fixed-conversion terms, outcomes between $38 and $125) and a bear branch (toxic floating plus lookback terms, outcomes around $1.50 or a reverse split).</desc>
   <style>
     .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:22px;fill:#F2F2F2}
     .subtitle{font-family:Inter,system-ui,sans-serif;font-size:12px;fill:#A8AEC0}
@@ -33,8 +33,8 @@
     <circle class="today-dot" r="10"/>
     <text class="date" x="-30" y="-22" text-anchor="end">April 15, 2026</text>
     <text class="event-label" x="-30" y="-6" text-anchor="end" font-weight="600">Today · Day 1</text>
-    <text class="event-note" x="-30" y="12" text-anchor="end">BIRD closes $14.50, intraday peak $24.31</text>
-    <text class="event-note" x="-30" y="28" text-anchor="end">288M shares traded · 35× float</text>
+    <text class="event-note" x="-30" y="12" text-anchor="end">BIRD closes $16.99, intraday peak $24.31</text>
+    <text class="event-note" x="-30" y="28" text-anchor="end">286M shares traded · 35× on shares outstanding / 50× on float</text>
   </g>
 
   <!-- Apr 22 · Market digests -->
@@ -57,8 +57,8 @@
   <g transform="translate(350,490)">
     <circle class="dot" r="6"/>
     <text class="date" x="30" y="-6" text-anchor="start">May 5</text>
-    <text class="event-label" x="30" y="12" text-anchor="start">Definitive proxy expected</text>
-    <text class="event-note" x="30" y="28" text-anchor="start">Conversion terms become public</text>
+    <text class="event-label" x="30" y="12" text-anchor="start">DEFM14A expected (after SEC review of Apr 15 PREM14A)</text>
+    <text class="event-note" x="30" y="28" text-anchor="start">Final conversion pricing mechanics become public</text>
   </g>
 
   <!-- May 12 · Proxy review -->
