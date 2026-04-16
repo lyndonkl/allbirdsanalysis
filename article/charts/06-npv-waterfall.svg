@@ -107,8 +107,8 @@
     <text class="row-primary" x="210" y="20" text-anchor="end">$5.00 / hr</text>
     <text class="row-sub"     x="210" y="34" text-anchor="end">B200 tier · 92% util</text>
     <rect x="440" y="10" width="249.6" height="20" fill="#3A8E5C"/>
-    <text class="value-label-pos" x="634" y="24" text-anchor="end" fill="#FFFFFF">+$48M</text>
-    <text class="verdict" x="694" y="24" fill="#3A8E5C" text-anchor="end">STRONG INVEST</text>
+    <text class="value-label-pos" x="452" y="24" fill="#FFFFFF">+$48M</text>
+    <text class="verdict" x="684" y="24" fill="#FFFFFF" text-anchor="end" font-weight="600">STRONG INVEST</text>
   </g>
 
   <!-- Brackets on the left -->
@@ -125,11 +125,9 @@
     <text class="bracket-bull" x="14" y="322" text-anchor="end" transform="rotate(-90 14 322)">ENTERPRISE CONTRACTS REQUIRED</text>
   </g>
 
-  <!-- Right side callout -->
-  <g transform="translate(670,258)">
-    <path d="M0,0 L-12,-8 L-12,8 Z" fill="#D9A441"/>
-  </g>
-  <text class="callout-text" x="680" y="260" text-anchor="end" fill="#D9A441" font-weight="600">
-    ↑ the entire investment thesis lives here
+  <!-- Top callout pointing down at the thesis band -->
+  <text class="callout-text" x="350" y="78" text-anchor="middle" fill="#D9A441" font-weight="600">
+    the entire investment thesis lives in this row ↓
   </text>
+  <path d="M350,86 L344,94 L356,94 Z" fill="#D9A441"/>
 </svg>

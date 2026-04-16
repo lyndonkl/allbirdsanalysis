@@ -106,11 +106,12 @@
   <!-- callout -->
   <g transform="translate(40,430)">
     <rect width="620" height="80" fill="#FBFAF7" stroke="#B23A48" stroke-width="1"/>
-    <text x="20" y="28" class="title" font-size="20" fill="#B23A48">0.02%</text>
-    <text x="20" y="50" class="subtitle" font-weight="600">of hyperscaler 2025 AI capex.</text>
-    <text x="130" y="28" class="subtitle" font-weight="600">NewBird AI's total capital base is one pixel inside the bar above.</text>
-    <text x="130" y="46" class="subtitle">To matter at this table the company needs between $500M and $1B of balance-sheet capital — a 4× to 8× equity raise from today's</text>
-    <text x="130" y="62" class="subtitle">position. That is not a competitive disadvantage. That is a category error.</text>
+    <text x="18" y="32" class="title" font-size="22" fill="#B23A48">0.02%</text>
+    <text x="18" y="52" class="subtitle" font-weight="600">of 2025 AI capex.</text>
+    <line x1="170" y1="18" x2="170" y2="62" stroke="#B23A48" stroke-opacity="0.3"/>
+    <text x="186" y="28" class="subtitle" font-weight="600">NewBird's total capital is one pixel inside the bar above.</text>
+    <text x="186" y="46" class="subtitle">To matter at this table the company needs $500M-$1B — a 4× to 8× raise</text>
+    <text x="186" y="62" class="subtitle">from today's position. Not a competitive disadvantage. A category error.</text>
   </g>
 
   <text x="40" y="518" class="subtitle">
