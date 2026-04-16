@@ -97,6 +97,15 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Analytics stub (plan §9.10) — zero-cost instrumentation.
+// Wire to a real sink (GA4, Plausible, custom endpoint) in a later pass.
+// Intentionally a no-op that logs in DEV only; any callable surface.
+function track(name, payload) {
+  // eslint-disable-next-line no-console
+  if (window.__BIRD_TRACE__) console.debug('[track]', name, payload);
+  // Future: POST to /ingest, push to dataLayer, etc.
+}
+
 // Data loader — prefers inline `window.__BIRD_DATA__` (file:// safe),
 // falls back to fetch() for the JSON files when served over HTTP.
 const DATA = {};
@@ -456,10 +465,26 @@ function renderScene8(stepIdx = 0) {
 
 // =============================================================
 // Scene 9 — scale zoom (SIGNATURE)
+// Plan §3 Scene 9 / §6 investment-moment 1 — continuous pull-back vertigo
+// Round-2 reviewer deliverable 1: drive zoom from onStepProgress, not
+// onStepEnter, and interpolate smoothly so the capital ladder becomes
+// a single share-image rather than six discrete exhibits.
 // =============================================================
 const S9_ZOOMS = [1, 18, 55, 116, 4688, 8000]; // last one gives hyperscalers headroom + the $500M-$1B band annotation
+const S9_CAPTIONS = [
+  { ratio: '1×',    text: 'NewBird AI has $128 million. That is the denominator for everything that follows.' },
+  { ratio: '18×',   text: 'Lambda Labs, private and Nvidia-backed, has raised $2.3 billion. Eighteen times NewBird\'s entire capital base.' },
+  { ratio: '55×',   text: 'Applied Digital has invested $7 billion in AI data centers and still reports only $340M in revenue.' },
+  { ratio: '116×',  text: 'CoreWeave spent $14.9 billion on capex in 2025 alone. NewBird\'s capital is one pixel inside that bar.' },
+  { ratio: '4,688×',text: 'AWS + Azure + GCP + Meta will spend over $600 billion on AI infrastructure in 2025. NewBird\'s capital is 0.02% of table stakes.' },
+  { ratio: '3.9×–7.8×', text: 'To matter at this table NewBird needs $500M–$1B. It has $128M. That is not a competitive disadvantage. That is a category error.' }
+];
 
-function renderScene9(stepIdx = 0) {
+// Continuous renderer — called every progress tick.
+// `zoom` is a floating-point value interpolated between S9_ZOOMS entries.
+// `stepIdx` is the integer step (0..5) that decides which annotations are live.
+// `captionProgress` is 0..1 within the current step, used for crossfade.
+function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
   const el = document.getElementById('s9-stage');
   if (!el || !DATA['capital-ladder']) return;
   const d = DATA['capital-ladder'];
@@ -472,18 +497,12 @@ function renderScene9(stepIdx = 0) {
     .attr('preserveAspectRatio', 'xMidYMid meet');
   svg.selectAll('*').remove();
 
-  const zoom = S9_ZOOMS[Math.min(stepIdx, S9_ZOOMS.length - 1)];
   // base anchor radius when zoom=1
   const anchorR = 110;
-  // each rung radius is proportional to sqrt(value/anchor.value) because area ratio
-  const areaRatio = v => Math.sqrt(v / rungs[0].value); // = sqrt(ratio)
-  // on-screen radius = anchorR * areaRatio(v) / zoom
-  // but we want anchor to stay visible at zoom=1 and shrink as zoom grows
-  // So on-screen anchor radius = anchorR / zoom. Visible circles must have enough screen room.
+  // area-proportional: each rung's screen radius is anchorR * sqrt(ratio) / zoom
+  const areaRatio = v => Math.sqrt(v / rungs[0].value);
 
   rungs.forEach((r, i) => {
-    const onscreen = (anchorR / 1) * (areaRatio(r.value)) / zoom * 1; // simplified
-    // use an asymptotic clamp — the anchor should be visible but tiny at max zoom
     const screenR = Math.max(0.8, Math.min(280, (anchorR * areaRatio(r.value)) / zoom));
     const visible = screenR >= 0.8 && screenR <= 320;
     if (!visible && i !== 0) return;
@@ -496,7 +515,6 @@ function renderScene9(stepIdx = 0) {
       .attr('fill', isAnchor ? T.accent : 'none')
       .attr('fill-opacity', isAnchor ? 0.15 : 0);
 
-    // Label position: at top of ring when big enough
     if (screenR > 18) {
       svg.append('text').attr('class', 'ring-label')
         .attr('x', cx).attr('y', cy - screenR - 12)
@@ -509,7 +527,7 @@ function renderScene9(stepIdx = 0) {
     }
   });
 
-  // Min-viable band as a subtle ring between $500M and $1B
+  // Min-viable band appears once we've crossed the hyperscaler zoom (final step)
   if (stepIdx >= 5) {
     const rMin = Math.max(0.8, (anchorR * areaRatio(500)) / zoom);
     const rMax = Math.max(0.8, (anchorR * areaRatio(1000)) / zoom);
@@ -524,7 +542,7 @@ function renderScene9(stepIdx = 0) {
       .text('Minimum viable neocloud: $500M–$1B');
   }
 
-  // "You are here" arrow when zoom is large
+  // "You are here" once we've pulled back past CoreWeave
   if (zoom >= 116) {
     svg.append('text').attr('class', 'you-are-here')
       .attr('x', cx).attr('y', cy + 50)
@@ -532,18 +550,24 @@ function renderScene9(stepIdx = 0) {
       .text('↑ YOU ARE HERE — NewBird AI');
   }
 
-  // Caption panel update
-  const captionData = [
-    { ratio: '1×',    text: 'NewBird AI has $128 million. That is the denominator for everything that follows.' },
-    { ratio: '18×',   text: 'Lambda Labs, private and Nvidia-backed, has raised $2.3 billion. Eighteen times NewBird\'s entire capital base.' },
-    { ratio: '55×',   text: 'Applied Digital has invested $7 billion in AI data centers and still reports only $340M in revenue.' },
-    { ratio: '116×',  text: 'CoreWeave spent $14.9 billion on capex in 2025 alone. NewBird\'s capital is one pixel inside that bar.' },
-    { ratio: '4,688×',text: 'AWS + Azure + GCP + Meta will spend over $600 billion on AI infrastructure in 2025. NewBird\'s capital is 0.02% of table stakes.' },
-    { ratio: '3.9×–7.8×', text: 'To matter at this table NewBird needs $500M–$1B. It has $128M. That is not a competitive disadvantage. That is a category error.' }
-  ];
-  const c = captionData[Math.min(stepIdx, captionData.length - 1)];
-  document.getElementById('s9-ratio').textContent = c.ratio;
-  document.getElementById('s9-captext').textContent = c.text;
+  // Caption crossfade — each caption peaks at mid-step and fades as the next takes over.
+  // Plan §3 Scene 9 — continuous zoom per reviewer deliverable 1.
+  const ratioEl = document.getElementById('s9-ratio');
+  const textEl = document.getElementById('s9-captext');
+  const capPanel = document.getElementById('s9-caption');
+  const c = S9_CAPTIONS[Math.min(stepIdx, S9_CAPTIONS.length - 1)];
+  if (ratioEl) ratioEl.textContent = c.ratio;
+  if (textEl) textEl.textContent = c.text;
+  if (capPanel) {
+    const fade = 1 - Math.abs(captionProgress - 0.5) * 2;
+    capPanel.style.opacity = Math.max(0.25, fade).toFixed(3);
+  }
+}
+
+// Back-compat discrete entry — used for the initial paint and reduced-motion fallback.
+function renderScene9(stepIdx = 0) {
+  const zoom = S9_ZOOMS[Math.min(stepIdx, S9_ZOOMS.length - 1)];
+  renderScene9Continuous(zoom, stepIdx, 0.5);
 }
 
 // =============================================================
@@ -984,6 +1008,7 @@ function wireScene13Drag() {
   function onStart(e) {
     dragging = true;
     sceneEl.classList.add('drag-ready');
+    track('scene13_user_drag_start', { startPrice: s13Price });
     if (e.preventDefault) e.preventDefault();
     onMove(e);
   }
@@ -993,7 +1018,10 @@ function wireScene13Drag() {
     if (xv === null) return;
     renderScene13(x.invert(xv));
   }
-  function onEnd() { dragging = false; }
+  function onEnd() {
+    if (dragging) track('scene13_user_drag_end', { endPrice: s13Price });
+    dragging = false;
+  }
 
   sliderEl.addEventListener('mousedown', onStart);
   sliderEl.addEventListener('touchstart', onStart, { passive: false });
@@ -1081,13 +1109,24 @@ function renderScene16(stepIdx = 5) {
     .attr('x', x(current)).attr('y', -46).attr('text-anchor', 'middle')
     .text('market $14.50');
 
-  // Plot dots — force-style lane to avoid overlaps
+  // Plot dots — force-directed lanes to avoid the $3.30 bear cluster overlap.
+  // Plan §3 Scene 16 — reviewer major 3: two bears at target=$3.30 were stacked
+  // by the old modulo jitter. Run a short d3.forceSimulation that anchors each
+  // dot to its x(target) and uses forceCollide(12) so same-target agents fan
+  // out vertically around the midline without drifting off-target.
   const yMid = ih / 2;
-  const groups = d3.groups(agents, a => Math.round(x(a.target) / 20));
-  agents.forEach(a => {
-    const ax = x(a.target);
-    // deterministic y jitter from original ordering
-    const dy = (a.n % 5) * 12 - 24;
+  const nodes = agents.map(a => ({ ...a, fx0: x(a.target), y: yMid }));
+  const sim = d3.forceSimulation(nodes)
+    .force('x', d3.forceX(d => d.fx0).strength(1))
+    .force('y', d3.forceY(yMid).strength(0.08))
+    .force('collide', d3.forceCollide(12))
+    .stop();
+  for (let i = 0; i < 120; i++) sim.tick();
+
+  nodes.forEach(a => {
+    const ax = x(a.target);       // keep x locked to true target
+    const ay = a.y;                // force simulation only contributes y lane
+    const dy = ay - yMid;
     const visible = (function() {
       if (stepIdx >= 5) return true;
       if (stepIdx >= 2 && a.stance === 'bear') return true;
@@ -1097,11 +1136,11 @@ function renderScene16(stepIdx = 5) {
     })();
     const opacity = visible ? 1 : 0;
     g.append('circle').attr('class', 'agent-dot ' + a.stance)
-      .attr('cx', ax).attr('cy', yMid + dy).attr('r', 9)
+      .attr('cx', ax).attr('cy', ay).attr('r', 9)
       .attr('opacity', opacity);
     if (visible) {
       const labelX = ax;
-      const labelY = yMid + dy + (dy < 0 ? -14 : 20);
+      const labelY = ay + (dy < 0 ? -14 : 20);
       g.append('text').attr('class', 'agent-label')
         .attr('x', labelX).attr('y', labelY).attr('text-anchor', 'middle')
         .text('$' + a.target.toFixed(2));
@@ -1148,25 +1187,38 @@ function renderScene17Docs() {
 // =========================================================================
 function initScrolling() {
   // One scroller for outer scene transitions (background + ticker updates)
+  // Plan §1 rule #9 (honesty over drama): the ticker only ever shows prices
+  // that appear in the real intraday series ($2.49 prior close, $24.31 peak,
+  // $14.50 close). No invented intermediate values. Scenes 3 and 11 drive the
+  // ticker progressively from the real bars via handleStep/handleStepProgress.
   const outer = scrollama();
   outer.setup({ step: '[data-scene]', offset: 0.5 })
     .onStepEnter(({ element }) => {
       updateBodyBg(element);
       const sid = element.getAttribute('data-scene');
-      // set ticker to scene-appropriate price if not progressively driven elsewhere
+      track('scene_enter', { scene: sid });
+      // set ticker to the truthful anchor for this scene's narrative moment
       if (sid === '1') setTicker(2.49, { dark: true });
       else if (sid === '2') setTicker(2.49, { dark: false });
-      else if (sid === '4') setTicker(18.70);
-      else if (sid === '5') setTicker(16.20);
-      else if (sid === '6') setTicker(15.80);
-      else if (sid === '7') setTicker(15.50);
-      else if (sid === '9') setTicker(15.20);
-      else if (sid === '10') setTicker(15.00);
+      // Scenes 4–10 hold at the $24.31 peak (the moment the story asks "why did
+      // this stock do +582%?" — the ticker is frozen at the peak while we answer).
+      else if (sid === '4') setTicker(24.31);
+      else if (sid === '5') setTicker(24.31);
+      else if (sid === '6') setTicker(24.31);
+      else if (sid === '7') setTicker(24.31);
+      else if (sid === '8') setTicker(24.31);
+      else if (sid === '9') setTicker(24.31);
+      else if (sid === '10') setTicker(24.31);
+      // Scene 11 drives the fade itself from real bars; 12+ lock at the close.
       else if (sid === '12') setTicker(14.50, { dark: true });
-      else if (sid === '13') setTicker(14.50, { dark: false });
+      else if (sid === '13') { setTicker(14.50, { dark: false }); track('scene13_enter', { price: s13Price }); }
       else if (sid === '15') setTicker(14.50);
       else if (sid === '16') setTicker(14.50);
       else if (sid === '17') setTicker(14.50);
+    })
+    .onStepExit(({ element, direction }) => {
+      const sid = element.getAttribute('data-scene');
+      if (sid === '13') track('scene13_exit', { direction, price: s13Price });
     });
 
   // Scene-specific inner scrollers (steps)
@@ -1190,6 +1242,34 @@ function initScrolling() {
     });
 
   window.addEventListener('resize', () => { outer.resize(); inner.resize(); });
+
+  // Plan §3 Scene 2 — morph fires on entry per reviewer dealbreaker 2.
+  // CSS already defines the is-morphed end state; we just need a JS trigger.
+  const s2 = document.getElementById('scene-2');
+  if (s2 && 'IntersectionObserver' in window) {
+    const s2Observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+          s2.classList.add('is-morphed');
+        }
+      });
+    }, { threshold: [0, 0.25, 0.35, 0.5] });
+    s2Observer.observe(s2);
+  }
+
+  // Plan §3 Scene 6 — redact reveal beat per reviewer dealbreaker 3.
+  // The document arrives with a dotted underline; the censor bars ink in on entry.
+  const s6 = document.getElementById('scene-6');
+  if (s6 && 'IntersectionObserver' in window) {
+    const s6Observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
+          s6.classList.add('revealed');
+        }
+      });
+    }, { threshold: [0, 0.25, 0.35, 0.5] });
+    s6Observer.observe(s6);
+  }
 }
 
 function handleStep(sceneId, stepIdx, progress) {
@@ -1220,8 +1300,9 @@ function handleStep(sceneId, stepIdx, progress) {
       renderScene10(stepIdx + 1);
       break;
     case '11':
+      // renderScene11 calls setTicker() itself using the last visible real
+      // intraday bar close — no invented intermediate prices here.
       renderScene11((stepIdx + 1) / 3);
-      setTicker([24.31, 17.00, 14.50][Math.min(stepIdx, 2)]);
       break;
     case '12':
       renderScene12(stepIdx + 1);
@@ -1230,7 +1311,9 @@ function handleStep(sceneId, stepIdx, progress) {
       if (stepIdx < 3) {
         renderScene13(S13.stepPrices[stepIdx]);
       } else {
+        // Auto-drive reached the $1.50 floor — now the reader takes the wheel.
         document.getElementById('scene-13').classList.add('drag-ready');
+        track('scene13_auto_complete', { finalPrice: S13.stepPrices[S13.stepPrices.length - 1] });
       }
       break;
     case '16':
@@ -1252,6 +1335,16 @@ function handleStepProgress(sceneId, stepIdx, progress) {
   }
   if (sceneId === '11') {
     renderScene11((stepIdx + progress) / 3);
+  }
+  if (sceneId === '9') {
+    // Plan §3 Scene 9 — continuous zoom per reviewer deliverable 1.
+    // Interpolate between S9_ZOOMS[stepIdx] and [stepIdx+1] with cubic easing
+    // so the pull-back is a smooth vertigo, not six discrete snaps.
+    const from = S9_ZOOMS[Math.min(stepIdx, S9_ZOOMS.length - 1)];
+    const to = S9_ZOOMS[Math.min(stepIdx + 1, S9_ZOOMS.length - 1)];
+    const d = reducedMotion ? progress : d3.easeCubicInOut(progress);
+    const z = from + (to - from) * d;
+    renderScene9Continuous(z, stepIdx, progress);
   }
 }
 

@@ -43,6 +43,11 @@
   /* Layout --------------------------------------------------------- */
   --scene-max: 1120px;
   --prose-max: 640px;
+
+  /* Plan §4 polish — tabular-nums cascaded globally so every number,
+     including serif display figures, aligns across scenes. */
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
 }
 
 /* Reset */
@@ -313,7 +318,9 @@ body[data-bg="slate"] .scene__dek { color: rgba(255,255,255,0.75); }
   margin: 0 auto;
 }
 #scene-1 .trailing-chart svg { overflow: visible; }
-#scene-1 .trailing-chart .axis-label { fill: rgba(255,255,255,0.55); font-family: var(--mono); font-size: 11px; }
+/* Plan §4 + WCAG AA — axis labels on the black cold-open need ≥4.5:1 contrast.
+   Bumped from 0.55 to 0.72 alpha to clear the AA threshold for small text. */
+#scene-1 .trailing-chart .axis-label { fill: rgba(255,255,255,0.72); font-family: var(--mono); font-size: 11px; }
 #scene-1 .trailing-chart .bird-line { fill: none; stroke: #9EC7C6; stroke-width: 1.6; opacity: 0; transition: opacity var(--dur-grand); }
 #scene-1 .trailing-chart.is-drawn .bird-line { opacity: 1; }
 #scene-1 .trailing-chart .low-dot { fill: var(--bear); opacity: 0; transition: opacity var(--dur-std) 400ms; }
@@ -484,12 +491,27 @@ body[data-bg="slate"] .scene__dek { color: rgba(255,255,255,0.75); }
   color: var(--ink-60); margin: 0 0 14px 0;
 }
 #scene-6 .redact-stage p { margin: 0 0 14px 0; }
+/* Plan §3 Scene 6 — dealbreaker 3 reveal beat.
+   Initial state: transparent bar with a dotted underline hinting at
+   elided text. On .revealed (added by IntersectionObserver), the censor
+   bar inks in over 400ms with an 800ms delay so the reader registers
+   that the name was hidden on purpose. The Chardan callout's existing
+   fade-in then serves as the coda. */
 #scene-6 .redact {
-  display: inline-block; background: #111; color: transparent;
-  padding: 0 6px; border-radius: 2px; user-select: none;
-  transition: background var(--dur-std), color var(--dur-std);
+  display: inline-block;
+  background: transparent;
+  color: transparent;
+  padding: 0 6px;
+  border-radius: 2px;
+  border-bottom: 1px dotted var(--ink-40);
+  user-select: none;
+  transition: background 400ms ease 800ms, border-color 400ms ease 800ms;
 }
-#scene-6.revealed .redact { background: #111; color: transparent; }
+#scene-6.revealed .redact {
+  background: #111;
+  color: transparent;
+  border-bottom-color: #111;
+}
 #scene-6 .chardan-callout {
   margin-top: 20px; padding: 14px 16px;
   border-left: 3px solid var(--bear);
