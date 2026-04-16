@@ -407,6 +407,8 @@ The company is deploying capital at (thesis) projected returns of 20-35% IRR aga
 3. Management has specific GPU purchase agreements in hand (no "raise first, find customers second" model)
 4. Long-term customer commitments (12-24 month minimum lease agreements) secured before or concurrent with deployment
 
+> **Correction (2026-04-16, Erratum #4):** The plumbing for equity issuance already exists: Allbirds has an S-3 shelf ($100M) and a $50M ATM program with TD Cowen, both on file since June 30, 2025 (ATM used once, 386,289 shares / $1.7M through Dec 31, 2025). The recommendation to issue at elevated prices is therefore operationally immediate, not hypothetical; baby-shelf caps (Rule I.B.6) apply. See [00-synthesis.md §Errata](00-synthesis.md).
+
 ```
 Phase 4 Outputs:
 FCFE capacity: ($104-120M) -- deeply negative (correct for deployment phase),

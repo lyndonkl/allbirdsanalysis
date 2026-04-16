@@ -205,6 +205,8 @@ The $50M convertible from an "institutional investor" with Chardan as placement 
 
 **Worst-case dilution scenario:** If convertible has a floor reset (common in toxic deals), and the stock returns to its pre-pump $2.50 range, $50M converts at ~$2.00 = **25 million new shares**, taking total share count to **33M**. At a generous $50M firm value, that's **$1.50/share**.
 
+> **Correction (2026-04-16, Erratum #3):** The PREM14A was filed April 15, 2026 and discloses an alternate floating-price conversion mechanic alongside the fixed path. The worst-case dilution scenario above is now a structurally-confirmed possibility rather than pure speculation; the exact trigger and discount parameters remain in the exhibits / definitive proxy. See [00-synthesis.md §Errata](00-synthesis.md).
+
 ---
 
 ## PHASE 5: RELATIVE VALUATION

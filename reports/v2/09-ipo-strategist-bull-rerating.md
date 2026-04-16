@@ -361,6 +361,8 @@ I will now use the `capital-structure-optimizer` skill to recommend NewBird's op
 
 **ANSWER: ABSOLUTELY YES. This is the single most important strategic decision.**
 
+> **Correction (2026-04-16, Erratum #4):** Allbirds already has an S-3 shelf ($100M) and a $50M ATM program with TD Cowen on file since June 30, 2025 (ATM used once, 386,289 shares / $1.7M through Dec 31, 2025). The bull-case "do a secondary now" recommendation is operationally immediate off the existing shelf; baby-shelf caps (Rule I.B.6, <$75M public float) apply. See [00-synthesis.md §Errata](00-synthesis.md).
+
 **Reasoning (from the capital structure optimization framework):**
 
 1. **The narrative window is the asset.** A 582% surge creates a finite window — typically 30-90 days — where institutional investors are willing to underwrite a follow-on. Miss the window and the multiple compresses regardless of fundamentals.

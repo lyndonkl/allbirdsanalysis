@@ -1,5 +1,5 @@
 {
-  "currentPrice": 14.50,
+  "currentPrice": 16.99,
   "agents": [
     { "n": 1,  "name": "Company Analyst — Bull",        "role": "Steelman pivot",         "target": 38.38, "rec": "Speculative Buy",      "stance": "bull" },
     { "n": 2,  "name": "Company Analyst — Bear",        "role": "Red-team pivot",         "target": 3.30,  "rec": "Strong Sell",          "stance": "bear" },

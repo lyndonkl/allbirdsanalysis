@@ -2,10 +2,10 @@
   "start": "2026-04-15",
   "vote":  "2026-05-18",
   "events": [
-    { "date": "2026-04-15", "label": "Day 1 — Pivot announced, $24.31 intraday, $14.50 close" },
+    { "date": "2026-04-15", "label": "Day 1 — Pivot announced, $24.31 intraday, $16.99 close; PREM14A filed" },
     { "date": "2026-04-22", "label": "Apr 22 — Market digests; short interest rebuilds" },
     { "date": "2026-04-30", "label": "Apr 30 — Q1 preview window" },
-    { "date": "2026-05-05", "label": "May 5 — Definitive proxy filing expected" },
+    { "date": "2026-05-05", "label": "May 5 — Definitive proxy expected (after SEC review)" },
     { "date": "2026-05-12", "label": "May 12 — Proxy review period" },
     { "date": "2026-05-18", "label": "May 18 — Stockholder vote" }
   ],

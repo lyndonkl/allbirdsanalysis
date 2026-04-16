@@ -378,6 +378,8 @@ Per Securities Lawyer 101 and Coral Capital references found in research, "toxic
 
 **Without disclosed conversion terms, dilution risk is unbounded.** A floating-conversion convertible at 20% discount with a $0.50 conversion floor would, if the stock retraces to $5 in 6 months, convert into 10M+ shares — more than doubling the share count. At a $1 retracement, it could convert into 50M+ shares — 6x the current float.
 
+> **Correction (2026-04-16, Erratum #3):** The PREM14A was filed April 15, 2026 and discloses the convertible's structure, including an alternate floating-price conversion mechanic — the bear's floating-conversion assumption is now structurally confirmed rather than hypothetical. Specific formula parameters (VWAP lookback, discount %, triggers) may require the exhibits and definitive proxy; the dilution math above holds. See [00-synthesis.md §Errata](00-synthesis.md).
+
 ### Bear Conclusion on Capital Structure
 
 The capital structure is the **most dangerous element of the entire pivot**. Even if the AI business were a brilliant idea, the financing mechanism is structured in a way that systematically transfers value from common shareholders to the convertible holder. The "$50M raise" is not equity capital in the conventional sense — it is a synthetic short on the common stock with optionality to the upside.

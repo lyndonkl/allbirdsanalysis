@@ -4,18 +4,19 @@
     "series": [
       { "d": -30, "p": 100 }, { "d": -20, "p": 98 }, { "d": -10, "p": 102 },
       { "d":  -1, "p": 100 },
-      { "d":   0, "p": 380 },
-      { "d":  10, "p": 310 }, { "d":  20, "p": 265 }, { "d":  30, "p": 230 },
-      { "d":  45, "p": 200 }, { "d":  60, "p": 170 }, { "d":  90, "p": 140 },
-      { "d": 120, "p": 105 }, { "d": 150, "p": 75 },  { "d": 180, "p": 55 },
-      { "d": 210, "p": 40 },  { "d": 240, "p": 28 },  { "d": 270, "p": 18 },
+      { "d":   0, "p": 288 },
+      { "d":  10, "p": 260 }, { "d":  20, "p": 235 }, { "d":  30, "p": 210 },
+      { "d":  45, "p": 185 }, { "d":  60, "p": 160 }, { "d":  90, "p": 135 },
+      { "d": 120, "p": 100 }, { "d": 150, "p": 72 },  { "d": 180, "p": 53 },
+      { "d": 210, "p": 38 },  { "d": 240, "p": 27 },  { "d": 270, "p": 17 },
       { "d": 300, "p": 10 },  { "d": 330, "p": 5 },   { "d": 365, "p": 2 }
     ],
     "milestones": [
-      { "d": 0,   "label": "Dec 2017 — Name change to Long Blockchain" },
-      { "d": 90,  "label": "Short sellers pile in; Nasdaq warning" },
-      { "d": 180, "label": "Reverse split attempted" },
-      { "d": 365, "label": "Nasdaq delisted; SEC investigation opens" }
+      { "d": 0,   "label": "Dec 2017 — Name change to Long Blockchain (+180% close, +388% intraday)" },
+      { "d": 60,  "label": "Feb 2018 — Nasdaq delisting notice" },
+      { "d": 115, "label": "Apr 12, 2018 — Trading suspended" },
+      { "d": 170, "label": "Jun 6, 2018 — Form 25 filed" },
+      { "d": 365, "label": "2021 — SEC revocation order; 'never became operational'" }
     ]
   },
   "bird": {

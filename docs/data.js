@@ -2,7 +2,7 @@
    Keeping JSON files in /data/ as the canonical source; this file mirrors them. */
 window.__BIRD_DATA__ = {
   "agents": {
-    "currentPrice": 14.50,
+    "currentPrice": 16.99,
     "agents": [
       { "n": 1,  "name": "Company Analyst — Bull",        "role": "Steelman pivot",          "target": 38.38, "rec": "Speculative Buy",             "stance": "bull"    },
       { "n": 2,  "name": "Company Analyst — Bear",        "role": "Red-team pivot",          "target": 3.30,  "rec": "Strong Sell",                 "stance": "bear"    },
@@ -19,11 +19,11 @@ window.__BIRD_DATA__ = {
   "chardan-deals": {
     "deals": [
       { "ticker": "NKLA", "company": "Nikola",     "year": 2020, "theme": "EV / hydrogen SPAC",      "outcome": "Fraud conviction (Milton), 4yr sentence, Chapter 11", "destructionPct": -100, "series": [100, 130, 180, 85, 60, 40, 28, 18, 12, 7, 3, 0] },
-      { "ticker": "BTOG", "company": "Bit Origin", "year": 2025, "theme": "$500M Dogecoin treasury", "outcome": "1-for-60 reverse split, -98% in 6 months",            "destructionPct": -98,  "series": [100, 160, 220, 170, 120, 80, 40, 15, 6, 4, 3, 2] },
-      { "ticker": "CLAS", "company": "Classover",  "year": 2025, "theme": "$500M into Solana",       "outcome": "Capital lockup, liquidity collapse",                  "destructionPct": -82,  "series": [100, 190, 240, 175, 110, 75, 55, 40, 30, 24, 20, 18] },
-      { "ticker": "EYEN", "company": "Eyenovia",   "year": 2025, "theme": "$50M PIPE → HYPE tokens", "outcome": "Token illiquidity, legacy pharma stalled",            "destructionPct": -76,  "series": [100, 150, 195, 160, 110, 70, 55, 42, 35, 30, 26, 24] },
-      { "ticker": "VVPR", "company": "VivoPower",  "year": 2025, "theme": "$121M for XRP",           "outcome": "Stock halved inside 90 days",                         "destructionPct": -65,  "series": [100, 185, 210, 150, 95, 70, 55, 48, 44, 40, 37, 35] },
-      { "ticker": "LGHL", "company": "Lion Group", "year": 2025, "theme": "$600M Hyperliquid allocation", "outcome": "Trading halted, going-concern",                   "destructionPct": -71,  "series": [100, 175, 230, 165, 105, 72, 55, 45, 38, 34, 31, 29] }
+      { "ticker": "BTOG", "company": "Bit Origin", "year": 2025, "theme": "$400M equity + $100M convertible debt — Dogecoin treasury", "outcome": "1-for-60 reverse split, -98% in 6 months",            "destructionPct": -98,  "series": [100, 160, 220, 170, 120, 80, 40, 15, 6, 4, 3, 2] },
+      { "ticker": "CLAS", "company": "Classover",  "year": 2025, "theme": "Up to $500M senior secured convertible notes — SOL treasury reserve",       "outcome": "Capital lockup, liquidity collapse",                  "destructionPct": -82,  "series": [100, 190, 240, 175, 110, 75, 55, 40, 30, 24, 20, 18] },
+      { "ticker": "EYEN", "company": "Eyenovia",   "year": 2025, "theme": "$50M PIPE (convertible preferred + warrants) — HYPE tokens", "outcome": "Token illiquidity, legacy pharma stalled",            "destructionPct": -76,  "series": [100, 150, 195, 160, 110, 70, 55, 42, 35, 30, 26, 24] },
+      { "ticker": "VVPR", "company": "VivoPower",  "year": 2025, "theme": "$121M straight equity at $6.05/share — XRP treasury",           "outcome": "Stock halved inside 90 days",                         "destructionPct": -65,  "series": [100, 185, 210, 150, 95, 70, 55, 48, 44, 40, 37, 35] },
+      { "ticker": "LGHL", "company": "Lion Group", "year": 2025, "theme": "$600M ATW facility — HYPE/SOL/SUI treasury", "outcome": "Trading halted, going-concern",                   "destructionPct": -71,  "series": [100, 175, 230, 165, 105, 72, 55, 45, 38, 34, 31, 29] }
     ]
   },
   "gpu-prices": {
@@ -76,15 +76,18 @@ window.__BIRD_DATA__ = {
       {"t":"11:30","o":20.40,"h":20.80,"l":19.20,"c":19.60,"v":18},
       {"t":"12:00","o":19.60,"h":19.80,"l":18.10,"c":18.30,"v":15},
       {"t":"13:00","o":18.30,"h":18.70,"l":16.40,"c":16.80,"v":14},
-      {"t":"14:00","o":16.80,"h":17.20,"l":15.40,"c":15.70,"v":12},
-      {"t":"15:00","o":15.70,"h":15.90,"l":14.20,"c":14.80,"v":11},
-      {"t":"15:30","o":14.80,"h":15.00,"l":14.30,"c":14.60,"v":10},
-      {"t":"16:00","o":14.60,"h":14.70,"l":14.40,"c":14.50,"v":8}
+      {"t":"14:00","o":16.80,"h":17.40,"l":16.20,"c":17.10,"v":12},
+      {"t":"15:00","o":17.10,"h":17.60,"l":16.60,"c":17.20,"v":11},
+      {"t":"15:30","o":17.20,"h":17.40,"l":16.80,"c":17.05,"v":10},
+      {"t":"16:00","o":17.05,"h":17.10,"l":16.85,"c":16.99,"v":8}
     ],
     "peak": {"t":"09:47","p":24.31,"pct":582},
-    "close": {"t":"16:00","p":14.50},
+    "close": {"t":"16:00","p":16.99},
     "shortInterestPct": 18.3,
-    "volumeTurnover": 35
+    "totalVolume": 285766200,
+    "volumeTurnover": {"sharesOutstanding": 35, "float": 50},
+    "sharesOutstanding": 8170000,
+    "float": 5600000
   },
   "capital-ladder": {
     "anchor": {"name":"NewBird AI","capital":128,"unit":"M"},
@@ -102,18 +105,19 @@ window.__BIRD_DATA__ = {
       "name": "Long Blockchain Corp (LBCC)",
       "series": [
         {"d":-30,"p":100},{"d":-20,"p":98},{"d":-10,"p":102},{"d":-1,"p":100},
-        {"d":0,"p":380},
-        {"d":10,"p":310},{"d":20,"p":265},{"d":30,"p":230},
-        {"d":45,"p":200},{"d":60,"p":170},{"d":90,"p":140},
-        {"d":120,"p":105},{"d":150,"p":75},{"d":180,"p":55},
-        {"d":210,"p":40},{"d":240,"p":28},{"d":270,"p":18},
+        {"d":0,"p":288},
+        {"d":10,"p":260},{"d":20,"p":235},{"d":30,"p":210},
+        {"d":45,"p":185},{"d":60,"p":160},{"d":90,"p":135},
+        {"d":120,"p":100},{"d":150,"p":72},{"d":180,"p":53},
+        {"d":210,"p":38},{"d":240,"p":27},{"d":270,"p":17},
         {"d":300,"p":10},{"d":330,"p":5},{"d":365,"p":2}
       ],
       "milestones": [
-        {"d":0,"label":"Dec 2017 — Name change to Long Blockchain"},
-        {"d":90,"label":"Short sellers pile in; Nasdaq warning"},
-        {"d":180,"label":"Reverse split attempted"},
-        {"d":365,"label":"Nasdaq delisted; SEC investigation opens"}
+        {"d":0,"label":"Dec 2017 — Name change to Long Blockchain (+180% close, +388% intraday)"},
+        {"d":60,"label":"Feb 2018 — Nasdaq delisting notice"},
+        {"d":115,"label":"Apr 12, 2018 — Trading suspended"},
+        {"d":170,"label":"Jun 6, 2018 — Form 25 filed"},
+        {"d":365,"label":"2021 — SEC revocation order; 'never became operational'"}
       ]
     },
     "bird": {
@@ -129,10 +133,10 @@ window.__BIRD_DATA__ = {
     "start": "2026-04-15",
     "vote": "2026-05-18",
     "events": [
-      {"date":"2026-04-15","label":"Day 1 — Pivot announced, $24.31 intraday, $14.50 close"},
+      {"date":"2026-04-15","label":"Day 1 — Pivot announced, $24.31 intraday, $16.99 close; PREM14A filed"},
       {"date":"2026-04-22","label":"Apr 22 — Market digests; short interest rebuilds"},
       {"date":"2026-04-30","label":"Apr 30 — Q1 preview window"},
-      {"date":"2026-05-05","label":"May 5 — Definitive proxy filing expected"},
+      {"date":"2026-05-05","label":"May 5 — Definitive proxy expected (after SEC review)"},
       {"date":"2026-05-12","label":"May 12 — Proxy review period"},
       {"date":"2026-05-18","label":"May 18 — Stockholder vote"}
     ],

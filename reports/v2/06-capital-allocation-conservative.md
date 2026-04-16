@@ -1217,6 +1217,14 @@ The only uncertainty is the exact conversion terms of the convertible note (not
 publicly disclosed as of this analysis). Obtaining those terms from the SEC 
 filing before the May 18 vote is essential.
 
+[CORRECTION 2026-04-16, Erratum #3: The preliminary proxy (PREM14A) was in fact
+filed on EDGAR on April 15, 2026 -- the same day as the press release -- and
+discloses an alternate floating-price conversion mechanic alongside a fixed
+conversion path. Specific formula parameters (VWAP lookback, discount %,
+activation triggers) may still require the exhibits and the definitive proxy.
+The capital-allocation conclusions above are unchanged. See 00-synthesis.md
+Errata section.]
+
 ONE IMPORTANT CAVEAT: The secondary offering opportunity is time-sensitive and 
 represents a genuinely constructive alternative to pure capital return. If 
 management can raise $150-220M in new equity at today's elevated price, the 

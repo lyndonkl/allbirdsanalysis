@@ -13,7 +13,7 @@
       "ticker": "BTOG",
       "company": "Bit Origin",
       "year": 2025,
-      "theme": "$500M Dogecoin treasury",
+      "theme": "$400M equity + $100M convertible debt — Dogecoin treasury",
       "outcome": "1-for-60 reverse split, -98% in 6 months",
       "destructionPct": -98,
       "series": [100, 160, 220, 170, 120, 80, 40, 15, 6, 4, 3, 2]
@@ -22,7 +22,7 @@
       "ticker": "CLAS",
       "company": "Classover",
       "year": 2025,
-      "theme": "$500M into Solana",
+      "theme": "Up to $500M senior secured convertible notes — SOL treasury reserve",
       "outcome": "Capital lockup, liquidity collapse",
       "destructionPct": -82,
       "series": [100, 190, 240, 175, 110, 75, 55, 40, 30, 24, 20, 18]
@@ -31,7 +31,7 @@
       "ticker": "EYEN",
       "company": "Eyenovia",
       "year": 2025,
-      "theme": "$50M PIPE → HYPE tokens",
+      "theme": "$50M PIPE (convertible preferred + warrants) — HYPE tokens",
       "outcome": "Token illiquidity, legacy pharma stalled",
       "destructionPct": -76,
       "series": [100, 150, 195, 160, 110, 70, 55, 42, 35, 30, 26, 24]
@@ -40,7 +40,7 @@
       "ticker": "VVPR",
       "company": "VivoPower",
       "year": 2025,
-      "theme": "$121M for XRP",
+      "theme": "$121M straight equity at $6.05/share — XRP treasury",
       "outcome": "Stock halved inside 90 days",
       "destructionPct": -65,
       "series": [100, 185, 210, 150, 95, 70, 55, 48, 44, 40, 37, 35]
@@ -49,7 +49,7 @@
       "ticker": "LGHL",
       "company": "Lion Group",
       "year": 2025,
-      "theme": "$600M Hyperliquid allocation",
+      "theme": "$600M ATW facility — HYPE/SOL/SUI treasury",
       "outcome": "Trading halted, going-concern",
       "destructionPct": -71,
       "series": [100, 175, 230, 165, 105, 72, 55, 45, 38, 34, 31, 29]

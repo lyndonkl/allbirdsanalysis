@@ -290,7 +290,7 @@ function renderScene3(progress = 1, showShortLabel = false) {
       .text('$24.31 · +582%');
     g.append('text').attr('x', cx + 66).attr('y', y(24.31) + 22)
       .attr('class', 'axis-text').attr('fill', T.ink60)
-      .text('9:47 AM · 288M shares traded · 35× float');
+      .text('9:47 AM · 286M shares · 35× shares out / 50× float');
   }
 
   // BIRD ticker reflects the last visible bar
@@ -920,7 +920,7 @@ function renderScene11(progress = 1) {
 
   svg.append('text').attr('x', M.l).attr('y', 22)
     .attr('font-family', 'Source Serif 4, Georgia, serif').attr('font-size', 18).attr('font-style', 'italic').attr('fill', T.ink)
-    .text('From $24.31 to $14.50 — the afternoon fade');
+    .text('From $24.31 to $16.99 — the afternoon fade');
 
   const g = svg.append('g').attr('transform', `translate(${M.l},${M.t})`);
 
@@ -955,9 +955,9 @@ function renderScene11(progress = 1) {
     .attr('text-anchor', 'middle').attr('class', 'close-label').attr('font-size', 18).attr('fill', T.bear)
     .text('peak $24.31');
   if (bars[bars.length - 1].t === '16:00') {
-    g.append('circle').attr('cx', x('16:00') + x.bandwidth() / 2).attr('cy', y(14.50)).attr('r', 3).attr('fill', T.ink);
-    g.append('text').attr('x', x('16:00') + x.bandwidth() / 2 + 10).attr('y', y(14.50) + 6)
-      .attr('class', 'close-label').text('close $14.50');
+    g.append('circle').attr('cx', x('16:00') + x.bandwidth() / 2).attr('cy', y(16.99)).attr('r', 3).attr('fill', T.ink);
+    g.append('text').attr('x', x('16:00') + x.bandwidth() / 2 + 10).attr('y', y(16.99) + 6)
+      .attr('class', 'close-label').text('close $16.99');
   }
 
   setTicker(bars[bars.length - 1].c);
@@ -1080,7 +1080,7 @@ function renderScene12(stepIdx = 0) {
     .attr('fill', T.marginal).attr('fill-opacity', 0.95);
   g.append('text').attr('x', xScale(0)).attr('y', todayLaneY + 4).attr('text-anchor', 'middle')
     .attr('font-family', 'Inter, sans-serif').attr('font-size', 12).attr('font-weight', 600)
-    .attr('fill', '#0B0B0B').attr('letter-spacing', '0.06em').text('TODAY · $14.50');
+    .attr('fill', '#0B0B0B').attr('letter-spacing', '0.06em').text('TODAY · $16.99');
   // Thin leader line connecting the today pill to the timeline dot.
   g.append('line')
     .attr('x1', xScale(0)).attr('x2', xScale(0))
@@ -1094,14 +1094,14 @@ function renderScene12(stepIdx = 0) {
 // =============================================================
 const S13 = {
   priceMin: 1.50,
-  priceMax: 14.50,
+  priceMax: 16.99,
   existingShares: 8.17e6,
   facility: 50e6,
   discount: 0.80,
-  stepPrices: [14.50, 11.60, 5.00, 1.50]
+  stepPrices: [16.99, 11.60, 5.00, 1.50]
 };
 
-let s13Price = 14.50;
+let s13Price = 16.99;
 
 function computeDilution(price) {
   const conv = price * S13.discount;
@@ -1376,13 +1376,13 @@ function renderScene16(stepIdx = 5) {
     .text('Ten analysts · one company · ten prices');
   svg.append('text').attr('x', M.l).attr('y', 52)
     .attr('font-family', 'Inter, sans-serif').attr('font-size', 12).attr('fill', T.ink60)
-    .text('12-month price target by agent framework (log scale). The market today is $14.50.');
+    .text('12-month price target by agent framework (log scale). The market today is $16.99.');
 
   const g = svg.append('g').attr('transform', `translate(${M.l},${M.t})`);
 
   // x axis
   const axis = g.append('g').attr('class', 'x-axis').attr('transform', `translate(0,${ih})`);
-  const ticks = [2.5, 5, 10, 14.5, 25, 50, 100, 125];
+  const ticks = [2.5, 5, 10, 16.99, 25, 50, 100, 125];
   axis.append('line').attr('x1', 0).attr('x2', iw).attr('y1', 0).attr('y2', 0);
   ticks.forEach(t => {
     axis.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', 0).attr('y2', 6);
@@ -1398,7 +1398,7 @@ function renderScene16(stepIdx = 5) {
   g.append('line').attr('class', 'current-line')
     .attr('x1', x(current)).attr('x2', x(current)).attr('y1', 0).attr('y2', ih + 8);
   const currentLabelY = 16;
-  const currentLabelText = 'market $14.50';
+  const currentLabelText = 'market $16.99';
   // Round 7 Bug 2: prior pill was 96×18 with rx=9. With 12px Inter 600
   // "market $14.50" measures ~86px — leaving just ~5px horizontal slack
   // per side, so the amber 1.5px border kissed the text. Bump to 112×26
@@ -1578,11 +1578,11 @@ function initScrolling() {
       else if (sid === '9') setTicker(24.31);
       else if (sid === '10') setTicker(24.31);
       // Scene 11 drives the fade itself from real bars; 12+ lock at the close.
-      else if (sid === '12') setTicker(14.50, { dark: true });
-      else if (sid === '13') { setTicker(14.50, { dark: false }); track('scene13_enter', { price: s13Price }); }
-      else if (sid === '15') setTicker(14.50);
-      else if (sid === '16') setTicker(14.50);
-      else if (sid === '17') setTicker(14.50);
+      else if (sid === '12') setTicker(16.99, { dark: true });
+      else if (sid === '13') { setTicker(16.99, { dark: false }); track('scene13_enter', { price: s13Price }); }
+      else if (sid === '15') setTicker(16.99);
+      else if (sid === '16') setTicker(16.99);
+      else if (sid === '17') setTicker(16.99);
     })
     .onStepExit(({ element, direction }) => {
       const sid = element.getAttribute('data-scene');
@@ -1735,7 +1735,7 @@ async function bootstrap() {
   renderScene10(0);
   renderScene11(0);
   renderScene12(0);
-  renderScene13(14.50);
+  renderScene13(16.99);
   renderScene15(1);
   renderScene16(0);
   renderScene17Docs();
