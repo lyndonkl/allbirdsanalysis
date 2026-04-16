@@ -227,12 +227,18 @@ button { font: inherit; cursor: pointer; }
 .scene--sticky .sticky-wrap {
   position: sticky;
   top: 0;
+  /* D4 (Round 3): older iOS Safari treats an unguarded `100dvh` override as
+     a reset to the URL-bar-hidden viewport, clipping sticky content. Gate
+     the `dvh` value behind an @supports query so only browsers that honor
+     the dynamic unit pick it up. */
   height: 100vh;
-  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+@supports (height: 100dvh) {
+  .scene--sticky .sticky-wrap { height: 100dvh; }
 }
 .scene--sticky .steps {
   position: relative;
@@ -242,10 +248,12 @@ button { font: inherit; cursor: pointer; }
 }
 .scene--sticky .step {
   min-height: 80vh;
-  min-height: 80dvh;
   display: flex;
   align-items: center;
   padding: 24px 0;
+}
+@supports (min-height: 80dvh) {
+  .scene--sticky .step { min-height: 80dvh; }
 }
 .scene--sticky .step__card {
   background: rgba(251,250,247,0.92);
@@ -271,6 +279,21 @@ button { font: inherit; cursor: pointer; }
   color: var(--ink-60);
 }
 
+/* D1 (Round 3): On dark-background scenes, the cream step card reads as a
+   bright yellow overlay and the inherited #F2F2F2 body copy becomes invisible
+   against it. Switch to a dark slate panel with light text on scenes
+   data-bg="black" (scene 1) and data-bg="slate" (scene 12). */
+body[data-bg="black"] .scene--sticky .step__card,
+body[data-bg="slate"] .scene--sticky .step__card {
+  background: rgba(26, 31, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #F2F2F2;
+}
+body[data-bg="black"] .scene--sticky .step__card h3,
+body[data-bg="slate"] .scene--sticky .step__card h3 {
+  color: rgba(255, 255, 255, 0.65);
+}
+
 /* Background progression (plan §4) */
 body[data-bg="black"]   { background: var(--bg-black);    color: #F2F2F2; }
 body[data-bg="paper-warm"] { background: var(--bg-paper-warm); color: var(--ink); }
@@ -285,6 +308,16 @@ body[data-bg="black"] .scene__eyebrow,
 body[data-bg="slate"] .scene__eyebrow { color: rgba(255,255,255,0.6); }
 body[data-bg="black"] .scene__dek,
 body[data-bg="slate"] .scene__dek { color: rgba(255,255,255,0.75); }
+
+/* M2 (Round 3): the cold-open clock sits at the visual center and narrow
+   viewports collide the BIRD ticker with the "April 15, 2026 · 9:29 AM ET"
+   dateline. The ticker is also redundant on scene 1 — $2.49 is already
+   printed on the headline chart. Hide until the first real scene change. */
+body[data-bg="black"] .bird-ticker {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
 
 /* =========================================================================
    Scene 1 — 9:29 AM cold open
@@ -627,13 +660,30 @@ body[data-bg="slate"] .scene__dek { color: rgba(255,255,255,0.75); }
   font-family: var(--sans); font-size: 11px; fill: var(--bear); text-transform: uppercase; letter-spacing: 0.18em;
 }
 #scene-9 .caption-panel {
-  position: absolute; left: 32px; bottom: 32px;
-  max-width: 360px;
+  /* D3 (Round 3): The SVG is centered (xMidYMid). Anchoring the caption at
+     the stage's left edge made it look divorced from the chart on wide
+     viewports and overflowed the viewport below ~392px. Anchor relative to
+     the SVG's visual center with a soft clamp instead. */
+  position: absolute;
+  left: max(24px, calc(50% - 480px));
+  right: auto;
+  bottom: 32px;
+  max-width: min(360px, calc(100vw - 48px));
   background: rgba(255,255,255,0.92);
   padding: 14px 16px;
   border-left: 3px solid var(--bear);
   font-family: var(--serif); font-size: 17px; line-height: 1.5;
   transition: opacity var(--dur-std);
+}
+@media (max-width: 720px) {
+  #scene-9 .caption-panel {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
 }
 #scene-9 .caption-panel .ratio {
   font-family: var(--serif); font-style: italic; font-weight: 600;
@@ -851,4 +901,22 @@ body[data-bg="slate"] .scene__dek { color: rgba(255,255,255,0.75); }
   #scene-15 .countdown { grid-template-columns: 1fr; }
   .bird-ticker { font-size: 11px; padding: 5px 8px; top: 8px; right: 10px; }
   #scene-1 .stats-row { grid-template-columns: repeat(2, 1fr); }
+
+  /* M1 (Round 3): shrink in-SVG typography for dense charts at narrow viewport.
+     Class names verified against script.js renderers — Scene 8 uses inline
+     font-size attributes, so we target all <text> in its overlay chart and
+     rely on attribute-vs-CSS cascade (CSS wins for font-size on SVG text). */
+  #scene-1 .trailing-chart .axis-label { font-size: 9px; }
+  #scene-8 .overlay-chart svg text { font-size: 9px; }
+  #scene-9 .ring-label,
+  #scene-9 .ring-value { font-size: 10px; }
+  #scene-10 .hm-label { font-size: 9px; }
+  #scene-10 .hm-axis { font-size: 9px; }
+  #scene-12 .tl-event-label,
+  #scene-12 .tl-text { font-size: 10px; }
+  #scene-12 .branch-label-bull,
+  #scene-12 .branch-label-bear { font-size: 11px; }
+  #scene-16 .agent-label { font-size: 10px; }
+  #scene-16 .x-axis text { font-size: 9px; }
+  #scene-16 .current-label { font-size: 12px; }
 }

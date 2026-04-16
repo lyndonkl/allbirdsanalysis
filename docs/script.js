@@ -303,17 +303,24 @@ function renderScene5(stepIdx = 0) {
   sub.textContent = frame.year + ' · ' + frame.sub;
 
   // timeline ticks
+  // M5 (Round 3): build the DOM once, but recompute `top` on every render so
+  // row positions stay in sync with the actual container height after resize
+  // or desktop→mobile rotation (stage is 520px desktop, 420px mobile).
   const tl = document.getElementById('s5-timeline');
   if (tl.childElementCount === 0) {
     S5_FRAMES.forEach((f, i) => {
       const row = document.createElement('div');
       row.className = 'tl-row';
       row.innerHTML = `${f.year}<span class="val">${f.label}</span>`;
-      row.style.top = (18 + (i / (S5_FRAMES.length - 1)) * 440) + 'px';
       row.dataset.idx = i;
       tl.appendChild(row);
     });
   }
+  const tlH = tl.clientHeight || canvas.clientHeight || 440;
+  const usableH = Math.max(120, tlH - 36);
+  Array.from(tl.children).forEach((row, i) => {
+    row.style.top = (18 + (i / (S5_FRAMES.length - 1)) * usableH) + 'px';
+  });
   tl.querySelectorAll('.tl-row').forEach(r => {
     r.classList.toggle('is-active', Number(r.dataset.idx) <= stepIdx);
   });
@@ -552,15 +559,30 @@ function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
 
   // Caption crossfade — each caption peaks at mid-step and fades as the next takes over.
   // Plan §3 Scene 9 — continuous zoom per reviewer deliverable 1.
+  // D2 (Round 3): gate the text-swap so the old caption is fully faded before
+  // the new caption appears — otherwise the 25%-clamped opacity produced a
+  // visible "double-read" shimmer at every step boundary.
   const ratioEl = document.getElementById('s9-ratio');
   const textEl = document.getElementById('s9-captext');
   const capPanel = document.getElementById('s9-caption');
   const c = S9_CAPTIONS[Math.min(stepIdx, S9_CAPTIONS.length - 1)];
-  if (ratioEl) ratioEl.textContent = c.ratio;
-  if (textEl) textEl.textContent = c.text;
   if (capPanel) {
     const fade = 1 - Math.abs(captionProgress - 0.5) * 2;
-    capPanel.style.opacity = Math.max(0.25, fade).toFixed(3);
+    const dipped = fade < 0.15;
+    if (dipped && capPanel.dataset.stepIdx !== String(stepIdx)) {
+      if (ratioEl) ratioEl.textContent = c.ratio;
+      if (textEl)  textEl.textContent = c.text;
+      capPanel.dataset.stepIdx = String(stepIdx);
+    } else if (capPanel.dataset.stepIdx === undefined) {
+      // First paint — populate before any fade math takes effect.
+      if (ratioEl) ratioEl.textContent = c.ratio;
+      if (textEl)  textEl.textContent = c.text;
+      capPanel.dataset.stepIdx = String(stepIdx);
+    }
+    capPanel.style.opacity = Math.max(0, fade).toFixed(3);
+  } else {
+    if (ratioEl) ratioEl.textContent = c.ratio;
+    if (textEl) textEl.textContent = c.text;
   }
 }
 
@@ -1005,30 +1027,90 @@ function wireScene13Drag() {
     return inv.x;
   }
   let dragging = false;
-  function onStart(e) {
+
+  // --- Mouse path (unchanged semantics) ---
+  function onMouseStart(e) {
     dragging = true;
     sceneEl.classList.add('drag-ready');
     track('scene13_user_drag_start', { startPrice: s13Price });
     if (e.preventDefault) e.preventDefault();
-    onMove(e);
+    onMouseMove(e);
   }
-  function onMove(e) {
+  function onMouseMove(e) {
     if (!dragging) return;
     const xv = xFromEvent(e);
     if (xv === null) return;
     renderScene13(x.invert(xv));
   }
-  function onEnd() {
+  function onMouseEnd() {
     if (dragging) track('scene13_user_drag_end', { endPrice: s13Price });
     dragging = false;
   }
 
-  sliderEl.addEventListener('mousedown', onStart);
-  sliderEl.addEventListener('touchstart', onStart, { passive: false });
-  window.addEventListener('mousemove', onMove);
-  window.addEventListener('touchmove', onMove, { passive: false });
-  window.addEventListener('mouseup', onEnd);
-  window.addEventListener('touchend', onEnd);
+  // --- Touch path (M3 Round 3) ---
+  // Old handler unconditionally preventDefault'd on touchstart, which blocked
+  // page scroll whenever a finger landed on the slider. Now we wait for a
+  // real horizontal drag intent (dx > 4, dx > dy) before claiming the gesture;
+  // a vertical swipe (dy > 8, dy > dx) releases immediately to the page.
+  let dragStartX = null, dragStartY = null, touchDragging = false;
+
+  function onTouchStart(e) {
+    const t = e.touches ? e.touches[0] : e;
+    dragStartX = t.clientX;
+    dragStartY = t.clientY;
+    touchDragging = false;
+    // Intentionally do NOT preventDefault yet — wait for drag threshold.
+  }
+
+  function onTouchMove(e) {
+    if (dragStartX === null) return;
+    const t = e.touches ? e.touches[0] : e;
+    const dx = Math.abs(t.clientX - dragStartX);
+    const dy = Math.abs(t.clientY - dragStartY);
+
+    if (!touchDragging) {
+      if (dy > 8 && dy > dx) {
+        // Vertical scroll intent: release the gesture.
+        dragStartX = null;
+        dragStartY = null;
+        return;
+      }
+      if (dx > 4) {
+        touchDragging = true;
+        dragging = true;
+        sceneEl.classList.add('drag-ready');
+        track('scene13_user_drag_start', { startPrice: s13Price });
+        if (e.cancelable) e.preventDefault();
+      } else {
+        return;
+      }
+    }
+    if (e.cancelable) e.preventDefault();
+    const xv = xFromEvent(e);
+    if (xv === null) return;
+    renderScene13(x.invert(xv));
+  }
+
+  function onTouchEnd() {
+    if (touchDragging) {
+      track('scene13_user_drag_end', { endPrice: s13Price });
+    }
+    dragging = false;
+    touchDragging = false;
+    dragStartX = null;
+    dragStartY = null;
+  }
+
+  sliderEl.addEventListener('mousedown', onMouseStart);
+  window.addEventListener('mousemove', onMouseMove);
+  window.addEventListener('mouseup', onMouseEnd);
+
+  // Touch listeners: start is passive so we don't block the initial tap;
+  // move stays non-passive so we can preventDefault once we've claimed the drag.
+  sliderEl.addEventListener('touchstart', onTouchStart, { passive: true });
+  window.addEventListener('touchmove', onTouchMove, { passive: false });
+  window.addEventListener('touchend', onTouchEnd);
+  window.addEventListener('touchcancel', onTouchEnd);
 
   sliderEl.addEventListener('keydown', (e) => {
     const step = e.shiftKey ? 1 : 0.10;
@@ -1115,18 +1197,46 @@ function renderScene16(stepIdx = 5) {
   // dot to its x(target) and uses forceCollide(12) so same-target agents fan
   // out vertically around the midline without drifting off-target.
   const yMid = ih / 2;
+  // M1 (Round 3): tighten collide radius on narrow viewports so the bear
+  // cluster stays legible without pushing dots off-axis.
+  const collideR = window.innerWidth < 720 ? 10 : 12;
   const nodes = agents.map(a => ({ ...a, fx0: x(a.target), y: yMid }));
   const sim = d3.forceSimulation(nodes)
     .force('x', d3.forceX(d => d.fx0).strength(1))
     .force('y', d3.forceY(yMid).strength(0.08))
-    .force('collide', d3.forceCollide(12))
+    .force('collide', d3.forceCollide(collideR))
     .stop();
   for (let i = 0; i < 120; i++) sim.tick();
 
-  nodes.forEach(a => {
+  // M4 (Round 3): labels sit at fixed vertical offsets from their dots.
+  // When two same-side dots share close x-targets (e.g., the bear cluster
+  // around $3.30) their labels overlap. Pre-compute label positions then
+  // run a simple y-separation pass pushing overlapping labels further
+  // along the same side of the midline.
+  const labelMeta = nodes.map(n => {
+    const ax = x(n.target);
+    const ay = n.y;
+    const side = ay < yMid ? -1 : 1;
+    return { node: n, ax, ay, side, lx: ax, ly: ay + (side < 0 ? -14 : 20) };
+  });
+  for (let i = 0; i < labelMeta.length; i++) {
+    for (let j = i + 1; j < labelMeta.length; j++) {
+      const a = labelMeta[i], b = labelMeta[j];
+      if (a.side !== b.side) continue;
+      if (Math.abs(a.lx - b.lx) > 48) continue;
+      if (Math.abs(a.ly - b.ly) < 14) {
+        // Push the label that is already further from midline even further out.
+        const further = a.side < 0
+          ? (a.ly < b.ly ? a : b)
+          : (a.ly > b.ly ? a : b);
+        further.ly += 14 * a.side;
+      }
+    }
+  }
+
+  nodes.forEach((a, idx) => {
     const ax = x(a.target);       // keep x locked to true target
     const ay = a.y;                // force simulation only contributes y lane
-    const dy = ay - yMid;
     const visible = (function() {
       if (stepIdx >= 5) return true;
       if (stepIdx >= 2 && a.stance === 'bear') return true;
@@ -1139,10 +1249,9 @@ function renderScene16(stepIdx = 5) {
       .attr('cx', ax).attr('cy', ay).attr('r', 9)
       .attr('opacity', opacity);
     if (visible) {
-      const labelX = ax;
-      const labelY = ay + (dy < 0 ? -14 : 20);
+      const meta = labelMeta[idx];
       g.append('text').attr('class', 'agent-label')
-        .attr('x', labelX).attr('y', labelY).attr('text-anchor', 'middle')
+        .attr('x', meta.lx).attr('y', meta.ly).attr('text-anchor', 'middle')
         .text('$' + a.target.toFixed(2));
     }
   });
