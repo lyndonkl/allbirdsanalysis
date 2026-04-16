@@ -534,13 +534,22 @@ function renderScene8(stepIdx = 0) {
     }
     labelPositions.push({ x: lx, label: m.label, row });
     g.append('circle').attr('class', 'milestone-dot').attr('cx', dx).attr('cy', y(pt.p)).attr('r', 3);
+    // Round 6 Bug 1: the rightmost milestone ("Nasdaq delisted; SEC
+    // investigation opens") at day=365 sits at x=iw, and with text-anchor
+    // start the label runs ~200px past the SVG right edge and gets clipped.
+    // For labels in the rightmost quarter of the plot, flip the anchor so
+    // the text extends leftward from the event's x-position.
+    const isRightEdge = lx > iw * 0.75;
+    const anchor = isRightEdge ? 'end' : 'start';
+    const textX = isRightEdge ? lx - 4 : lx + 4;
     // Leader line from dot up to the label band
     g.append('line').attr('class', 'milestone-leader')
       .attr('x1', dx).attr('x2', lx)
       .attr('y1', y(pt.p)).attr('y2', bandY + 4)
       .attr('stroke', T.ink40).attr('stroke-opacity', 0.6).attr('stroke-width', 1);
     g.append('text').attr('class', 'milestone-label')
-      .attr('x', lx + 4).attr('y', bandY)
+      .attr('x', textX).attr('y', bandY)
+      .attr('text-anchor', anchor)
       .text(m.label);
   });
 }
@@ -573,6 +582,7 @@ function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
   const rungs = d.rungs;
   const W = 720, H = 620;
   const cx = W / 2, cy = H / 2;
+  const isMobile = window.innerWidth <= 720;
 
   const svg = d3.select(el).selectAll('svg').data([0]).join('svg')
     .attr('viewBox', `0 0 ${W} ${H}`)
@@ -584,14 +594,16 @@ function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
   // area-proportional: each rung's screen radius is anchorR * sqrt(ratio) / zoom
   const areaRatio = v => Math.sqrt(v / rungs[0].value);
 
-  // Round 4 Bug 4: ring labels used to render for EVERY ring with screenR>18,
-  // which meant at stepIdx=0 (zoom=1) the outer rings (Lambda, Applied
-  // Digital, CoreWeave, Hyperscalers) were clipped to the cx,cy-screenR bound
-  // at roughly the same spot and their labels all stacked on top of each
-  // other in the middle of the canvas. Gate label visibility by stepIdx:
-  // ring i's label only appears once the reader has scrolled to that zoom
-  // level. Inner rings we've already passed fade to 0.55 opacity so they
-  // remain as quiet landmarks.
+  // Round 6 Bug 2: position-based labels always overlap as rings collapse
+  // toward the center. Replaced ring-top labels and the "YOU ARE HERE" arrow
+  // with a legend-style reveal on the right side of the SVG. Rings stay as
+  // they are; the legend is the single source of labeling truth.
+  // Swatch palette — accent teal for NewBird, a graded charcoal ramp for the
+  // outer rings matching the design-token family already in styles.css.
+  const swatchPalette = d3.scaleOrdinal()
+    .domain([0, 1, 2, 3, 4])
+    .range([T.accent, '#6E7A85', '#7C7067', '#8A8A8A', '#2D2F36']);
+
   rungs.forEach((r, i) => {
     const screenR = Math.max(0.8, Math.min(280, (anchorR * areaRatio(r.value)) / zoom));
     const visible = screenR >= 0.8 && screenR <= 320;
@@ -604,64 +616,6 @@ function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
       .attr('stroke-width', isAnchor ? 2 : 1.2)
       .attr('fill', isAnchor ? T.accent : 'none')
       .attr('fill-opacity', isAnchor ? 0.15 : 0);
-
-    // Label gating:
-    //   anchor (NewBird) always visible at full opacity
-    //   current step's ring at full opacity
-    //   already-passed rings fade to 0.55 as landmarks
-    //   future rings hidden
-    // Round 5 Bug B: the previous `screenR > 18` gate excluded the anchor
-    // label once zoom climbed past step 0 (anchor screenR shrinks to ~6 at
-    // zoom=18). The reader then loses the $128M reference entirely. Always
-    // render the anchor + current-step labels; only gate passed-ring labels
-    // by screen radius so they don't stack as microscopic dots.
-    let labelOpacity = 0;
-    if (isAnchor) {
-      labelOpacity = 1;
-    } else if (stepIdx === i) {
-      labelOpacity = 1;
-    } else if (stepIdx > i) {
-      labelOpacity = 0.55;
-    }
-
-    const forceLabel = isAnchor || stepIdx === i;
-    const okSize = screenR > 14;
-    if (labelOpacity > 0 && (forceLabel || okSize)) {
-      // Round 5 Bug B: anchor label pin.
-      // Once we zoom past step 0, the anchor ring shrinks to a handful of
-      // pixels at the canvas center. Park the anchor label BELOW the dot
-      // (south of center) so it cannot collide with the outer ring's
-      // top-anchored label. When the anchor is still the dominant ring
-      // (step 0), keep the original north stand-off for familiarity.
-      if (isAnchor && stepIdx > 0) {
-        const pin = Math.max(screenR + 12, 22);
-        svg.append('text').attr('class', 'ring-label')
-          .attr('x', cx).attr('y', cy + pin)
-          .attr('text-anchor', 'middle').attr('fill', T.accent)
-          .attr('opacity', labelOpacity)
-          .text(r.name);
-        svg.append('text').attr('class', 'ring-value')
-          .attr('x', cx).attr('y', cy + pin + 16)
-          .attr('text-anchor', 'middle').attr('fill', T.accent)
-          .attr('opacity', labelOpacity)
-          .text(r.value >= 1000 ? '$' + (r.value / 1000).toFixed(r.value >= 10000 ? 0 : 1) + 'B' : '$' + r.value + 'M');
-      } else {
-        // Non-anchor label or anchor at step 0 — original north stand-off.
-        // Lambda's label at stepIdx=1 used to collide with NewBird's value,
-        // so nudge Lambda's value further above.
-        const valueYOffset = (i === 1 && stepIdx === 1) ? -screenR - 40 : -screenR + 4;
-        svg.append('text').attr('class', 'ring-label')
-          .attr('x', cx).attr('y', cy - screenR - 12)
-          .attr('text-anchor', 'middle').attr('fill', isAnchor ? T.accent : T.ink60)
-          .attr('opacity', labelOpacity)
-          .text(r.name);
-        svg.append('text').attr('class', 'ring-value')
-          .attr('x', cx).attr('y', cy + valueYOffset)
-          .attr('text-anchor', 'middle').attr('fill', isAnchor ? T.accent : T.ink)
-          .attr('opacity', labelOpacity)
-          .text(r.value >= 1000 ? '$' + (r.value / 1000).toFixed(r.value >= 10000 ? 0 : 1) + 'B' : '$' + r.value + 'M');
-      }
-    }
   });
 
   // Min-viable band appears once we've crossed the hyperscaler zoom (final step)
@@ -679,12 +633,56 @@ function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
       .text('Minimum viable neocloud: $500M–$1B');
   }
 
-  // "You are here" once we've pulled back past CoreWeave
-  if (zoom >= 116) {
-    svg.append('text').attr('class', 'you-are-here')
-      .attr('x', cx).attr('y', cy + 50)
-      .attr('text-anchor', 'middle')
-      .text('↑ YOU ARE HERE — NewBird AI');
+  // Legend — vertical stack on the right (desktop) or horizontal chip row
+  // at the bottom (mobile). Each row fades in one step EARLY so the reader
+  // sees the upcoming label before the ring arrives, then stays on forever.
+  const fmtValue = v => v >= 1000
+    ? '$' + (v / 1000).toFixed(v >= 10000 ? 0 : 1) + 'B'
+    : '$' + v + 'M';
+  const legendOpacity = i => {
+    // Row i begins fading in when stepIdx >= i - 1 (one step early),
+    // ramps over the first 50% of that step's progress, then stays at 1.
+    if (stepIdx > i - 1) return 1;
+    if (stepIdx === i - 1) return Math.max(0, Math.min(1, captionProgress / 0.5));
+    return 0;
+  };
+
+  if (!isMobile) {
+    const rowH = 32, swatchD = 8;
+    const legend = svg.append('g').attr('class', 's9-legend')
+      .attr('transform', `translate(${W - 180},20)`);
+    rungs.forEach((r, i) => {
+      const row = legend.append('g').attr('transform', `translate(0,${i * rowH})`)
+        .attr('opacity', legendOpacity(i));
+      row.append('circle').attr('cx', swatchD / 2).attr('cy', 10).attr('r', swatchD / 2)
+        .attr('fill', swatchPalette(i));
+      row.append('text').attr('x', swatchD + 8).attr('y', 8)
+        .attr('font-family', 'Inter, sans-serif').attr('font-size', 12).attr('font-weight', 600)
+        .attr('fill', i === 0 ? T.accent : T.ink)
+        .text(r.name);
+      row.append('text').attr('x', swatchD + 8).attr('y', 22)
+        .attr('font-family', 'JetBrains Mono, monospace').attr('font-size', 11)
+        .attr('fill', T.ink60).attr('font-variant-numeric', 'tabular-nums')
+        .text(fmtValue(r.value));
+    });
+  } else {
+    // Mobile: horizontal chip row at the bottom, 2 lines per chip.
+    const chipW = (W - 24) / rungs.length;
+    const legend = svg.append('g').attr('class', 's9-legend')
+      .attr('transform', `translate(12,${H - 58})`);
+    rungs.forEach((r, i) => {
+      const row = legend.append('g').attr('transform', `translate(${i * chipW},0)`)
+        .attr('opacity', legendOpacity(i));
+      row.append('circle').attr('cx', 4).attr('cy', 8).attr('r', 4)
+        .attr('fill', swatchPalette(i));
+      row.append('text').attr('x', 12).attr('y', 10)
+        .attr('font-family', 'Inter, sans-serif').attr('font-size', 10).attr('font-weight', 600)
+        .attr('fill', i === 0 ? T.accent : T.ink)
+        .text(r.name);
+      row.append('text').attr('x', 12).attr('y', 24)
+        .attr('font-family', 'JetBrains Mono, monospace').attr('font-size', 10)
+        .attr('fill', T.ink60).text(fmtValue(r.value));
+    });
   }
 
   // Caption crossfade — each caption peaks at mid-step and fades as the next takes over.
@@ -803,9 +801,21 @@ function renderScene10(stepIdx = 0) {
     g.append('rect').attr('x', -6).attr('y', thesisY - 3)
       .attr('width', iw + 12).attr('height', y.bandwidth() + 6)
       .attr('fill', 'none').attr('stroke', T.marginal).attr('stroke-width', 2);
-    g.append('text').attr('x', iw + 10).attr('y', thesisY + y.bandwidth() / 2 + 4)
+    // Round 6 Bug 3: the "break-even" callout used to sit at x=iw+10, which
+    // pushed the right edge of the text ~43px past the SVG bounds and got
+    // clipped. Render it as a pill ABOVE the amber row, inside the plot
+    // area, where it reads cleanly without needing a margin change.
+    const pillText = 'break-even';
+    const pillW = 76, pillH = 18;
+    const pillX = iw - pillW - 4;
+    const pillY = thesisY - pillH - 4;
+    g.append('rect').attr('x', pillX).attr('y', pillY)
+      .attr('width', pillW).attr('height', pillH).attr('rx', 9)
+      .attr('fill', T.marginal).attr('fill-opacity', 0.95);
+    g.append('text').attr('x', pillX + pillW / 2).attr('y', pillY + 13)
+      .attr('text-anchor', 'middle')
       .attr('font-family', 'Inter, sans-serif').attr('font-size', 11)
-      .attr('fill', T.marginal).attr('font-weight', 600).text('break-even');
+      .attr('fill', '#1A1A1A').attr('font-weight', 600).text(pillText);
   }
 
   // break-even frontier — straight line through approx zero cells
@@ -1383,13 +1393,17 @@ function renderScene16(stepIdx = 5) {
   const currentLabelY = 14;
   const currentLabelText = 'market $14.50';
   const currentPillW = 96;
+  // Round 6 Bug 4: solid amber fill read as a "stoplight" in a bright
+  // editorial piece. Soften to a paper-white pill with an amber border so
+  // the "current market" colour coding survives as a signal, not a shout.
   g.append('rect').attr('class', 'current-label-pill')
     .attr('x', x(current) - currentPillW / 2).attr('y', currentLabelY - 11)
     .attr('width', currentPillW).attr('height', 18).attr('rx', 9)
-    .attr('fill', T.marginal).attr('fill-opacity', 0.95);
+    .attr('fill', 'rgba(255,255,255,0.95)')
+    .attr('stroke', T.marginal).attr('stroke-width', 1.5);
   g.append('text').attr('class', 'current-label')
     .attr('x', x(current)).attr('y', currentLabelY + 2).attr('text-anchor', 'middle')
-    .attr('fill', '#0B0B0B').attr('font-weight', 600).attr('font-size', 12)
+    .attr('fill', T.ink).attr('font-weight', 600).attr('font-size', 12)
     .attr('font-family', 'Inter, sans-serif').attr('font-style', 'normal')
     .text(currentLabelText);
 
