@@ -175,7 +175,7 @@ function renderScene1() {
 // =============================================================
 // Scene 3 — intraday candlesticks
 // =============================================================
-function renderScene3(progress = 1) {
+function renderScene3(progress = 1, showShortLabel = false) {
   const el = document.getElementById('s3-chart');
   if (!el || !DATA['intraday-bird']) return;
   const allBars = DATA['intraday-bird'].intraday;
@@ -227,9 +227,35 @@ function renderScene3(progress = 1) {
   // Short-interest band (18.3% of 2.49 prior close — conceptual shading behind bars near the bottom)
   const siY1 = y(2.49);
   const siY2 = y(2.49 - (2.49 * 0.183));
+  const siTop = Math.min(siY1, siY2);
+  const siH = Math.abs(siY2 - siY1);
   g.append('rect').attr('class', 'short-band')
-    .attr('x', 0).attr('y', Math.min(siY1, siY2))
-    .attr('width', iw).attr('height', Math.abs(siY2 - siY1));
+    .attr('x', 0).attr('y', siTop)
+    .attr('width', iw).attr('height', siH);
+
+  // Round 4 Bug 1: short-interest label as a dark pill ABOVE the band so the
+  // text never sits inside the red fill. Only shown once Scene 3's step 4
+  // (short interest reveal) fires.
+  if (showShortLabel) {
+    const pillY = siTop - 28;                // sit above the band
+    const pillX = iw - 10;                   // right-anchored pill
+    const pillText = '18.3% short interest · every share borrowed twice';
+    const approxW = pillText.length * 6.2 + 20;
+    g.append('rect').attr('class', 'short-pill-bg')
+      .attr('x', pillX - approxW).attr('y', pillY - 16)
+      .attr('width', approxW).attr('height', 22).attr('rx', 11).attr('ry', 11)
+      .attr('fill', 'rgba(11,11,14,0.88)');
+    g.append('text').attr('class', 'short-pill-text')
+      .attr('x', pillX - 10).attr('y', pillY).attr('text-anchor', 'end')
+      .attr('font-family', 'Inter, sans-serif').attr('font-size', 11)
+      .attr('font-weight', 600).attr('fill', '#FFFFFF')
+      .text(pillText);
+    // Thin tick connecting the pill to the band
+    g.append('line').attr('class', 'short-pill-tick')
+      .attr('x1', pillX - 18).attr('x2', pillX - 18)
+      .attr('y1', pillY + 4).attr('y2', siTop)
+      .attr('stroke', 'rgba(11,11,14,0.6)').attr('stroke-width', 1);
+  }
 
   // Candles
   bars.forEach((b) => {
@@ -288,19 +314,28 @@ function renderScene5(stepIdx = 0) {
   const frame = S5_FRAMES[Math.min(stepIdx, S5_FRAMES.length - 1)];
   const canvas = document.getElementById('s5-canvas');
   const cw = canvas.clientWidth || 500;
-  const ch = 500;
+  const ch = canvas.clientHeight || 500;
   // area-proportional scaling so the box is honestly smaller
   const side = Math.sqrt(frame.area) * Math.min(cw, ch) * 0.95;
+  const finalSide = Math.max(18, side);
   const box = document.getElementById('s5-box');
-  box.style.width = Math.max(18, side) + 'px';
-  box.style.height = Math.max(18, side) + 'px';
+  box.style.width = finalSide + 'px';
+  box.style.height = finalSide + 'px';
 
   const lbl = document.getElementById('s5-label');
   lbl.textContent = frame.label;
   lbl.style.fontSize = Math.max(14, Math.min(64, side / 4)) + 'px';
 
+  // Round 4 Bug 2: s5-sub (year + sub-caption) used to sit inside the canvas
+  // at fixed top:48px, which put it INSIDE the green box until the box
+  // shrunk below ~50px tall (so early frames hid the date label entirely).
+  // Pin the subtitle to the box's bottom edge instead — it now sits just
+  // below the green square at every frame, solid-background pill for
+  // legibility against the cream canvas.
   const sub = document.getElementById('s5-sub');
   sub.textContent = frame.year + ' · ' + frame.sub;
+  sub.style.top = (finalSide + 10) + 'px';
+  sub.style.left = '0px';
 
   // timeline ticks
   // M5 (Round 3): build the DOM once, but recompute `top` on every render so
@@ -459,14 +494,37 @@ function renderScene8(stepIdx = 0) {
     .text('NewBird AI (today)');
 
   // Milestone labels progressive
+  // Round 4 Bug 3: milestone labels used to sit ON the LBCC price line at
+  // x(day)+6, y(pt.p)-6 — overlapping chart content and the announcement
+  // rule. Float labels at the TOP of the plot area with a thin leader line
+  // down to the data point so the lines stay clean. Also avoid drawing
+  // over the announcement vertical (x=x(0)) by nudging day-0 labels right.
   const milestones = d.lbcc.milestones;
   const visibleMilestones = Math.max(0, Math.min(milestones.length, stepIdx));
+  const labelBandY = 12;                                 // top-of-plot label row
+  const labelPositions = [];                             // {x, label} to avoid collisions
   milestones.slice(0, visibleMilestones).forEach(m => {
     const day = m.d;
     if (day > cutoff) return;
     const pt = d.lbcc.series.reduce((a, b) => (Math.abs(b.d - day) < Math.abs(a.d - day) ? b : a));
-    g.append('circle').attr('class', 'milestone-dot').attr('cx', x(day)).attr('cy', y(pt.p)).attr('r', 3);
-    g.append('text').attr('class', 'milestone-label').attr('x', x(day) + 6).attr('y', y(pt.p) - 6).text(m.label);
+    const dx = x(day);
+    // Nudge horizontally away from prior labels so the milestone band stays legible.
+    let lx = dx;
+    for (const p of labelPositions) {
+      if (Math.abs(lx - p.x) < 130) {
+        lx = p.x + 130;
+      }
+    }
+    labelPositions.push({ x: lx, label: m.label });
+    g.append('circle').attr('class', 'milestone-dot').attr('cx', dx).attr('cy', y(pt.p)).attr('r', 3);
+    // Leader line from dot up to the label band
+    g.append('line').attr('class', 'milestone-leader')
+      .attr('x1', dx).attr('x2', lx)
+      .attr('y1', y(pt.p)).attr('y2', labelBandY + 4)
+      .attr('stroke', T.ink40).attr('stroke-opacity', 0.6).attr('stroke-width', 1);
+    g.append('text').attr('class', 'milestone-label')
+      .attr('x', lx + 4).attr('y', labelBandY)
+      .text(m.label);
   });
 }
 
@@ -509,6 +567,14 @@ function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
   // area-proportional: each rung's screen radius is anchorR * sqrt(ratio) / zoom
   const areaRatio = v => Math.sqrt(v / rungs[0].value);
 
+  // Round 4 Bug 4: ring labels used to render for EVERY ring with screenR>18,
+  // which meant at stepIdx=0 (zoom=1) the outer rings (Lambda, Applied
+  // Digital, CoreWeave, Hyperscalers) were clipped to the cx,cy-screenR bound
+  // at roughly the same spot and their labels all stacked on top of each
+  // other in the middle of the canvas. Gate label visibility by stepIdx:
+  // ring i's label only appears once the reader has scrolled to that zoom
+  // level. Inner rings we've already passed fade to 0.55 opacity so they
+  // remain as quiet landmarks.
   rungs.forEach((r, i) => {
     const screenR = Math.max(0.8, Math.min(280, (anchorR * areaRatio(r.value)) / zoom));
     const visible = screenR >= 0.8 && screenR <= 320;
@@ -522,14 +588,34 @@ function renderScene9Continuous(zoom, stepIdx = 0, captionProgress = 0) {
       .attr('fill', isAnchor ? T.accent : 'none')
       .attr('fill-opacity', isAnchor ? 0.15 : 0);
 
-    if (screenR > 18) {
+    // Label gating:
+    //   anchor (NewBird) always visible
+    //   ring i shown only once stepIdx reaches i (revealed as we zoom out)
+    //   already-passed rings fade to 0.55 so they remain context landmarks
+    let labelOpacity = 0;
+    if (isAnchor) {
+      labelOpacity = 1;
+    } else if (stepIdx > i) {
+      labelOpacity = 0.55;
+    } else if (stepIdx === i) {
+      labelOpacity = 1;
+    }
+
+    if (screenR > 18 && labelOpacity > 0) {
+      // Lambda's label at stepIdx=1 collides with NewBird's label because
+      // both rings briefly fill similar screen space. Nudge Lambda's value
+      // label above the frame center (negative offset) so the two read
+      // separately.
+      const valueYOffset = (i === 1 && stepIdx === 1) ? -screenR - 40 : -screenR + 4;
       svg.append('text').attr('class', 'ring-label')
         .attr('x', cx).attr('y', cy - screenR - 12)
         .attr('text-anchor', 'middle').attr('fill', isAnchor ? T.accent : T.ink60)
+        .attr('opacity', labelOpacity)
         .text(r.name);
       svg.append('text').attr('class', 'ring-value')
-        .attr('x', cx).attr('y', cy - screenR + 4)
+        .attr('x', cx).attr('y', cy + valueYOffset)
         .attr('text-anchor', 'middle').attr('fill', isAnchor ? T.accent : T.ink)
+        .attr('opacity', labelOpacity)
         .text(r.value >= 1000 ? '$' + (r.value / 1000).toFixed(r.value >= 10000 ? 0 : 1) + 'B' : '$' + r.value + 'M');
     }
   });
@@ -844,17 +930,36 @@ function renderScene12(stepIdx = 0) {
   // main axis
   g.append('line').attr('class', 'tl-axis').attr('x1', 0).attr('y1', mainY).attr('x2', iw * 0.6).attr('y2', mainY)
     .attr('stroke-width', 1);
+
+  // Round 4 Bug 5: event labels used to be the raw second half of each
+  // event.label, which at 175-274px wide collided with adjacent events at
+  // this x-density. Provide concise two-line labels per event and widen
+  // the alternating offset from ±(24/14, 40/30) to ±(28/18, 58/48) so the
+  // date band and label band sit further from the axis.
+  const SHORT_LABELS = [
+    ['Pivot', 'announced'],
+    ['Short interest', 'rebuilds'],
+    ['Q1 preview', 'window'],
+    ['Definitive', 'proxy filing'],
+    ['Proxy review', 'period'],
+    ['Stockholder', 'vote']
+  ];
   events.forEach((e, i) => {
+    const above = (i % 2 !== 0);                         // 0,2,4 below — 1,3,5 above
+    const dateY = mainY + (above ? -18 : 28);
+    const labelY = mainY + (above ? -48 : 58);
     g.append('circle').attr('class', 'tl-event-dot').attr('cx', xScale(i)).attr('cy', mainY)
       .attr('r', i === voteIdx ? 6 : 4)
       .attr('fill', i === voteIdx ? T.marginal : '#9EC7C6');
     g.append('text').attr('class', 'tl-text')
-      .attr('x', xScale(i)).attr('y', mainY + (i % 2 === 0 ? 24 : -14))
+      .attr('x', xScale(i)).attr('y', dateY)
       .attr('text-anchor', 'middle').text(e.date.slice(5));
-    g.append('text').attr('class', 'tl-event-label')
-      .attr('x', xScale(i)).attr('y', mainY + (i % 2 === 0 ? 40 : -30))
-      .attr('text-anchor', 'middle')
-      .text(e.label.split(' — ')[1] || e.label);
+    const [l1, l2] = SHORT_LABELS[i] || [e.label, ''];
+    const label = g.append('text').attr('class', 'tl-event-label')
+      .attr('x', xScale(i)).attr('y', labelY)
+      .attr('text-anchor', 'middle');
+    label.append('tspan').attr('x', xScale(i)).attr('dy', 0).text(l1);
+    if (l2) label.append('tspan').attr('x', xScale(i)).attr('dy', 13).text(l2);
   });
 
   // vote rule
@@ -877,18 +982,23 @@ function renderScene12(stepIdx = 0) {
     g.append('path').attr('class', 'branch-bull').attr('d', bullPath);
     g.append('path').attr('class', 'branch-bear').attr('d', bearPath);
 
+    // Round 4 Bug 5 (part 2): branch-label-bull used to sit at y = bullY+4
+    // (only 4px below the branch path end-point), directly on top of the
+    // "Stockholder vote" label for the last event. Push both branch labels
+    // vertically further from mainY and right-anchor at bx2 with a small
+    // inset so they read clearly past the vote marker.
     g.append('text').attr('class', 'branch-label-bull')
-      .attr('x', bx2 + 4).attr('y', bullY + 4).attr('text-anchor', 'end')
+      .attr('x', bx2).attr('y', bullY - 6).attr('text-anchor', 'end')
       .text('$38 – $125');
     g.append('text').attr('class', 'branch-label-bear')
-      .attr('x', bx2 + 4).attr('y', bearY + 4).attr('text-anchor', 'end')
+      .attr('x', bx2).attr('y', bearY + 18).attr('text-anchor', 'end')
       .text('$1.50 / reverse split');
     g.append('text')
-      .attr('x', bx2 + 4).attr('y', bullY + 22).attr('text-anchor', 'end')
+      .attr('x', bx2).attr('y', bullY + 10).attr('text-anchor', 'end')
       .attr('font-family', 'Inter, sans-serif').attr('font-size', 11)
       .attr('fill', 'rgba(255,255,255,0.6)').text('Benign fixed-conversion terms');
     g.append('text')
-      .attr('x', bx2 + 4).attr('y', bearY + 22).attr('text-anchor', 'end')
+      .attr('x', bx2).attr('y', bearY + 34).attr('text-anchor', 'end')
       .attr('font-family', 'Inter, sans-serif').attr('font-size', 11)
       .attr('fill', 'rgba(255,255,255,0.6)').text('Toxic floating + lookback');
   }
@@ -942,25 +1052,40 @@ function renderScene13(price = s13Price) {
   // slider svg
   const sliderEl = document.getElementById('s13-slider');
   if (sliderEl) {
-    const W = 600, H = 84;
-    const pad = 30;
+    // Round 4 Bug 6: viewbox was 600x84 with pad=30, so the $14.50 handle at
+    // x=570 had only 30 viewbox-units of right margin. When rendered in a
+    // ~540px physical SVG, the italic "$14.50" label (w≈58px, text-anchor
+    // middle) extended past the SVG right edge by a couple pixels. Widen
+    // the viewbox by 60 viewbox-units of side margin AND add a bounds-aware
+    // text-anchor so labels near either edge stay inside the frame.
+    const W = 660, H = 84;
+    const pad = 60;
     const x = d3.scaleLinear().domain([S13.priceMin, S13.priceMax]).range([pad, W - pad]).clamp(true);
     const svg = d3.select(sliderEl);
+    svg.attr('viewBox', `0 0 ${W} ${H}`);
     svg.selectAll('*').remove();
     svg.append('line').attr('class', 'slider-track')
       .attr('x1', pad).attr('x2', W - pad).attr('y1', H / 2 + 6).attr('y2', H / 2 + 6);
     S13.stepPrices.forEach(p => {
       svg.append('line').attr('class', 'slider-tick')
         .attr('x1', x(p)).attr('x2', x(p)).attr('y1', H / 2 - 6).attr('y2', H / 2 + 18);
+      // Tick labels near the edges also switch anchor so the last digit
+      // never clips the viewbox.
+      const tickAnchor = x(p) < pad + 30 ? 'start' : (x(p) > W - pad - 30 ? 'end' : 'middle');
       svg.append('text').attr('class', 'slider-label')
-        .attr('x', x(p)).attr('y', H / 2 + 34).attr('text-anchor', 'middle')
+        .attr('x', x(p)).attr('y', H / 2 + 34).attr('text-anchor', tickAnchor)
         .text('$' + p.toFixed(2));
     });
     const hx = x(s13Price);
     svg.append('circle').attr('class', 'slider-handle')
       .attr('cx', hx).attr('cy', H / 2 + 6).attr('r', 14);
+    // Dynamic text-anchor on the live handle-price label: within 40 viewbox
+    // units of each end, switch to start/end so the full "$14.50" / "$1.50"
+    // reads cleanly even at the slider extremes.
+    const handleAnchor = hx < pad + 40 ? 'start' : (hx > W - pad - 40 ? 'end' : 'middle');
     svg.append('text').attr('class', 'slider-handle-price')
       .attr('x', hx).attr('y', H / 2 - 10)
+      .style('text-anchor', handleAnchor)
       .text('$' + s13Price.toFixed(2));
     sliderEl.setAttribute('aria-valuenow', s13Price.toFixed(2));
   }
@@ -1211,25 +1336,52 @@ function renderScene16(stepIdx = 5) {
   // M4 (Round 3): labels sit at fixed vertical offsets from their dots.
   // When two same-side dots share close x-targets (e.g., the bear cluster
   // around $3.30) their labels overlap. Pre-compute label positions then
-  // run a simple y-separation pass pushing overlapping labels further
-  // along the same side of the midline.
+  // run a y-separation pass pushing overlapping labels further along the
+  // same side of the midline.
+  //
+  // Round 4 Bug 7: Run the pass THREE times with an 18px step so the
+  // stacked bear cluster ($3.30/$3.30/$3.50/$4.77/$8.30) fully resolves
+  // even when the force simulation landed three labels in the same x-lane.
+  // Also widen the x-proximity window from 48 to 56 so near-neighbours
+  // with wider "$125.00"-size labels still register as collisions.
   const labelMeta = nodes.map(n => {
     const ax = x(n.target);
     const ay = n.y;
     const side = ay < yMid ? -1 : 1;
     return { node: n, ax, ay, side, lx: ax, ly: ay + (side < 0 ? -14 : 20) };
   });
+  const STEP = 18;
+  const XGATE = 56;
+  for (let pass = 0; pass < 3; pass++) {
+    for (let i = 0; i < labelMeta.length; i++) {
+      for (let j = i + 1; j < labelMeta.length; j++) {
+        const a = labelMeta[i], b = labelMeta[j];
+        if (a.side !== b.side) continue;
+        if (Math.abs(a.lx - b.lx) > XGATE) continue;
+        if (Math.abs(a.ly - b.ly) < STEP - 4) {
+          // Push the label that is already further from midline even further out.
+          const further = a.side < 0
+            ? (a.ly < b.ly ? a : b)
+            : (a.ly > b.ly ? a : b);
+          further.ly += STEP * a.side;
+        }
+      }
+    }
+  }
+  // Final fallback: if any same-side, same-x labels are still inside the
+  // collision window after three passes, shift them into a leader-line
+  // lane at the chart top/bottom so they read unambiguously.
   for (let i = 0; i < labelMeta.length; i++) {
     for (let j = i + 1; j < labelMeta.length; j++) {
       const a = labelMeta[i], b = labelMeta[j];
       if (a.side !== b.side) continue;
-      if (Math.abs(a.lx - b.lx) > 48) continue;
-      if (Math.abs(a.ly - b.ly) < 14) {
-        // Push the label that is already further from midline even further out.
-        const further = a.side < 0
-          ? (a.ly < b.ly ? a : b)
-          : (a.ly > b.ly ? a : b);
-        further.ly += 14 * a.side;
+      if (Math.abs(a.lx - b.lx) > XGATE) continue;
+      if (Math.abs(a.ly - b.ly) < STEP - 4) {
+        const laneY = a.side < 0 ? -28 : ih + 36;
+        // put the one closer to midline into the lane
+        const mover = Math.abs(a.ly - yMid) < Math.abs(b.ly - yMid) ? a : b;
+        mover.ly = laneY;
+        mover.lane = true;
       }
     }
   }
@@ -1250,6 +1402,12 @@ function renderScene16(stepIdx = 5) {
       .attr('opacity', opacity);
     if (visible) {
       const meta = labelMeta[idx];
+      if (meta.lane) {
+        g.append('line').attr('class', 'agent-label-leader')
+          .attr('x1', ax).attr('x2', meta.lx)
+          .attr('y1', ay).attr('y2', meta.ly + (meta.side < 0 ? 2 : -10))
+          .attr('stroke', T.ink40).attr('stroke-opacity', 0.7).attr('stroke-width', 1);
+      }
       g.append('text').attr('class', 'agent-label')
         .attr('x', meta.lx).attr('y', meta.ly).attr('text-anchor', 'middle')
         .text('$' + a.target.toFixed(2));
@@ -1388,7 +1546,9 @@ function handleStep(sceneId, stepIdx, progress) {
       const bars = DATA['intraday-bird'].intraday;
       const targets = [2.49, 3.15, 24.31, 24.31];
       setTicker(targets[Math.min(stepIdx, targets.length - 1)]);
-      renderScene3(0.25 + 0.25 * stepIdx);
+      // Round 4 Bug 1: step 3 (0-indexed) is the "Short interest: 18.3%"
+      // reveal — pass showShortLabel=true so the pill annotation appears.
+      renderScene3(0.25 + 0.25 * stepIdx, stepIdx >= 3);
       break;
     case '5':
       renderScene5(stepIdx);
@@ -1440,7 +1600,7 @@ function handleStepProgress(sceneId, stepIdx, progress) {
     renderScene13(from + (to - from) * eased);
   }
   if (sceneId === '3') {
-    renderScene3(0.2 + 0.8 * ((stepIdx + progress) / 3));
+    renderScene3(0.2 + 0.8 * ((stepIdx + progress) / 3), stepIdx >= 3);
   }
   if (sceneId === '11') {
     renderScene11((stepIdx + progress) / 3);

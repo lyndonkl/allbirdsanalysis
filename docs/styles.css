@@ -250,6 +250,14 @@ button { font: inherit; cursor: pointer; }
   min-height: 80vh;
   display: flex;
   align-items: center;
+  /* D5 (Round 4, Bug 8): center the step card horizontally inside the
+     prose-max column. Without this, the card's 420px flex item defaulted
+     to justify-content: flex-start, pinning it to the left edge of the
+     640px column. On wide viewports the card therefore sat ~86px left of
+     viewport center — the "slightly to the left" bias the user flagged.
+     Centering places the card over the sticky graphic's visual center,
+     where the reader's eye is already anchored. */
+  justify-content: center;
   padding: 24px 0;
 }
 @supports (min-height: 80dvh) {
@@ -486,8 +494,18 @@ body[data-bg="black"] .bird-ticker {
   transition: font-size var(--dur-grand);
 }
 #scene-5 .box-sub {
-  position: absolute; left: 10px; top: 48px;
-  font-family: var(--mono); font-size: 12px; color: var(--ink-60);
+  /* Round 4 Bug 2: top is now set in JS to (boxHeight + 10) so the subtitle
+     always sits just BELOW the shrinking box rather than underneath it. */
+  position: absolute; left: 0; top: 0;
+  font-family: var(--mono); font-size: 12px; color: var(--ink);
+  background: rgba(253,252,248,0.9);
+  padding: 2px 8px;
+  border-left: 2px solid var(--bull);
+  transition: top var(--dur-grand) cubic-bezier(.2,.7,.2,1);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #scene-5 .destruction {
   position: absolute; right: 0; top: 0;
@@ -660,15 +678,20 @@ body[data-bg="black"] .bird-ticker {
   font-family: var(--sans); font-size: 11px; fill: var(--bear); text-transform: uppercase; letter-spacing: 0.18em;
 }
 #scene-9 .caption-panel {
-  /* D3 (Round 3): The SVG is centered (xMidYMid). Anchoring the caption at
-     the stage's left edge made it look divorced from the chart on wide
-     viewports and overflowed the viewport below ~392px. Anchor relative to
-     the SVG's visual center with a soft clamp instead. */
+  /* D3 (Round 3) attempted a calc(50% - 480px) anchor to track the SVG
+     centerline, but on wide viewports (1440px+) the constant 480px offset
+     kept pinning the panel into the left third of the viewport.
+     D6 (Round 4, Bug 8): true center-based anchoring. The SVG is centered
+     (preserveAspectRatio: xMidYMid meet), so the panel should center on
+     the same axis. translateX(-50%) keeps this correct at any width.
+     Mobile (<=720px) falls back to a full-width bottom bar. */
   position: absolute;
-  left: max(24px, calc(50% - 480px));
+  left: 50%;
   right: auto;
+  transform: translateX(-50%);
   bottom: 32px;
-  max-width: min(360px, calc(100vw - 48px));
+  max-width: min(520px, calc(100vw - 48px));
+  width: max-content;
   background: rgba(255,255,255,0.92);
   padding: 14px 16px;
   border-left: 3px solid var(--bear);
@@ -679,8 +702,10 @@ body[data-bg="black"] .bird-ticker {
   #scene-9 .caption-panel {
     left: 12px;
     right: 12px;
+    transform: none;
     bottom: 12px;
     max-width: none;
+    width: auto;
     padding: 10px 12px;
     font-size: 14px;
   }
