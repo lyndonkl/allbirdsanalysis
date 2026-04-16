@@ -149,14 +149,14 @@
   <section class="scene" id="scene-6" data-scene="6" data-bg="cream" aria-labelledby="s6-title">
     <div class="scene__inner">
       <p class="scene__eyebrow">Scene 6 · who paid</p>
-      <h2 class="scene__title" id="s6-title">A phrase lawyers love and reporters hate.</h2>
+      <h2 class="scene__title" id="s6-title">The redaction was for the press release. Not the proxy.</h2>
 
       <div class="redact-stage">
         <h4>Exhibit 99.1 — Press release, April 15, 2026</h4>
         <p><em>Allbirds, Inc. (NASDAQ: BIRD) today announced the closing of a $50,000,000 senior secured convertible note financing with <span class="redact">[ undisclosed institutional investor ]</span>, to fund the Company's expansion into AI compute infrastructure.</em></p>
         <p>The offering was placed by <strong style="color:var(--bear);">Chardan Capital Markets, LLC</strong>, acting as sole placement agent. Legal counsel to the Company was provided by Holland &amp; Hart LLP.</p>
         <div class="chardan-callout">
-          The investor's name is redacted. <strong>The placement agent's name is not.</strong> Chardan Capital Markets' recent history is the rest of this story. The <strong>PREM14A preliminary proxy</strong> filed the same day discloses the convertible's structure — including an alternate floating-price conversion mechanic — even as the counterparty stays anonymous.
+          The press release redacted the buyer. The <strong>PREM14A preliminary proxy</strong> filed the same day did not: the counterparty is <strong>AXNY Group</strong>, 1400 Broadway (Floor 18), New York, NY — represented by Steve Velasquez and counseled by The Dallal Firm PC at 40 Wall Street. The name was in the proxy all along. And the proxy also spells out the conversion formula in concrete percentage terms: <strong>93% of the lowest 10-day VWAP</strong> in the normal case, <strong>85% of the lowest 15-day VWAP</strong> in default, plus a <strong>5% original issue discount</strong> and a <strong>25% premium</strong> on the conversion amount in default. It is a textbook death spiral, disclosed in black-letter English, on the same day as the press release.
         </div>
       </div>
     </div>
@@ -244,8 +244,8 @@
       <div class="tl-stage" id="s12-stage" role="img" aria-label="Horizontal timeline from April 15 to May 18. At May 18 the stockholder vote occurs and the path forks into a bull branch (benign conversion terms, $38-$125) and a bear branch (toxic floating terms, $1.50 or reverse split)."></div>
     </div>
     <div class="steps">
-      <div class="step" data-step="1"><div class="step__card"><h3>Today · April 15</h3><p>The press release did not include the conversion terms. The <strong>preliminary proxy (PREM14A) was filed the same day</strong> and already discloses an alternate floating-price conversion mechanic alongside the fixed path.</p></div></div>
-      <div class="step" data-step="2"><div class="step__card"><h3>Early May</h3><p>The definitive proxy, filed after SEC review, will finalize terms ahead of the May 18 vote. Specific formula parameters (VWAP lookback, discount percentage, activation triggers) will be nailed down in the exhibits.</p></div></div>
+      <div class="step" data-step="1"><div class="step__card"><h3>Today · April 15</h3><p>The press release did not include the conversion terms. The <strong>preliminary proxy (PREM14A) was filed the same day</strong> and already discloses the Alternate Conversion Price formula explicitly: <strong>93% of the lowest 10-day VWAP</strong> (normal), or <strong>85% of the lowest 15-day VWAP</strong> in default, plus a <strong>25% premium</strong> on principal in default. The notes carry a <strong>5% OID</strong> and mature on the second anniversary of issuance. The buyer is <strong>AXNY Group</strong>.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>Early May</h3><p>The preliminary proxy already discloses the formula: 93% of 10-day lowest VWAP, or 85% of 15-day lowest VWAP in default, plus a 25% premium. The <strong>definitive proxy</strong> finalizes the mechanic ahead of the May 18 vote — but the material economics are already on file.</p></div></div>
       <div class="step" data-step="3"><div class="step__card"><h3>May 18 · the vote</h3><p>Stockholders vote on authorizing the convertible — required because the dilution exceeds Nasdaq's 19.99% cap.</p></div></div>
       <div class="step" data-step="4"><div class="step__card"><h3>Two futures</h3><p><strong>Fixed path prevails:</strong> the convertible behaves like patient growth capital. The bull outcomes ($38–$125) become possible.<br><strong>Floating alternate activates:</strong> the dilution compounds. The bear outcomes ($1.50 or reverse split) become likely.</p></div></div>
     </div>
@@ -267,18 +267,18 @@
         </div>
         <div class="sim-panel" aria-live="polite">
           <h3>If BIRD trades at…</h3>
-          <div class="odo-row"><span class="odo-label">Conversion price (20% discount)</span><span class="odo-value mono" id="s13-odo-convprice">$11.60</span></div>
-          <div class="odo-row"><span class="odo-label">New shares issued</span><span class="odo-value mono" id="s13-odo-newshares">4.3M</span></div>
-          <div class="odo-row"><span class="odo-label">Existing holders own</span><span class="odo-value mono" id="s13-odo-existing">65.5%</span></div>
-          <div class="odo-row"><span class="odo-label">Dilution</span><span class="odo-value mono warn" id="s13-odo-dilution">53%</span></div>
+          <div class="odo-row"><span class="odo-label">Conversion price (93% of VWAP · PREM14A)</span><span class="odo-value mono" id="s13-odo-convprice">$15.80</span></div>
+          <div class="odo-row"><span class="odo-label">New shares issued</span><span class="odo-value mono" id="s13-odo-newshares">3.2M</span></div>
+          <div class="odo-row"><span class="odo-label">Existing holders own</span><span class="odo-value mono" id="s13-odo-existing">72.1%</span></div>
+          <div class="odo-row"><span class="odo-label">Dilution</span><span class="odo-value mono warn" id="s13-odo-dilution">39%</span></div>
           <div class="drag-invite" aria-hidden="true">↔ Drag the handle to explore</div>
         </div>
       </div>
     </div>
     <div class="steps">
-      <div class="step" data-step="1"><div class="step__card"><h3>Today · $16.99</h3><p>At the current close, a 20%-discount conversion would price at $13.59, generating roughly <strong>3.7M new shares</strong>. Existing holders still own most of the company — but the slider mechanics below are the same once the floating alternate activates.</p></div></div>
-      <div class="step" data-step="2"><div class="step__card"><h3>If BIRD retraces to $5</h3><p>Conversion at $4 generates <strong>12.5M new shares.</strong> Dilution jumps to 153%. Existing holders now own 40%.</p></div></div>
-      <div class="step" data-step="3"><div class="step__card"><h3>If BIRD retraces to $1.50</h3><p>The Bit Origin level. Conversion at $1.20 means <strong>41.7 million new shares.</strong> The 8 million holders of record this morning would own less than a sixth of their own company.</p></div></div>
+      <div class="step" data-step="1"><div class="step__card"><h3>Today · $16.99</h3><p>At the current close, the PREM14A's 93% alternate conversion prices at $15.80, generating roughly <strong>3.2M new shares</strong> — about 39% dilution. Existing holders still own most of the company in the benign case. The slider below shows how the number moves as the reference price moves.</p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>If BIRD retraces to $5</h3><p>Conversion at $4.65 (93% of VWAP) generates <strong>10.75M new shares.</strong> Dilution jumps to 132%. Existing holders now own 43%.</p></div></div>
+      <div class="step" data-step="3"><div class="step__card"><h3>If BIRD retraces to $1.50</h3><p>The Bit Origin level. Conversion at $1.395 means <strong>35.8 million new shares</strong> — and in a default event the 85% / 15-day formula plus a 25% principal premium pushes that past <strong>49 million</strong>. The 8 million holders of record this morning would own less than a sixth of their own company.</p></div></div>
       <div class="step" data-step="4"><div class="step__card"><h3>Your turn.</h3><p>Drag the handle — or use the arrow keys — to pick a price and watch the dilution numbers recompute. This is what a floating convertible does, mechanically, when a stock retraces.</p></div></div>
     </div>
   </section>
@@ -342,12 +342,12 @@
           <li><strong>18.3% short interest:</strong> MarketBeat.</li>
           <li><strong>$39M asset sale to American Exchange Group (Mar 30, 2026):</strong> StockTitan.</li>
           <li><strong>$50M convertible placed by Chardan Capital Markets:</strong> <a href="https://www.globenewswire.com/news-release/2026/04/15/3274362/0/en/Allbirds-Inc-Executes-50M-Convertible-Financing-Facility-Agreement-Announces-Expansion-into-AI-Compute-Infrastructure.html">GlobeNewswire, Apr 15, 2026</a>.</li>
-          <li><strong>Preliminary proxy (PREM14A), filed Apr 15, 2026:</strong> <a href="https://www.sec.gov/Archives/edgar/data/1653909/000119312526155866/d39753dprem14a.htm">SEC EDGAR</a>. Discloses convertible structure including alternate floating-price conversion mechanic.</li>
+          <li><strong>Preliminary proxy (PREM14A), filed Apr 15, 2026:</strong> <a href="https://www.sec.gov/Archives/edgar/data/1653909/000119312526155866/d39753dprem14a.htm">SEC EDGAR</a>. Discloses the Alternate Conversion Price formula (93% of 10-day lowest VWAP; 85% of 15-day lowest VWAP in default), a 5% original issue discount, a 25% premium on conversion in default, a two-year maturity, and names <strong>AXNY Group</strong> (1400 Broadway, Floor 18, NYC) as the note buyer.</li>
           <li><strong>S-3 shelf ($100M) + $50M ATM program with TD Cowen, filed Jun 30, 2025:</strong> <a href="https://ir.allbirds.com/news-releases/news-release-details/allbirds-announces-financing-strategy-support-growth-plans">Allbirds IR</a>. ATM used once (386,289 shares / $1.7M) through Dec 31, 2025.</li>
           <li><strong>NewBird total capital $128M:</strong> $50M convertible + $39M asset sale + $39M Q1 cash (10-Q).</li>
           <li><strong>CoreWeave 2025 capex $14.9B:</strong> CoreWeave 10-K.</li>
           <li><strong>Hyperscaler 2025 capex $600B+:</strong> AWS/Azure/GCP/Meta guidance aggregates.</li>
-          <li><strong>Dilution math (4.3M → 12.5M → 41.7M new shares):</strong> $50M ÷ (price × 0.80), holding existing shares at 8.17M.</li>
+          <li><strong>Dilution math (3.2M → 10.75M → 35.8M new shares):</strong> $50M ÷ (price × 0.93) per the PREM14A's 93%-of-10-day-lowest-VWAP formula, holding existing shares at 8.17M. In default, 85% × 15-day with a 25% principal premium drives the distressed tail past 49M.</li>
           <li><strong>NPV grid ($2/hr −$37M → $5/hr +$48M):</strong> 5-year DCF at 10.5% WACC, Capital Allocation Aggressive report.</li>
           <li><strong>Long Blockchain Corp precedent:</strong> Wikipedia (LBCC), SEC litigation releases.</li>
         </ul>

@@ -20,7 +20,7 @@
   <rect width="700" height="394" fill="#FBFAF7"/>
 
   <text class="title" x="40" y="34">BIRD intraday, April 15, 2026</text>
-  <text class="subtitle" x="40" y="52">5-MIN BARS · PEAK $24.31 AT 9:47 AM · CLOSE $16.99 · 286M SHARES · 35× ON SHARES OUTSTANDING / ~50× ON FLOAT</text>
+  <text class="subtitle" x="40" y="52">5-MIN BARS · PEAK $24.31 (9:47) · CLOSE $16.99 · 286M SHARES</text>
 
   <!-- price area -->
   <g transform="translate(50,70)">

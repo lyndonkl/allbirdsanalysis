@@ -1114,7 +1114,10 @@ const S13 = {
   priceMax: 16.99,
   existingShares: 8.17e6,
   facility: 50e6,
-  discount: 0.80,
+  // PREM14A normal-case alternate conversion: 93% of the lowest 10-day VWAP.
+  // Default-case path (85% + 25% premium) is addressed in the article; the
+  // slider uses the benign case so the stage-one numbers stay conservative.
+  discount: 0.93,
   stepPrices: [16.99, 11.60, 5.00, 1.50]
 };
 

@@ -34,13 +34,13 @@
   <!-- Reject 0-3.5 : y(0)=330 => rect y=236.7 h=93.3 -->
   <rect x="60" y="236.7" width="600" height="93.3" fill="#B23A48" opacity="0.10"/>
 
-  <!-- band labels (right margin) -->
-  <text class="band-label" x="666" y="160" fill="#3A8E5C">STRONG</text>
-  <text class="band-label" x="666" y="174" fill="#3A8E5C">INVEST</text>
-  <text class="band-label" x="666" y="214" fill="#6BAE7E">INVEST</text>
-  <text class="band-label" x="666" y="234" fill="#D9A441">MARGINAL</text>
-  <text class="band-label" x="666" y="278" fill="#B23A48">REJECT</text>
-  <text class="band-label" x="666" y="292" fill="#B23A48">(−NPV)</text>
+  <!-- band labels (right margin, right-anchored at x=694 so they sit inside the 700 viewBox) -->
+  <text class="band-label" x="694" y="160" text-anchor="end" fill="#3A8E5C">STRONG</text>
+  <text class="band-label" x="694" y="174" text-anchor="end" fill="#3A8E5C">INVEST</text>
+  <text class="band-label" x="694" y="214" text-anchor="end" fill="#6BAE7E">INVEST</text>
+  <text class="band-label" x="694" y="234" text-anchor="end" fill="#D9A441">MARGINAL</text>
+  <text class="band-label" x="694" y="278" text-anchor="end" fill="#B23A48">REJECT</text>
+  <text class="band-label" x="694" y="292" text-anchor="end" fill="#B23A48">(−NPV)</text>
 
   <!-- Y axis ticks -->
   <text class="axis-tick" x="54" y="94"  text-anchor="end">$9</text>
@@ -81,9 +81,9 @@
   <line x1="60" y1="116.7" x2="80" y2="110" stroke="#1A1A1A" stroke-width="1"/>
 
   <!-- Today marker -->
-  <line x1="613.8" y1="290" x2="613.8" y2="120" stroke="#B23A48" stroke-dasharray="3 3"/>
-  <text class="anno-text-warn" x="610" y="100" text-anchor="end">Apr 2026 · $1.50</text>
-  <text class="anno-text-warn" x="610" y="114" text-anchor="end">inside REJECT zone</text>
+  <line x1="613.8" y1="290" x2="613.8" y2="108" stroke="#B23A48" stroke-dasharray="3 3"/>
+  <text class="anno-text-warn" x="610" y="98" text-anchor="end">Apr 2026 · $1.50</text>
+  <text class="anno-text-warn" x="610" y="260" text-anchor="end">inside REJECT zone</text>
 
   <!-- Thesis line at $3.50 -->
   <line x1="60" y1="236.7" x2="660" y2="236.7" stroke="#D9A441" stroke-dasharray="4 3" stroke-width="1.5"/>

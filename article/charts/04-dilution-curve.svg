@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 394" width="700" height="394" role="img" aria-labelledby="t04 d04">
   <title id="t04">Dilution curve: how far existing holders are diluted at each stock-price scenario</title>
-  <desc id="d04">Dual-line chart showing new shares issued (in millions) and percent dilution of existing holders as a function of BIRD stock price at conversion. At $16.99 (today), 3.68 million new shares and 45% dilution. At $5.00, 12.5 million new shares and 153% dilution. At $1.50, 41.7 million new shares and 510% dilution. Assumes 20% conversion discount, $50 million facility, 8.17 million existing shares.</desc>
+  <desc id="d04">Dual-line chart showing new shares issued (in millions) and percent dilution of existing holders as a function of BIRD stock price at conversion. Illustrative curve drawn at a 20% discount — a midpoint between the PREM14A's 93%-of-10-day-lowest-VWAP normal case (7% discount) and the 85%-plus-25%-premium default case. At $16.99 (today), 3.68 million new shares and 45% dilution. At $5.00, 12.5 million new shares and 153% dilution. At $1.50, 41.7 million new shares and 510% dilution. $50 million facility, 8.17 million existing shares.</desc>
   <style>
     .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:20px;fill:#1A1A1A}
     .subtitle{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#5C5C5C}
@@ -20,7 +20,7 @@
   <rect width="700" height="394" fill="#FBFAF7"/>
 
   <text class="title" x="40" y="34">A $50M facility turns into 42 million shares if BIRD retraces to $1.50</text>
-  <text class="subtitle" x="40" y="52">NEW SHARES ISSUED AT EACH PRICE SCENARIO · 20% CONVERSION DISCOUNT · 8.17M EXISTING SHARES</text>
+  <text class="subtitle" x="40" y="52">ILLUSTRATIVE 20% DISCOUNT · MIDPOINT OF PREM14A 93%/10-DAY AND 85%/15-DAY+25% · 8.17M EXISTING SHARES</text>
 
   <!-- Plot area: x=60..630 (570 wide), y=90..320 (230 tall)
        X domain: price $1.50 .. $17.00 (range 15.5) — extended right-edge so the $16.99 "Today" dot lands just inside the axis.
@@ -110,11 +110,12 @@
   <text class="scenario-value" x="195" y="238" text-anchor="start">12.5M · 153%</text>
   <text class="scenario-sub" x="195" y="222" text-anchor="start">at $5.00</text>
 
-  <!-- $1.50 -->
+  <!-- $1.50 — label block placed right of the rotated "SHARES ISSUED" axis title (which occupies x~158-175, y~110-200) with a leader line from the dot. -->
   <circle class="scenario-dot" cx="60" cy="128.3" r="6"/>
-  <text class="scenario-label" x="68" y="120" text-anchor="start">Severe stress (Bit Origin level)</text>
-  <text class="scenario-value" x="68" y="104" text-anchor="start">41.7M · 510%</text>
-  <text class="scenario-sub" x="68" y="88" text-anchor="start">at $1.50 → 1-for-6 reverse split territory</text>
+  <line x1="66" y1="128.3" x2="200" y2="108" stroke="#B23A48" stroke-width="1" stroke-opacity="0.55"/>
+  <text class="scenario-label" x="205" y="112" text-anchor="start">Severe stress (Bit Origin level)</text>
+  <text class="scenario-value" x="205" y="130" text-anchor="start">41.7M · 510%</text>
+  <text class="scenario-sub" x="205" y="146" text-anchor="start">at $1.50 → 1-for-6 reverse split territory</text>
 
   <!-- Legend -->
   <g transform="translate(60,70)">
@@ -125,6 +126,6 @@
   </g>
 
   <text x="40" y="384" class="subtitle">
-    New shares = $50M ÷ (P × 0.80). Dilution = new shares ÷ existing shares. Assumes one-shot conversion of the full facility. Excludes interest accrual.
+    Curve: $50M ÷ (P × 0.80), a midpoint between the PREM14A's 93%/10-day normal case and the 85%/15-day + 25%-premium default case. One-shot conversion. Excludes interest.
   </text>
 </svg>
