@@ -169,6 +169,22 @@ function renderScene1() {
     .attr('x', x(data.length - 1) - 8).attr('y', y(data[data.length - 1].p) - 8)
     .attr('text-anchor', 'end').attr('fill', '#F5F3EE').text('52-week low · $2.49');
 
+  // Round 12 — narrative annotations to make the trailing line carry an argument,
+  // not just a shape. Two in-viewBox captions: "Four years of decline." at
+  // upper-left (describing what the line shows), and "One afternoon ahead: +582%"
+  // at upper-right in amber (foreshadowing). Both sit above the line so they
+  // don't collide with the existing "52-week low · $2.49" label at the dot.
+  g.append('text').attr('class', 's1-annotation s1-annotation--past')
+    .attr('x', 0).attr('y', y(3.2))
+    .attr('text-anchor', 'start')
+    .attr('font-family', 'Source Serif 4, Georgia, serif').attr('font-style', 'italic').attr('font-size', 13)
+    .attr('fill', 'rgba(245, 243, 238, 0.78)').text('Four years of decline.');
+  g.append('text').attr('class', 's1-annotation s1-annotation--future')
+    .attr('x', iw).attr('y', y(3.2))
+    .attr('text-anchor', 'end')
+    .attr('font-family', 'Source Serif 4, Georgia, serif').attr('font-style', 'italic').attr('font-size', 13)
+    .attr('fill', '#D9A441').text('One afternoon ahead: +582% →');
+
   setTimeout(() => el.classList.add('is-drawn'), 300);
 }
 
@@ -1603,6 +1619,8 @@ function initScrolling() {
       else if (sid === '15') setTicker(16.99);
       else if (sid === '16') setTicker(16.99);
       else if (sid === '17') setTicker(16.99);
+      // Round 12 — act-bar active-state sync.
+      updateActBar(sid);
     })
     .onStepExit(({ element, direction }) => {
       const sid = element.getAttribute('data-scene');
@@ -1739,6 +1757,71 @@ function handleStepProgress(sceneId, stepIdx, progress) {
 }
 
 // =========================================================================
+// Round 12 — Act-bar active-state sync.
+// Maps data-scene → act index (1..5) and toggles .is-active / .is-past.
+// =========================================================================
+function updateActBar(sid) {
+  const bar = document.querySelector('.act-bar');
+  if (!bar) return;
+  const sceneNum = Number(sid);
+  // Determine current act from the data-scenes attribute on each .act-bar__act.
+  const acts = bar.querySelectorAll('.act-bar__act');
+  let activeIdx = -1;
+  acts.forEach((el, idx) => {
+    const scenes = (el.getAttribute('data-scenes') || '').split(',').map(s => Number(s.trim()));
+    if (scenes.includes(sceneNum)) activeIdx = idx;
+  });
+  // Scene 17 (methodology footer) has no act — keep Act V highlighted since the
+  // methodology is the coda to the vote-act.
+  if (activeIdx === -1 && sceneNum === 17) activeIdx = acts.length - 1;
+  acts.forEach((el, idx) => {
+    el.classList.remove('is-active', 'is-past');
+    if (idx < activeIdx) el.classList.add('is-past');
+    else if (idx === activeIdx) el.classList.add('is-active');
+  });
+}
+
+// =========================================================================
+// Round 12 — Cold-open overlay (shown once per session on first load).
+// Dismisses on click, scroll, keypress, or 8s timeout. sessionStorage-gated.
+// =========================================================================
+function wireColdOpen() {
+  const overlay = document.getElementById('coldOpenOverlay');
+  if (!overlay) return;
+  const SEEN_KEY = 'bird.coldOpen.dismissed';
+  if (sessionStorage.getItem(SEEN_KEY) === '1') return;
+
+  overlay.hidden = false;
+  // Two-frame RAF so the opacity transition actually animates in.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.setAttribute('data-open', 'true');
+  }));
+
+  let dismissed = false;
+  const dismiss = () => {
+    if (dismissed) return;
+    dismissed = true;
+    sessionStorage.setItem(SEEN_KEY, '1');
+    overlay.removeAttribute('data-open');
+    setTimeout(() => { overlay.hidden = true; }, 340);
+    window.removeEventListener('scroll', onScroll, { passive: true });
+    window.removeEventListener('keydown', onKey);
+  };
+  const onScroll = () => dismiss();
+  const onKey = () => dismiss();
+
+  const btn = document.getElementById('coldOpenDismiss');
+  if (btn) btn.addEventListener('click', dismiss);
+  overlay.addEventListener('click', (e) => {
+    // Click-outside-the-card dismiss: only if the click target is the backdrop.
+    if (e.target === overlay) dismiss();
+  });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('keydown', onKey);
+  setTimeout(dismiss, 8000);
+}
+
+// =========================================================================
 // Bootstrap
 // =========================================================================
 async function bootstrap() {
@@ -1766,6 +1849,10 @@ async function bootstrap() {
   // Default initial body bg
   const first = document.querySelector('[data-scene]');
   if (first) updateBodyBg(first);
+
+  // Round 12 — cold-open overlay + initial act-bar state on Scene 1.
+  wireColdOpen();
+  updateActBar('1');
 
   // Re-render on resize for responsive sizing
   let resizeT;

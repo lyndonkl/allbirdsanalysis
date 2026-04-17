@@ -96,6 +96,15 @@ button { font: inherit; cursor: pointer; }
 /* =========================================================================
    Progress chrome (plan §4 — "Navigation chrome")
    ========================================================================= */
+/* =========================================================================
+   Top chrome stack (plan §orient-first + minimalist synthesis)
+   Stack order, top→down:
+     1. .ai-disclosure    (legal disclosure, teal badge + links)       ~32px
+     2. .pinned-thesis    (14-word thesis, always visible)              ~24px
+     3. .act-bar          (5-act navigation, click to jump)             ~34px
+     4. .progress-bar     (2px teal fill, sits below everything)         2px
+   ========================================================================= */
+
 /* AI-generated disclosure strip (persistent, sits above progress bar) */
 .ai-disclosure {
   position: fixed; top: 0; left: 0; right: 0;
@@ -139,15 +148,88 @@ button { font: inherit; cursor: pointer; }
   .ai-disclosure__badge { font-size: 9px; letter-spacing: 0.1em; }
 }
 
+/* Pinned one-line thesis — persistent advance organizer */
+.pinned-thesis {
+  position: fixed; top: 32px; left: 0; right: 0;
+  z-index: 101;
+  display: flex; align-items: center; justify-content: center;
+  padding: 4px 18px;
+  background: var(--bg-paper-warm);
+  border-bottom: 1px solid var(--ink-20);
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+  text-align: center;
+}
+.pinned-thesis__text { max-width: 860px; }
+@media (max-width: 600px) {
+  .pinned-thesis { font-size: 12px; padding: 3px 10px; }
+}
+
+/* Five-act navigation bar */
+.act-bar {
+  position: fixed; top: 60px; left: 0; right: 0;
+  z-index: 101;
+  display: flex; align-items: stretch; justify-content: center;
+  gap: 0;
+  background: var(--bg-paper);
+  border-bottom: 1px solid var(--ink-20);
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 1;
+}
+.act-bar__act {
+  flex: 0 1 auto;
+  padding: 9px 18px 8px;
+  text-decoration: none;
+  color: var(--ink-40);
+  display: flex; align-items: baseline; gap: 8px;
+  border-bottom: 2px solid transparent;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+.act-bar__act:hover { color: var(--ink); }
+.act-bar__act.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+.act-bar__act.is-past { color: var(--ink-60); }
+.act-bar__num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 600;
+}
+.act-bar__act.is-past .act-bar__num { color: var(--ink-40); }
+.act-bar__act:not(.is-active):not(.is-past) .act-bar__num { color: var(--ink-20); }
+.act-bar__label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+@media (max-width: 600px) {
+  .act-bar { font-size: 10px; top: 86px; }
+  .act-bar__act { padding: 6px 8px; gap: 4px; }
+  .act-bar__label { display: none; }
+  .act-bar__num { font-size: 11px; }
+  .act-bar__act::after {
+    content: attr(data-act);
+    display: none;
+  }
+}
+
 .progress-bar {
-  position: fixed; top: 32px; left: 0;
+  position: fixed; top: 94px; left: 0;
   width: 100%; height: 2px;
   background: transparent;
   z-index: 100;
   pointer-events: none;
 }
 @media (max-width: 600px) {
-  .progress-bar { top: 64px; }
+  .progress-bar { top: 112px; }
 }
 .progress-bar__fill {
   height: 100%;
@@ -170,7 +252,7 @@ button { font: inherit; cursor: pointer; }
 /* Persistent BIRD ticker (plan §4) */
 .bird-ticker {
   position: fixed;
-  top: 46px; right: 18px;
+  top: 108px; right: 18px;
   font-family: var(--mono);
   font-size: 13px;
   letter-spacing: 0.02em;
@@ -396,8 +478,18 @@ body[data-bg="black"] .bird-ticker {
   font-size: clamp(32px, 4vw, 48px);
   line-height: 1.2;
   font-weight: 400;
-  margin: 0 0 28px 0;
+  margin: 0 0 14px 0;
   color: #F5F3EE;
+}
+#scene-1 .headline-subtitle {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(18px, 2.1vw, 24px);
+  line-height: 1.35;
+  font-weight: 400;
+  margin: 0 0 28px 0;
+  color: rgba(245, 243, 238, 0.72);
+  letter-spacing: 0.005em;
 }
 #scene-1 .trailing-chart {
   width: 100%;
@@ -970,7 +1062,7 @@ body[data-bg="black"] .bird-ticker {
   #scene-7 .chardan-grid { grid-template-columns: repeat(2, 1fr); }
   #scene-13 .sim-stage { grid-template-columns: 1fr; }
   #scene-15 .countdown { grid-template-columns: 1fr; }
-  .bird-ticker { font-size: 11px; padding: 5px 8px; top: 70px; right: 10px; }
+  .bird-ticker { font-size: 11px; padding: 5px 8px; top: 124px; right: 10px; }
   #scene-1 .stats-row { grid-template-columns: repeat(2, 1fr); }
 
   /* M1 (Round 3): shrink in-SVG typography for dense charts at narrow viewport.
@@ -990,4 +1082,165 @@ body[data-bg="black"] .bird-ticker {
   #scene-16 .agent-label { font-size: 10px; }
   #scene-16 .x-axis text { font-size: 9px; }
   #scene-16 .current-label { font-size: 12px; }
+}
+
+/* =========================================================================
+   Cold-open overlay (shown once per session on first load)
+   ========================================================================= */
+.cold-open-overlay {
+  position: fixed; inset: 0;
+  z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(11, 11, 14, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 320ms ease;
+  padding: 24px;
+}
+.cold-open-overlay[data-open="true"] { opacity: 1; }
+.cold-open-overlay__card {
+  background: var(--bg-paper);
+  color: var(--ink);
+  max-width: 540px;
+  padding: 36px 40px 32px;
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+  text-align: left;
+}
+.cold-open-overlay__eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 14px 0;
+  font-weight: 600;
+}
+.cold-open-overlay__body {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 22px 0;
+}
+.cold-open-overlay__dismiss {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  background: var(--ink);
+  color: var(--bg-paper);
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+.cold-open-overlay__dismiss:hover { background: var(--accent); }
+@media (max-width: 600px) {
+  .cold-open-overlay__card { padding: 28px 22px 24px; }
+  .cold-open-overlay__body { font-size: 16px; }
+}
+
+/* =========================================================================
+   Interlude (inter-scene prose bridge — the maximalist blocks)
+   Narrow column, soft background, explicitly NOT a scene (no sticky behavior).
+   ========================================================================= */
+.interlude {
+  padding: 64px 24px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background-color var(--dur-beat) ease;
+}
+.interlude[data-bg="paper-warm"] { background: var(--bg-paper-warm); }
+.interlude[data-bg="cream"]      { background: var(--bg-cream); }
+.interlude[data-bg="white"]      { background: var(--bg-white); }
+.interlude[data-bg="closing"]    { background: var(--bg-closing); }
+.interlude[data-bg="slate"]      { background: var(--bg-slate); color: #F5F3EE; }
+.interlude__inner {
+  max-width: 580px;
+  width: 100%;
+}
+.interlude__kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 14px 0;
+}
+.interlude__body {
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+  font-style: italic;
+}
+.interlude[data-bg="slate"] .interlude__body { color: rgba(245, 243, 238, 0.92); }
+.interlude[data-bg="slate"] .interlude__kicker { color: var(--marginal); }
+.interlude__body strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink);
+}
+.interlude[data-bg="slate"] .interlude__body strong { color: #FFFFFF; }
+@media (max-width: 600px) {
+  .interlude { padding: 44px 20px; }
+  .interlude__body { font-size: 17px; line-height: 1.5; }
+}
+
+/* =========================================================================
+   Glossary hovers — inline dotted-underline term, floating tooltip on hover/focus
+   ========================================================================= */
+.gloss {
+  position: relative;
+  border-bottom: 1px dotted currentColor;
+  cursor: help;
+  outline: none;
+}
+.gloss:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.gloss__tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  z-index: 150;
+  width: max-content;
+  max-width: 260px;
+  background: var(--bg-paper-warm);
+  color: var(--ink);
+  border: 1px solid var(--ink-20);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.gloss__tip::after {
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--ink-20);
+}
+.gloss:hover .gloss__tip,
+.gloss:focus-within .gloss__tip,
+.gloss:focus .gloss__tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+@media (max-width: 600px) {
+  .gloss__tip { max-width: 220px; font-size: 12px; }
 }

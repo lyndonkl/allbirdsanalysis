@@ -28,10 +28,33 @@
     </span>
   </div>
 
+  <!-- Persistent one-line thesis (advance organizer) -->
+  <div class="pinned-thesis" role="note" aria-label="Piece thesis">
+    <span class="pinned-thesis__text">A $20M shoe company became a $148M AI story before a single GPU shipped.</span>
+  </div>
+
+  <!-- Five-act navigation bar -->
+  <nav class="act-bar" aria-label="Five-act narrative structure">
+    <a href="#scene-1"  class="act-bar__act" data-act="1" data-scenes="1,2,3"><span class="act-bar__num">I</span><span class="act-bar__label">The spike</span></a>
+    <a href="#scene-4"  class="act-bar__act" data-act="2" data-scenes="4,5,6"><span class="act-bar__num">II</span><span class="act-bar__label">The deal</span></a>
+    <a href="#scene-7"  class="act-bar__act" data-act="3" data-scenes="7,8"><span class="act-bar__num">III</span><span class="act-bar__label">The pattern</span></a>
+    <a href="#scene-9"  class="act-bar__act" data-act="4" data-scenes="9,10,11"><span class="act-bar__num">IV</span><span class="act-bar__label">The math</span></a>
+    <a href="#scene-12" class="act-bar__act" data-act="5" data-scenes="12,13,15,16"><span class="act-bar__num">V</span><span class="act-bar__label">The vote</span></a>
+  </nav>
+
   <!-- Progress chrome -->
   <div class="progress-bar" role="progressbar" aria-label="Story progress" aria-valuemin="0" aria-valuemax="100">
     <div class="progress-bar__fill" id="progressFill"></div>
     <div class="progress-bar__ticks" id="progressTicks" aria-hidden="true"></div>
+  </div>
+
+  <!-- Cold-open title card (shown once per session on first load) -->
+  <div class="cold-open-overlay" id="coldOpenOverlay" role="dialog" aria-labelledby="coldOpenTitle" aria-describedby="coldOpenBody" hidden>
+    <div class="cold-open-overlay__card">
+      <p class="cold-open-overlay__eyebrow" id="coldOpenTitle">Before you scroll</p>
+      <p class="cold-open-overlay__body" id="coldOpenBody">On April 15, 2026, Allbirds stopped being a shoe company. Between 9:30 and 9:47 a.m., its stock rose 582%. This is an investigation of the eighteen minutes, the money that financed them, and what happens on May 18.</p>
+      <button class="cold-open-overlay__dismiss" id="coldOpenDismiss" type="button">Start scrolling ↓</button>
+    </div>
   </div>
 
   <!-- Persistent BIRD ticker (plan §4) -->
@@ -51,6 +74,7 @@
       <div class="cold-open">
         <div class="clock">April 15, 2026 &nbsp;·&nbsp; 9:29 AM ET</div>
         <h1 class="headline" id="s1-title">The last morning Allbirds was a shoe company, the stock opened at two dollars and forty-nine cents.</h1>
+        <p class="headline-subtitle" id="s1-subtitle">In eighteen minutes, it wouldn't be.</p>
         <div class="trailing-chart" id="s1-chart" aria-hidden="true">
           <!-- rendered by script.js -->
         </div>
@@ -63,7 +87,7 @@
       </div>
     </div>
     <div class="steps">
-      <div class="step" data-step="1"><div class="step__card"><h3>Scene 1</h3><p>A $20 million shoe company with a going-concern warning. Nobody on a Manhattan trading desk is watching BIRD this morning. They have no reason to.</p></div></div>
+      <div class="step" data-step="1"><div class="step__card"><h3>Scene 1</h3><p>A $20 million shoe company with a going-concern warning. In eighteen minutes, it will become a $148 million GPU company. The next twenty minutes answer three questions: what they gave away, who handed them the money, and what kind of company they pretended to become.</p></div></div>
       <div class="step" data-step="2"><div class="step__card"><h3>Eighteen minutes away</h3><p>The auditors filed a going-concern note three weeks ago — accountant's English for "we don't think this company can pay its bills."</p></div></div>
     </div>
   </section>
@@ -119,6 +143,14 @@
     </div>
   </section>
 
+  <!-- Interlude A — thesis statement (between the spike and the questions) -->
+  <aside class="interlude" data-bg="paper-warm" aria-label="Thesis interlude">
+    <div class="interlude__inner">
+      <p class="interlude__kicker">Thesis</p>
+      <p class="interlude__body">On April 15, Allbirds announced it was becoming an AI infrastructure company. The stock went up 582 percent. That is the story the market bought. There is another story, in the filing, about a conversion formula and a $39 million sale, and it is the story this piece is about. Before the chart, the thesis: <strong>the document is the company.</strong></p>
+    </div>
+  </aside>
+
   <!-- ========== SCENE 4 ========== -->
   <section class="scene" id="scene-4" data-scene="4" data-bg="cream" aria-labelledby="s4-title">
     <div class="scene__inner">
@@ -132,6 +164,14 @@
       </div>
     </div>
   </section>
+
+  <!-- Interlude B — act transition (between the three-question frame and "what they gave away") -->
+  <aside class="interlude" data-bg="cream" aria-label="Act-transition interlude">
+    <div class="interlude__inner">
+      <p class="interlude__kicker">Act II — The deal</p>
+      <p class="interlude__body">Start with what left the building. Before the AI announcement, before the convertible, before the ticker change, Allbirds sold its operating business for $39 million. The shoes are gone. What remains is a listing, a shell, and a set of terms. The next three scenes are about those terms.</p>
+    </div>
+  </aside>
 
   <!-- ========== SCENE 5 ========== -->
   <section class="scene scene--sticky" id="scene-5" data-scene="5" data-bg="cream" aria-labelledby="s5-title">
@@ -164,9 +204,9 @@
       <div class="redact-stage">
         <h4>Exhibit 99.1 — Press release, April 15, 2026</h4>
         <p><em>Allbirds, Inc. (NASDAQ: BIRD) today announced the closing of a $50,000,000 senior secured convertible note financing with <span class="redact">[ undisclosed institutional investor ]</span>, to fund the Company's expansion into AI compute infrastructure.</em></p>
-        <p>The offering was placed by <strong style="color:var(--bear);">Chardan Capital Markets, LLC</strong>, acting as sole placement agent. Legal counsel to the Company was provided by Holland &amp; Hart LLP.</p>
+        <p>The offering was placed by <strong style="color:var(--bear);"><span class="gloss" tabindex="0">Chardan Capital Markets, LLC<span class="gloss__tip" role="tooltip">Chardan Capital Markets. A small New York placement agent specializing in micro-cap structured financings. Has placed several of the prior deals shown in the track-record panel.</span></span></strong>, acting as sole placement agent. Legal counsel to the Company was provided by Holland &amp; Hart LLP.</p>
         <div class="chardan-callout">
-          The press release redacted the buyer. The <strong>PREM14A preliminary proxy</strong> filed the same day did not: the counterparty is <strong>AXNY Group</strong>, 1400 Broadway (Floor 18), New York, NY — represented by Steve Velasquez and counseled by The Dallal Firm PC at 40 Wall Street. The name was in the proxy all along. And the proxy also spells out the conversion formula in concrete percentage terms: <strong>93% of the lowest 10-day VWAP</strong> in the normal case, <strong>85% of the lowest 15-day VWAP</strong> in default, plus a <strong>5% original issue discount</strong> and a <strong>25% premium</strong> on the conversion amount in default. It is a textbook death spiral, disclosed in black-letter English, on the same day as the press release.
+          The press release redacted the buyer. The <strong><span class="gloss" tabindex="0">PREM14A<span class="gloss__tip" role="tooltip">Preliminary proxy statement filed with the SEC before a shareholder vote. Contains the full terms of the transaction management wants shareholders to approve.</span></span> preliminary proxy</strong> filed the same day did not: the counterparty is <strong><span class="gloss" tabindex="0">AXNY Group<span class="gloss__tip" role="tooltip">The counterparty to the $50M convertible, named in the PREM14A but redacted in the press release. A private investor at 1400 Broadway, Floor 18, NYC.</span></span></strong>, 1400 Broadway (Floor 18), New York, NY — represented by Steve Velasquez and counseled by The Dallal Firm PC at 40 Wall Street. The name was in the proxy all along. And the proxy also spells out the conversion formula in concrete percentage terms: <strong>93% of the lowest 10-day <span class="gloss" tabindex="0">VWAP<span class="gloss__tip" role="tooltip">Volume-Weighted Average Price. The average share price over a period, weighted by trading volume. The reference price in this convertible's math.</span></span></strong> in the normal case, <strong>85% of the lowest 15-day VWAP</strong> in default, plus a <strong>5% <span class="gloss" tabindex="0">original issue discount<span class="gloss__tip" role="tooltip">The gap between a note's face value and cash proceeds. A 5% OID means $50M face for $47.5M cash — an embedded fee built into the financing.</span></span></strong> and a <strong>25% premium</strong> on the conversion amount in default. It is a textbook <span class="gloss" tabindex="0">death spiral<span class="gloss__tip" role="tooltip">A floating convertible whose holder profits as the stock falls. Issuing more shares to convert pushes the price down, which triggers more dilution. Industry slang for a toxic floating-price note.</span></span>, disclosed in black-letter English, on the same day as the press release.
         </div>
       </div>
     </div>
@@ -179,7 +219,7 @@
     </div>
     <div class="steps">
       <div class="step" data-step="1"><div class="step__card"><h3>Nikola · 2020</h3><p>SPAC pivot to hydrogen trucks. Founder convicted of fraud, 4-year sentence. Company filed Chapter 11.</p></div></div>
-      <div class="step" data-step="2"><div class="step__card"><h3>Bit Origin · July 2025</h3><p>$400M equity + $100M convertible debt for a Dogecoin treasury. <strong>Six months later: 1-for-60 reverse split, 98% destruction.</strong></p></div></div>
+      <div class="step" data-step="2"><div class="step__card"><h3>Bit Origin · July 2025</h3><p>$400M equity + $100M convertible debt for a Dogecoin treasury. <strong>Six months later: 1-for-60 <span class="gloss" tabindex="0">reverse split<span class="gloss__tip" role="tooltip">Consolidating shares (e.g., 1-for-60) to lift the nominal price. The standard remedy after a death spiral has already done its work.</span></span>, 98% destruction.</strong></p></div></div>
       <div class="step" data-step="3"><div class="step__card"><h3>Classover · 2025</h3><p>Up to $500M of senior secured convertible notes to support a SOL treasury reserve. Capital locked up; liquidity collapse.</p></div></div>
       <div class="step" data-step="4"><div class="step__card"><h3>Eyenovia · 2025</h3><p>$50M PIPE — convertible preferred plus warrants, not plain convertibles — for HYPE tokens. Legacy pharma business stalled.</p></div></div>
       <div class="step" data-step="5"><div class="step__card"><h3>VivoPower · 2025</h3><p>$121M of straight equity at $6.05/share for an XRP treasury. Stock halved within 90 days.</p></div></div>
@@ -189,6 +229,13 @@
   </section>
 
   <!-- ========== SCENE 8 ========== -->
+  <aside class="interlude" data-bg="cream" aria-label="Stakes interlude">
+    <div class="interlude__inner">
+      <p class="interlude__kicker">The weight of the pattern</p>
+      <p class="interlude__body">Chardan has done this before. Not this exact deal — this shape of deal. A micro-cap, a narrative pivot, a convertible with a floor-less conversion formula, a press release that makes the cover of CNBC. The precedents are not allegations; they are a prior. When you see the same three notes played by the same piano in the same room, it is fair to ask what song is being played.</p>
+    </div>
+  </aside>
+
   <section class="scene scene--sticky" id="scene-8" data-scene="8" data-bg="cream" aria-labelledby="s8-title">
     <div class="sticky-wrap">
       <div class="overlay-chart" id="s8-chart" role="img" aria-label="Long Blockchain's post-announcement trajectory: as much as +388% intraday, closed up more than 180%, then ground to zero over the next fifteen months of delisting steps. BIRD sits at day one of the equivalent chart."></div>
@@ -224,6 +271,13 @@
   </section>
 
   <!-- ========== SCENE 10 ========== -->
+  <aside class="interlude" data-bg="white" aria-label="Midpoint recap">
+    <div class="interlude__inner">
+      <p class="interlude__kicker">Where we are</p>
+      <p class="interlude__body">So far: $39 million in, $50 million convertible out, a capital structure that depends on a share price the company has not yet had to defend. The next scene asks the question the press release does not. If you are going to spend this to build AI compute, what does the compute cost? The numbers are not close.</p>
+    </div>
+  </aside>
+
   <section class="scene scene--sticky" id="scene-10" data-scene="10" data-bg="white" aria-labelledby="s10-title">
     <div class="sticky-wrap">
       <div class="heatmap-stage" id="s10-stage" role="img" aria-label="A heatmap showing project NPV across rental rate ($2.00 to $5.00 per GPU-hour) and utilization (70% to 92%). Below $3.50/hour, every cell is negative. The market is pricing $3.00 × 85% (negative $8M). The thesis requires $4.00 × 90% (positive $18M)."></div>
@@ -257,9 +311,17 @@
       <div class="step" data-step="1"><div class="step__card"><h3>Today · April 15</h3><p>The press release did not include the conversion terms. The <strong>preliminary proxy (PREM14A) was filed the same day</strong> and already discloses the Alternate Conversion Price formula explicitly: <strong>93% of the lowest 10-day VWAP</strong> (normal), or <strong>85% of the lowest 15-day VWAP</strong> in default, plus a <strong>25% premium</strong> on principal in default. The notes carry a <strong>5% OID</strong> and mature on the second anniversary of issuance. The buyer is <strong>AXNY Group</strong>.</p></div></div>
       <div class="step" data-step="2"><div class="step__card"><h3>Early May</h3><p>The preliminary proxy already discloses the formula: 93% of 10-day lowest VWAP, or 85% of 15-day lowest VWAP in default, plus a 25% premium. The <strong>definitive proxy</strong> finalizes the mechanic ahead of the May 18 vote — but the material economics are already on file.</p></div></div>
       <div class="step" data-step="3"><div class="step__card"><h3>May 18 · the vote</h3><p>Stockholders vote on authorizing the convertible — required because the dilution exceeds Nasdaq's 19.99% cap.</p></div></div>
-      <div class="step" data-step="4"><div class="step__card"><h3>Two futures</h3><p><strong>Fixed path prevails:</strong> the convertible behaves like patient growth capital. The bull outcomes ($38–$125) become possible.<br><strong>Floating alternate activates:</strong> the dilution compounds. The bear outcomes ($1.50 or reverse split) become likely.</p></div></div>
+      <div class="step" data-step="4"><div class="step__card"><h3>Two futures</h3><p><strong>Fixed path prevails:</strong> the convertible behaves like patient growth capital. The bull outcomes ($38–$125) become possible.<br><strong><span class="gloss" tabindex="0">Floating alternate<span class="gloss__tip" role="tooltip">A convertible whose conversion price is a discount to future trading prices, not a fixed number. Lower stock later means more shares issued — a toxic convertible.</span></span> activates:</strong> the dilution compounds. The bear outcomes ($1.50 or reverse split) become likely.</p></div></div>
     </div>
   </section>
+
+  <!-- Interlude E — stakes reminder (between the May 18 timeline and the dilution slider) -->
+  <aside class="interlude" data-bg="paper-warm" aria-label="Stakes interlude">
+    <div class="interlude__inner">
+      <p class="interlude__kicker">What's at stake</p>
+      <p class="interlude__body">May 18 is the vote. Between now and then, the stock has to do one thing: hold a price high enough that the conversion math stays benign. Below that, the 93% formula manufactures shares faster than the company can defend. The next scene is the math — you drive the slider, you watch the shares move.</p>
+    </div>
+  </aside>
 
   <!-- ========== SCENE 13 ========== -->
   <section class="scene scene--sticky" id="scene-13" data-scene="13" data-bg="paper-warm" aria-labelledby="s13-title">
@@ -331,6 +393,14 @@
       <div class="step" data-step="5"><div class="step__card"><h3>The market says $16.99.</h3><p>Above all bears, above the neutral, and far below any bull. Roughly one chance in seven. Whether that is optimism or innumeracy, you find out on <strong>May 18.</strong></p></div></div>
     </div>
   </section>
+
+  <!-- Interlude F — methodology bridge (between the dispersion and the methodology footer) -->
+  <aside class="interlude" data-bg="closing" aria-label="Methodology interlude">
+    <div class="interlude__inner">
+      <p class="interlude__kicker">A note on method</p>
+      <p class="interlude__body">Ten agents. Ten valuations. They do not agree. That is the point — not a bug in the method but the method itself. A dialectical valuation is the argument between the models, not the average of them. The dispersion is the signal. The methodology and the ten underlying reports are below.</p>
+    </div>
+  </aside>
 
   <!-- ========== SCENE 17 — Footer ========== -->
   <section id="scene-17" data-scene="17" data-bg="closing" aria-labelledby="s17-title">
