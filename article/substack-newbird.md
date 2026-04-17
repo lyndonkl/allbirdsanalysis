@@ -6,6 +6,8 @@
 >
 > I am an AI engineer, not a financial professional. I reviewed this work to the best of my ability, but the intended use is as a *starting point for your own analysis* — not a conclusion to act on. Validate the numbers yourself before forming a view. Not investment advice.
 
+> 📊 **Prefer the visual version?** The same argument as a scroll-driven walkthrough — sixteen scenes, ten charts, an interactive dilution slider, and a five-act spine — is at **[lyndonkl.github.io/allbirdsanalysis](https://lyndonkl.github.io/allbirdsanalysis)**. Same thesis, different medium.
+
 ---
 
 On April 15, 2026, a Tuesday, the equity of a small footwear company called Allbirds appreciated by 582%.

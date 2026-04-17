@@ -354,19 +354,29 @@ button { font: inherit; cursor: pointer; }
 .scene--sticky { position: relative; }
 .scene--sticky .sticky-wrap {
   position: sticky;
-  top: 0;
+  /* Round 12 (Scene-9 fix): top offset must clear the 94px top-chrome stack
+     (ai-disclosure 32px + pinned-thesis 24px + act-bar 34px + progress-bar
+     2px) so the sticky graphic's own labels and overlays are not hidden
+     behind the fixed header. Mobile chrome is ~112px. */
+  top: 94px;
   /* D4 (Round 3): older iOS Safari treats an unguarded `100dvh` override as
      a reset to the URL-bar-hidden viewport, clipping sticky content. Gate
      the `dvh` value behind an @supports query so only browsers that honor
      the dynamic unit pick it up. */
-  height: 100vh;
+  height: calc(100vh - 94px);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 @supports (height: 100dvh) {
-  .scene--sticky .sticky-wrap { height: 100dvh; }
+  .scene--sticky .sticky-wrap { height: calc(100dvh - 94px); }
+}
+@media (max-width: 600px) {
+  .scene--sticky .sticky-wrap { top: 112px; height: calc(100vh - 112px); }
+  @supports (height: 100dvh) {
+    .scene--sticky .sticky-wrap { height: calc(100dvh - 112px); }
+  }
 }
 .scene--sticky .steps {
   position: relative;
