@@ -1109,6 +1109,12 @@ body[data-bg="black"] .bird-ticker {
   padding: 24px;
 }
 .cold-open-overlay[data-open="true"] { opacity: 1; }
+/* CRITICAL: [hidden] must take effect even though .cold-open-overlay has
+   display:flex. Without this override, the dismissed overlay stays as an
+   invisible full-page layer (pointer-events:auto by default) that
+   intercepts every hover and click on the page — silently breaking
+   the glossary tooltips, act-bar clicks, and all scene interactions. */
+.cold-open-overlay[hidden] { display: none; }
 .cold-open-overlay__card {
   background: var(--bg-paper);
   color: var(--ink);
