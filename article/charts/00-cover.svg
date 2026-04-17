@@ -97,9 +97,9 @@
        Red arrow hand-jittered, points to the peak
        ============================================================ -->
   <g>
-    <text x="540" y="250" class="margin-note" font-size="26">"the document is the company"</text>
+    <text x="420" y="250" class="margin-note" font-size="22">"the document is the company"</text>
     <!-- arrow from note down to peak dot -->
-    <path d="M 545 262 Q 420 280 254.03 283.30" fill="none" stroke="#B23A48" stroke-width="1.8" filter="url(#jitter)"/>
+    <path d="M 425 260 Q 350 278 254.03 283.30" fill="none" stroke="#B23A48" stroke-width="1.5" filter="url(#jitter)"/>
     <!-- arrowhead -->
     <path d="M 258.03 279.30 L 250.03 285.30 L 262.03 287.30 Z" fill="#B23A48"/>
   </g>
@@ -109,18 +109,13 @@
        Positioned in the left margin; the chart line "emerges" from
        the shoe at the $2.49 baseline.
        ============================================================ -->
-  <g transform="translate(130,639.776923076923)">
-    <!-- runner silhouette, simple single path, sized ~120 wide -->
-    <path d="M -60 8 Q -62 -6 -48 -9 L -22 -13 Q -6 -14 12 -18 L 36 -24 Q 56 -28 66 -20 Q 72 -12 58 -4 L 44 0 L 28 -2 L 10 2 L -14 6 L -42 8 Q -56 8 -60 4 Z" fill="#3B3125" opacity="0.88"/>
-    <path d="M -58 6 L 60 6" stroke="#3B3125" stroke-width="1" opacity="0.6"/>
-    <!-- lacing detail hint -->
-    <line x1="-18" y1="-10" x2="-12" y2="-4" stroke="#FBFAF7" stroke-width="0.8" opacity="0.7"/>
-    <line x1="-6" y1="-14" x2="0" y2="-6" stroke="#FBFAF7" stroke-width="0.8" opacity="0.7"/>
-    <line x1="8" y1="-16" x2="14" y2="-8" stroke="#FBFAF7" stroke-width="0.8" opacity="0.7"/>
-    <line x1="22" y1="-20" x2="28" y2="-12" stroke="#FBFAF7" stroke-width="0.8" opacity="0.7"/>
-    <!-- label beneath -->
-    <text x="0" y="30" text-anchor="middle" class="byline" font-size="10">APR 14 · A SHOE COMPANY</text>
+  <g transform="translate(100,610) scale(0.5)">
+    <!-- Wool-runner silhouette from Scene 2 (240×140 viewBox, scaled 0.5×)
+         Much more legible as "a shoe" than the prior abstract blob. -->
+    <path d="M10 110 Q 10 90 30 85 L 60 80 Q 80 78 100 72 L 140 62 Q 170 56 190 64 Q 215 72 228 92 Q 234 104 220 114 L 200 118 L 180 115 L 140 120 L 80 122 L 30 118 Q 14 118 10 110 Z" fill="#3B3125" opacity="0.85"/>
+    <path d="M14 108 L 224 108" stroke="#3B3125" stroke-width="1.5" opacity="0.5"/>
   </g>
+  <text x="100" y="690" text-anchor="start" class="byline" font-size="10">APR 14 · A SHOE COMPANY</text>
 
   <!-- ============================================================
        RIGHT ANCHOR — GPU die silhouette (C's concession)
