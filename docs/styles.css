@@ -1208,6 +1208,10 @@ body[data-bg="black"] .bird-ticker {
    subtle background tint that brightens on hover.
    ========================================================================= */
 .gloss {
+  /* inline-block is required: inline spans create unreliable containing
+     blocks for position: absolute children (especially when the span
+     wraps across lines), which was preventing the tooltip from showing. */
+  display: inline-block;
   position: relative;
   border-bottom: 1.5px dashed var(--accent);
   background: rgba(14, 124, 123, 0.08);
@@ -1215,6 +1219,7 @@ body[data-bg="black"] .bird-ticker {
   border-radius: 2px;
   cursor: help;
   outline: none;
+  white-space: nowrap;
   transition: background-color 160ms ease;
 }
 .gloss::after {
@@ -1244,9 +1249,11 @@ body[data-bg="black"] .gloss::after { color: #9EC7C6; }
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%) translateY(4px);
-  z-index: 150;
+  /* Above the top-chrome stack (ai-disclosure z:102, cold-open z:200). */
+  z-index: 300;
   width: max-content;
   max-width: 260px;
+  white-space: normal;
   background: var(--bg-paper-warm);
   color: var(--ink);
   border: 1px solid var(--ink-20);

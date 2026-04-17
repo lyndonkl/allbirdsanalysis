@@ -57,7 +57,7 @@
   <!-- x(128)=270 + ((log10(128)-2)/4)*370 = 270 + ((2.107-2)/4)*370 = 270 + 9.9 = 279.9 -->
   <g transform="translate(0,110)">
     <text x="260" y="4" text-anchor="end" class="bar-label">NewBird AI</text>
-    <text x="260" y="20" text-anchor="end" class="subtitle">$50M conv + $39M sale + $39M cash</text>
+    <text x="260" y="20" text-anchor="end" class="subtitle">$39M cash + $39M sale + $50M conv debt</text>
     <rect class="bar-anchor" x="270" y="-14" width="9.9" height="28"/>
     <text x="285" y="4" class="bar-value">$128M</text>
     <text x="285" y="20" class="you-are-here">YOU ARE HERE</text>
