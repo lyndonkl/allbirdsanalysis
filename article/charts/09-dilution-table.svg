@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 280" width="700" height="280">
+  <style>
+    .title{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:18px;fill:#1A1A1A}
+    .hdr{font-family:Inter,system-ui,sans-serif;font-size:11px;font-weight:600;fill:#FFFFFF;letter-spacing:0.04em}
+    .cell{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:14px;fill:#1A1A1A}
+    .cell-warn{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:14px;fill:#B23A48;font-weight:600}
+    .row-label{font-family:Inter,system-ui,sans-serif;font-size:11px;fill:#5C5C5C}
+    .foot{font-family:Inter,system-ui,sans-serif;font-size:10px;fill:#9E9E9E}
+  </style>
+  <rect width="700" height="280" fill="#FBFAF7"/>
+
+  <text class="title" x="24" y="32">What the 93% formula does at three price levels</text>
+
+  <!-- Header row -->
+  <rect x="24" y="48" width="652" height="32" fill="#1A1A1A" rx="3"/>
+  <text class="hdr" x="42" y="69">Stock price</text>
+  <text class="hdr" x="210" y="69">Conversion price</text>
+  <text class="hdr" x="400" y="69">Shares issued</text>
+  <text class="hdr" x="556" y="69">Dilution</text>
+
+  <!-- Row 1: $16.99 (today) -->
+  <rect x="24" y="84" width="652" height="48" fill="#FFFFFF"/>
+  <line x1="24" y1="132" x2="676" y2="132" stroke="#E8E4DC"/>
+  <text class="cell" x="42" y="112">$16.99</text>
+  <text class="row-label" x="42" y="126">today</text>
+  <text class="cell" x="210" y="112">$15.80</text>
+  <text class="row-label" x="210" y="126">93% × $16.99</text>
+  <text class="cell" x="400" y="114">3.16M</text>
+  <text class="cell" x="556" y="114">39%</text>
+
+  <!-- Row 2: $5.00 -->
+  <rect x="24" y="132" width="652" height="48" fill="#FFF9F4"/>
+  <line x1="24" y1="180" x2="676" y2="180" stroke="#E8E4DC"/>
+  <text class="cell" x="42" y="160">$5.00</text>
+  <text class="row-label" x="42" y="174">moderate stress</text>
+  <text class="cell" x="210" y="160">$4.65</text>
+  <text class="row-label" x="210" y="174">93% × $5.00</text>
+  <text class="cell-warn" x="400" y="162">10.75M</text>
+  <text class="cell-warn" x="556" y="162">132%</text>
+
+  <!-- Row 3: $1.50 -->
+  <rect x="24" y="180" width="652" height="48" fill="#FFF4F0"/>
+  <line x1="24" y1="228" x2="676" y2="228" stroke="#E8E4DC"/>
+  <text class="cell" x="42" y="208">$1.50</text>
+  <text class="row-label" x="42" y="222">Bit Origin level</text>
+  <text class="cell" x="210" y="208">$1.395</text>
+  <text class="row-label" x="210" y="222">93% × $1.50</text>
+  <text class="cell-warn" x="400" y="210">35.8M</text>
+  <text class="cell-warn" x="556" y="210">439%</text>
+
+  <!-- Footer -->
+  <text class="foot" x="24" y="252">Formula: $50M ÷ (stock price × 0.93) per the PREM14A's Alternate Conversion Price.</text>
+  <text class="foot" x="24" y="266">Existing shares: 8.17M. Default case (85% / 15-day + 25% premium) produces even higher dilution.</text>
+</svg>
