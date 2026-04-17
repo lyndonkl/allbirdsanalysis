@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1456 816" width="1456" height="816" role="img" aria-labelledby="coverTitle coverDesc">
+  <title id="coverTitle">The Document Is the Company — cover</title>
+  <desc id="coverDesc">Editorial cover. A wool Allbirds runner silhouette on the left, a GPU die on the right, connected by the April 15 2026 BIRD intraday price curve (2 dollars 49 cents prior close to a 24 dollar 31 cent peak at 9:47 AM, closing 16 dollars 99 cents). A teal PREM14A stamp sits behind the close. A handwritten margin note reads "the document is the company".</desc>
+
+  <defs>
+    <!-- Warm paper subtle grain -->
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.72  0 0 0 0 0.69  0 0 0 0 0.63  0 0 0 0.05 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Rough hand-drawn stroke look for the margin note arrow -->
+    <filter id="jitter" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.2"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title { font-family: "Source Serif 4", "GT Super", Georgia, serif; fill: #1A1A1A; }
+    .subtitle { font-family: "Source Serif 4", Georgia, serif; font-style: italic; fill: #5C5C5C; }
+    .byline { font-family: "JetBrains Mono", ui-monospace, monospace; fill: #9E9E9E; letter-spacing: 0.12em; text-transform: uppercase; }
+    .axis-tick { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; fill: #9E9E9E; letter-spacing: 0.04em; }
+    .axis-rule { stroke: #D9D9D9; stroke-width: 1; }
+    .baseline { stroke: #9E9E9E; stroke-width: 1; stroke-dasharray: 4 4; }
+    .bird-line { stroke: #0E7C7B; stroke-width: 3.5; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+    .peak-label { font-family: "Source Serif 4", Georgia, serif; font-style: italic; fill: #B23A48; }
+    .close-label { font-family: "JetBrains Mono", ui-monospace, monospace; fill: #5C5C5C; }
+    .margin-note { font-family: "Source Serif 4", Georgia, serif; font-style: italic; fill: #B23A48; }
+    .stamp-text { font-family: "JetBrains Mono", ui-monospace, monospace; fill: #0E7C7B; font-weight: 600; letter-spacing: 0.08em; }
+  </style>
+
+  <!-- Warm paper ground -->
+  <rect width="1456" height="816" fill="#FBFAF7"/>
+  <rect width="1456" height="816" fill="#FBFAF7" filter="url(#grain)"/>
+
+  <!-- Newsroom slug (top) -->
+  <text x="200" y="72" class="byline" font-size="11">NEWBIRD AI · NASDAQ: BIRD · APRIL 15, 2026 INTRADAY</text>
+
+  <!-- Title + subtitle (top-left) -->
+  <text x="200" y="128" class="title" font-size="64" font-weight="400">The Document Is the Company<tspan fill="#B23A48">.</tspan></text>
+  <text x="200" y="172" class="subtitle" font-size="22">On a wool sneaker startup, a $50M convertible,</text>
+  <text x="200" y="200" class="subtitle" font-size="22">and one piece of paper almost nobody has read yet.</text>
+
+  <!-- ============================================================
+       The PREM14A stamp (watermark, behind chart, subtle)
+       ============================================================ -->
+  <g transform="translate(1050,560) rotate(-8)" opacity="0.14">
+    <rect x="-170" y="-44" width="340" height="88" fill="none" stroke="#0E7C7B" stroke-width="3"/>
+    <rect x="-164" y="-38" width="328" height="76" fill="none" stroke="#0E7C7B" stroke-width="1.5"/>
+    <text x="0" y="-6" text-anchor="middle" class="stamp-text" font-size="30">PREM14A</text>
+    <text x="0" y="22" text-anchor="middle" class="stamp-text" font-size="11">FILED · SEC EDGAR · APR 15 2026</text>
+  </g>
+
+  <!-- ============================================================
+       Y axis ticks (only the meaningful ones)
+       ============================================================ -->
+  <!-- Prior close baseline -->
+  <line x1="200" y1="639.78" x2="1256" y2="639.78" class="baseline"/>
+  <text x="190" y="643.78" text-anchor="end" class="axis-tick">$2.49 · APR 14 CLOSE</text>
+
+  <!-- Peak tick -->
+  <line x1="194" y1="287.30" x2="200" y2="287.30" class="axis-rule"/>
+  <text x="190" y="291.30" text-anchor="end" class="axis-tick">$24.31 · PEAK</text>
+
+  <!-- Close tick -->
+  <line x1="194" y1="405.55" x2="200" y2="405.55" class="axis-rule"/>
+  <text x="190" y="409.55" text-anchor="end" class="axis-tick">$16.99 · CLOSE</text>
+
+  <!-- X axis: 9:30 and 4:00 only -->
+  <line x1="200" y1="682" x2="1256" y2="682" class="axis-rule"/>
+  <text x="200" y="702" text-anchor="start" class="axis-tick">9:30 AM</text>
+  <text x="1256" y="702" text-anchor="end" class="axis-tick">4:00 PM</text>
+  <text x="246.03" y="702" text-anchor="middle" class="axis-tick">9:47</text>
+  <line x1="246.03" y1="678" x2="246.03" y2="682" class="axis-rule"/>
+
+  <!-- ============================================================
+       The line — the hero
+       ============================================================ -->
+  <path d="M200.00,639.78 C200.00,639.78 200.00,629.12 200.00,629.12 C206.77,629.12 206.77,597.62 213.54,597.62 C220.31,597.62 220.31,537.85 227.08,537.85 C233.85,537.85 233.85,447.38 240.62,447.38 C243.32,447.38 243.32,287.30 246.03,287.30 C263.63,287.30 263.63,323.00 281.23,323.00 C321.85,323.00 321.85,331.08 362.46,331.08 C403.08,331.08 403.08,350.46 443.69,350.46 C484.31,350.46 484.31,363.38 524.92,363.38 C565.54,363.38 565.54,384.38 606.15,384.38 C687.38,384.38 687.38,408.62 768.62,408.62 C849.85,408.62 849.85,403.77 931.08,403.77 C1012.31,403.77 1012.31,402.15 1093.54,402.15 C1134.15,402.15 1134.15,404.58 1174.77,404.58 C1215.38,404.58 1215.38,405.55 1256.00,405.55" class="bird-line"/>
+
+  <!-- Peak dot + label -->
+  <circle cx="246.03" cy="287.30" r="7" fill="#B23A48"/>
+  <circle cx="246.03" cy="287.30" r="2.5" fill="#FBFAF7"/>
+  <text x="264.03" y="275.30" class="peak-label" font-size="34" font-weight="600">+582%</text>
+  <text x="264.03" y="301.30" class="peak-label" font-size="16">in eighteen minutes</text>
+
+  <!-- Close dot + label -->
+  <circle cx="1256.00" cy="405.55" r="6" fill="#1A1A1A"/>
+  <circle cx="1256.00" cy="405.55" r="2" fill="#FBFAF7"/>
+
+  <!-- ============================================================
+       Hand-written margin note (A's concession — enacts the thesis)
+       Positioned to the right of the peak, just below title region
+       Red arrow hand-jittered, points to the peak
+       ============================================================ -->
+  <g>
+    <text x="540" y="250" class="margin-note" font-size="26">"the document is the company"</text>
+    <!-- arrow from note down to peak dot -->
+    <path d="M 545 262 Q 420 280 254.03 283.30" fill="none" stroke="#B23A48" stroke-width="1.8" filter="url(#jitter)"/>
+    <!-- arrowhead -->
+    <path d="M 258.03 279.30 L 250.03 285.30 L 262.03 287.30 Z" fill="#B23A48"/>
+  </g>
+
+  <!-- ============================================================
+       LEFT ANCHOR — wool runner silhouette (C's concession)
+       Positioned in the left margin; the chart line "emerges" from
+       the shoe at the $2.49 baseline.
+       ============================================================ -->
+  <g transform="translate(130,639.776923076923)">
+    <!-- runner silhouette, simple single path, sized ~120 wide -->
+    <path d="M -60 8 Q -62 -6 -48 -9 L -22 -13 Q -6 -14 12 -18 L 36 -24 Q 56 -28 66 -20 Q 72 -12 58 -4 L 44 0 L 28 -2 L 10 2 L -14 6 L -42 8 Q -56 8 -60 4 Z" fill="#3B3125" opacity="0.88"/>
+    <path d="M -58 6 L 60 6" stroke="#3B3125" stroke-width="1" opacity="0.6"/>
+    <!-- lacing detail hint -->
+    <line x1="-18" y1="-10" x2="-12" y2="-4" stroke="#FBFAF7" stroke-width="0.8" opacity="0.7"/>
+    <line x1="-6" y1="-14" x2="0" y2="-6" stroke="#FBFAF7" stroke-width="0.8" opacity="0.7"/>
+    <line x1="8" y1="-16" x2="14" y2="-8" stroke="#FBFAF7" stroke-width="0.8" opacity="0.7"/>
+    <line x1="22" y1="-20" x2="28" y2="-12" stroke="#FBFAF7" stroke-width="0.8" opacity="0.7"/>
+    <!-- label beneath -->
+    <text x="0" y="30" text-anchor="middle" class="byline" font-size="10">APR 14 · A SHOE COMPANY</text>
+  </g>
+
+  <!-- ============================================================
+       RIGHT ANCHOR — GPU die silhouette (C's concession)
+       Line terminates at the close, feeds into the GPU die.
+       ============================================================ -->
+  <g transform="translate(1326,405.54615384615386)">
+    <!-- package substrate -->
+    <rect x="-56" y="-42" width="112" height="84" fill="#1A1F2A" rx="3"/>
+    <!-- die -->
+    <rect x="-34" y="-24" width="68" height="48" fill="#0E7C7B" rx="1.5" opacity="0.92"/>
+    <!-- interconnect traces hint -->
+    <g stroke="#FBFAF7" stroke-width="0.5" opacity="0.45">
+      <line x1="-30" y1="-18" x2="30" y2="-18"/>
+      <line x1="-30" y1="-10" x2="30" y2="-10"/>
+      <line x1="-30" y1="-2" x2="30" y2="-2"/>
+      <line x1="-30" y1="6" x2="30" y2="6"/>
+      <line x1="-30" y1="14" x2="30" y2="14"/>
+    </g>
+    <!-- pins sides -->
+    <g stroke="#0E7C7B" stroke-width="1" opacity="0.85">
+      <line x1="-56" y1="-28" x2="-66" y2="-28"/>
+      <line x1="-56" y1="-16" x2="-66" y2="-16"/>
+      <line x1="-56" y1="-4" x2="-66" y2="-4"/>
+      <line x1="-56" y1="8" x2="-66" y2="8"/>
+      <line x1="-56" y1="20" x2="-66" y2="20"/>
+      <line x1="56" y1="-28" x2="66" y2="-28"/>
+      <line x1="56" y1="-16" x2="66" y2="-16"/>
+      <line x1="56" y1="-4" x2="66" y2="-4"/>
+      <line x1="56" y1="8" x2="66" y2="8"/>
+      <line x1="56" y1="20" x2="66" y2="20"/>
+    </g>
+    <!-- serial number easter egg: the ticker folded in as hardware ID -->
+    <text x="0" y="4" text-anchor="middle" class="stamp-text" font-size="9" fill="#FBFAF7" opacity="0.95">BIRD-0582</text>
+    <!-- label beneath -->
+    <text x="0" y="58" text-anchor="middle" class="byline" font-size="10">APR 15 · AN AI COMPANY</text>
+  </g>
+
+  <!-- ============================================================
+       Bottom byline
+       ============================================================ -->
+  <text x="200" y="780" class="byline" font-size="11">KUSHAL D'SOUZA · A TEN-AGENT AI VALUATION · LYNDONKL.GITHUB.IO/ALLBIRDSANALYSIS</text>
+
+</svg>
+

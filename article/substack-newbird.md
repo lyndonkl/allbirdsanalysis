@@ -1,3 +1,5 @@
+![Cover: The Document Is the Company — the April 15 2026 intraday price curve rising 582% in eighteen minutes, bracketed by an Allbirds wool runner on the left and a teal GPU die on the right, with a PREM14A filing stamp behind the close and a handwritten margin note reading "the document is the company."](charts/00-cover.svg)
+
 # The Document Is the Company
 
 *On a wool sneaker startup, a $50M convertible, and one piece of paper almost nobody has read yet.*
