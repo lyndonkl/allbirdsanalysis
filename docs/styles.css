@@ -1202,15 +1202,43 @@ body[data-bg="black"] .bird-ticker {
 }
 
 /* =========================================================================
-   Glossary hovers — inline dotted-underline term, floating tooltip on hover/focus
+   Glossary hovers — inline term with a visible affordance, floating tooltip
+   on hover/focus. Affordance must be discoverable at a glance: dashed
+   underline in accent teal, small info-circle icon after the term, and a
+   subtle background tint that brightens on hover.
    ========================================================================= */
 .gloss {
   position: relative;
-  border-bottom: 1px dotted currentColor;
+  border-bottom: 1.5px dashed var(--accent);
+  background: rgba(14, 124, 123, 0.08);
+  padding: 0 2px;
+  border-radius: 2px;
   cursor: help;
   outline: none;
+  transition: background-color 160ms ease;
 }
+.gloss::after {
+  content: 'ⓘ';
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.78em;
+  font-style: normal;
+  font-weight: 500;
+  color: var(--accent);
+  margin-left: 3px;
+  vertical-align: 0.08em;
+  opacity: 0.85;
+}
+.gloss:hover { background: rgba(14, 124, 123, 0.18); }
 .gloss:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+/* On dark scenes (slate/black backgrounds), bump the affordance contrast. */
+body[data-bg="slate"] .gloss,
+body[data-bg="black"] .gloss {
+  background: rgba(255, 255, 255, 0.10);
+  border-bottom-color: #9EC7C6;
+}
+body[data-bg="slate"] .gloss::after,
+body[data-bg="black"] .gloss::after { color: #9EC7C6; }
 .gloss__tip {
   position: absolute;
   bottom: calc(100% + 8px);
